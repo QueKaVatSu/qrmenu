@@ -19,8 +19,8 @@
         .font-regular { font-weight: 400; }
         .font-medium { font-weight: 500; }
         /* Scrollbar Gizleme */
-        nav::-webkit-scrollbar { display: none; }
-        nav { -ms-overflow-style: none; scrollbar-width: none; }
+        .scroll-hidden::-webkit-scrollbar { display: none; }
+        .scroll-hidden { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body>
@@ -78,12 +78,27 @@
         // --- Bileşenler (Components) ---
 
         const Header = () => (
-          <header className="sticky top-0 z-50 flex items-center justify-between px-4 py-4 bg-white/90 backdrop-blur-md shadow-sm">
-            <button className="p-2 text-gray-800"><MenuIcon /></button>
+          <header className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-4 bg-transparent">
+            <button className="p-2 text-white"><MenuIcon /></button>
             <img src="./logo.png" alt="SpicyMenu Logo" className="h-8" onError={(e) => { e.target.onerror = null; e.target.style.display='none'; document.getElementById('logo-text').style.display='block'; }}/>
-            <h1 id="logo-text" className="hidden text-xl font-bold tracking-widest text-gray-900 uppercase">SpicyMenu</h1>
-            <button className="p-2 text-gray-800"><SearchIcon /></button>
+            <h1 id="logo-text" className="hidden text-xl font-bold tracking-widest text-white uppercase">SpicyMenu</h1>
+            <button className="p-2 text-white"><SearchIcon /></button>
           </header>
+        );
+        
+        // YENİ AÇILIŞ VİDEOSU BİLEŞENİ
+        const Hero = ({ onScrollClick }) => (
+            <div className="relative h-screen w-full overflow-hidden">
+                <video src="./hero.mp4" autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0"></video>
+                <div className="absolute top-0 left-0 w-full h-full bg-black/40 z-10"></div>
+                <div className="relative z-20 flex flex-col items-center justify-center h-full">
+                    <button 
+                        onClick={onScrollClick}
+                        className="font-regular text-white text-lg border border-white/80 rounded-full px-12 py-3 backdrop-blur-sm transition-colors hover:bg-white/20">
+                        Menüyü Görüntüle
+                    </button>
+                </div>
+            </div>
         );
 
         const CategoryCard = ({ category, onSelectCategory }) => {
@@ -94,25 +109,13 @@
             return (
                 <div
                     className="relative rounded-2xl p-6 flex flex-col justify-end cursor-pointer transition-transform duration-300 hover:scale-[1.03] overflow-hidden text-white shadow-lg"
-                    style={{ 
-                        flexBasis: flexBasis,
-                        aspectRatio: `${category.width} / ${category.height}`
-                    }}
+                    style={{ flexBasis: flexBasis, aspectRatio: `${category.width} / ${category.height}` }}
                     onClick={() => onSelectCategory(category.id)}
                 >
                     {isVideo ? (
-                        <video
-                            src={`./${category.media}`}
-                            autoPlay loop muted playsInline
-                            className="absolute top-0 left-0 w-full h-full object-cover z-0"
-                        ></video>
+                        <video src={`./${category.media}`} autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0"></video>
                     ) : (
-                        <img
-                            src={`./${category.media}`}
-                            alt={category.name}
-                            className="absolute top-0 left-0 w-full h-full object-cover z-0"
-                            onError={(e) => { e.target.style.backgroundColor = '#e5e7eb'; e.target.src = '' }}
-                        />
+                        <img src={`./${category.media}`} alt={category.name} className="absolute top-0 left-0 w-full h-full object-cover z-0" onError={(e) => { e.target.style.backgroundColor = '#e5e7eb'; e.target.src = '' }} />
                     )}
                     <div className="absolute top-0 left-0 w-full h-full bg-black/40 z-10"></div>
                     <div className="relative z-20">
@@ -123,9 +126,9 @@
             );
         };
 
-        const CategoryPage = ({ onSelectCategory }) => {
+        const CategoryPage = ({ onSelectCategory, menuRef }) => {
             return (
-                <div className="p-4 flex flex-col gap-4">
+                <div ref={menuRef} className="p-4 flex flex-col gap-4 bg-gray-100">
                     {menuData.categoryRows.map((row, rowIndex) => (
                         <div key={rowIndex} className="flex gap-4">
                             {row.map(category => (
@@ -142,8 +145,8 @@
           const allCategories = menuData.categoryRows.flat();
           
           return (
-            <div className="bg-gray-100 min-h-screen">
-              <nav className="sticky top-[72px] z-40 bg-white/90 backdrop-blur-md overflow-x-auto whitespace-nowrap">
+            <div className="bg-gray-100 min-h-full">
+              <nav className="sticky top-0 z-40 bg-white/90 backdrop-blur-md overflow-x-auto whitespace-nowrap scroll-hidden">
                 <div className="flex p-4 border-b border-gray-200">
                     <button onClick={onGoBack} className="flex-shrink-0 flex items-center justify-center px-4 py-2 text-sm font-semibold text-gray-700 bg-gray-200 rounded-full">
                         <BackIcon/> Kategoriler
@@ -176,14 +179,14 @@
             </div>
           );
         };
-
+        
         const ProductDetailPage = ({ product, onGoBack }) => {
             if (!product) return null;
             return (
-                <div className="bg-gray-100 min-h-screen">
+                <div className="bg-gray-100 min-h-full">
                     <div className="relative">
                         <img src={product.image} alt={product.name} className="w-full h-64 object-cover" />
-                        <button onClick={onGoBack} className="absolute top-4 left-4 bg-white/80 p-2 rounded-full shadow-md">
+                        <button onClick={onGoBack} className="absolute top-4 left-4 bg-white/80 p-2 rounded-full shadow-md z-30">
                             <BackIcon className="h-6 w-6 text-gray-800" />
                         </button>
                     </div>
@@ -195,7 +198,6 @@
                             </div>
                             <p className="text-2xl font-medium text-gray-900 whitespace-nowrap ml-4">{product.price}</p>
                         </div>
-
                         <div className="flex justify-around bg-white p-4 rounded-2xl shadow-sm text-center">
                             <div className="font-regular"><span className="font-medium text-lg block">{product.prepTime}</span> minute</div>
                             <div className="font-regular"><span className="font-medium text-lg block">{product.grams}</span> gram</div>
@@ -206,11 +208,15 @@
             );
         };
 
-        // Ana Uygulama Bileşeni
         function App() {
-          const [page, setPage] = React.useState('categories'); // categories, products, productDetail
+          const [page, setPage] = React.useState('categories');
           const [selectedCategory, setSelectedCategory] = React.useState(null);
           const [selectedProduct, setSelectedProduct] = React.useState(null);
+          const menuRef = React.useRef(null);
+
+          const handleScrollToMenu = () => {
+              menuRef.current?.scrollIntoView({ behavior: 'smooth' });
+          };
 
           const handleSelectCategory = (categoryId) => {
             setSelectedCategory(categoryId);
@@ -233,19 +239,26 @@
           };
 
           return (
-              <div className="bg-gray-100 min-h-screen max-w-md mx-auto border-x border-gray-200">
-                <Header />
-                <main className="relative w-full overflow-hidden">
-                  <div className={`flex transition-transform duration-500 ease-in-out ${getPageTransform()}`}>
-                    <div className="w-full flex-shrink-0">
-                      <CategoryPage onSelectCategory={handleSelectCategory} />
+              <div className="bg-gray-100 min-h-screen max-w-md mx-auto">
+                <main className="relative w-full h-screen overflow-hidden">
+                  <div className={`flex transition-transform duration-500 ease-in-out h-full ${getPageTransform()}`}>
+                    
+                    <div className="w-full flex-shrink-0 h-full overflow-y-auto scroll-hidden">
+                      <div className="relative">
+                        <Header />
+                        <Hero onScrollClick={handleScrollToMenu} />
+                        <CategoryPage onSelectCategory={handleSelectCategory} menuRef={menuRef} />
+                      </div>
                     </div>
-                    <div className="w-full flex-shrink-0">
+
+                    <div className="w-full flex-shrink-0 h-full overflow-y-auto scroll-hidden">
                       {selectedCategory && <ProductListPage selectedCategory={selectedCategory} onGoBack={goBackToCategories} onSelectCategory={setSelectedCategory} onSelectProduct={handleSelectProduct} />}
                     </div>
-                    <div className="w-full flex-shrink-0">
+                    
+                    <div className="w-full flex-shrink-0 h-full overflow-y-auto scroll-hidden">
                       <ProductDetailPage product={selectedProduct} onGoBack={goBackToProducts} />
                     </div>
+
                   </div>
                 </main>
               </div>
