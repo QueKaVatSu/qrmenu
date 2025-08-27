@@ -54,12 +54,12 @@
               { id: 'c2', name: 'İçecekler', subtitle: 'Taze ve serinletici', width: 170, height: 200, media: 'title2' }
             ],
             [
-              { id: 'c3', name: 'Pizza', subtitle: 'Ekşi maya hamurdan gelen lezzet', width: 205, height: 250, media: 'title3' },
+              { id: 'c3', name: 'Pizza', subtitle: 'Ekşi maya hamurda gelen lezzet', width: 205, height: 250, media: 'title3' },
               { id: 'c4', name: 'Salatalar', subtitle: 'Her zaman taze', width: 135, height: 200, media: 'title4' }
             ],
             [ { id: 'c5', name: 'Ana Yemekler', subtitle: 'Şef seçkisi lezzetler', width: 360, height: 200, media: 'title5' } ],
             [
-              { id: 'c6', name: 'Title6', subtitle: 'Subtitle6', width: 205, height: 250, media: 'title6' },
+              { id: 'c6', name: 'Şaraplar', subtitle: 'Bağlardan kristal kadehlere', width: 205, height: 250, media: 'title6' },
               { id: 'c7', name: 'Title7', subtitle: 'Subtitle7', width: 135, height: 200, media: 'title7' }
             ],
             [
@@ -113,14 +113,12 @@
                 <video src="./hero.mp4" autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0"></video>
                 <div className="absolute top-0 left-0 w-full h-full bg-black/30 z-10"></div>
                 <div className="relative z-20 flex flex-col items-center justify-center h-full px-4">
-                    <div className={`bg-white shadow-lg transition-opacity duration-300 ease-in-out mb-8 ${isScrolled ? 'opacity-0' : 'opacity-100'} w-40 h-40 flex items-center justify-center`}>
-                        <img
-                            src="./logo.png"
-                            alt="SpicyMenu Logo"
-                            className="h-32"
-                            onError={(e) => { e.target.style.display = 'none'; }}
-                        />
-                    </div>
+                    <img
+                        src="./logo.png"
+                        alt="SpicyMenu Logo"
+                        className={`h-56 mb-8 transition-opacity duration-300 ease-in-out drop-shadow-lg ${isScrolled ? 'opacity-0' : 'opacity-100'}`}
+                        onError={(e) => { e.target.style.display = 'none'; }}
+                    />
                     <button 
                         onClick={onScrollClick}
                         className="font-regular text-white text-lg border border-white/80 rounded-full px-12 py-3 backdrop-blur-sm transition-colors hover:bg-white/20">
