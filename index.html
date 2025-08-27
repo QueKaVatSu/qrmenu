@@ -1,242 +1,260 @@
-import React, { useState, useRef, useEffect } from 'react';
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spicy Menu</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React Kütüphaneleri -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel (JSX'i tarayıcıda çalıştırmak için) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-// --- Ikonlar (SVG olarak) ---
-const MenuIcon = () => (
-  <svg xmlns="http://www.w.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16m-16 6h16" />
-  </svg>
-);
-
-const SearchIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-  </svg>
-);
-
-const BackIcon = ({ className = "h-5 w-5 mr-2" }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-    </svg>
-);
-
-// --- Örnek Menü Verisi ---
-// Kategori ve ürünlere medya dosyaları ve detay bilgileri eklendi.
-const menuData = {
-  categoryRows: [
-    [
-      { id: 'c1', name: 'Title1', subtitle: 'Subtitle1', width: 170, height: 200, media: 'title1.mp4' },
-      { id: 'c2', name: 'Title2', subtitle: 'Subtitle2', width: 170, height: 200, media: 'title2.png' }
-    ],
-    [
-      { id: 'c3', name: 'Title3', subtitle: 'Subtitle3', width: 205, height: 250, media: 'title3.mp4' },
-      { id: 'c4', name: 'Title4', subtitle: 'Subtitle4', width: 135, height: 200, media: 'title4.png' }
-    ],
-    [ { id: 'c5', name: 'Title5', subtitle: 'Subtitle5', width: 360, height: 200, media: 'title5.mp4' } ],
-    [
-      { id: 'c6', name: 'Title6', subtitle: 'Subtitle6', width: 205, height: 250, media: 'title6.png' },
-      { id: 'c7', name: 'Title7', subtitle: 'Subtitle7', width: 135, height: 200, media: 'title7.mp4' }
-    ],
-    [
-      { id: 'c8', name: 'Title8', subtitle: 'Subtitle8', width: 170, height: 200, media: 'title8.png' },
-      { id: 'c9', name: 'Title9', subtitle: 'Subtitle9', width: 170, height: 200, media: 'title9.mp4' }
-    ]
-  ],
-  products: {
-    'c1': [ { id: 'p1', name: 'Product 1', description: 'Lezzetli ürün açıklaması.', price: '165 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Product+1', prepTime: 15, grams: 350, kcal: 450 } ],
-    'c2': [ { id: 'p2', name: 'Product 2', description: 'Lezzetli ürün açıklaması.', price: '190 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Product+2', prepTime: 20, grams: 420, kcal: 600 } ],
-    'c3': [ { id: 'p3', name: 'Product 3', description: 'Lezzetli ürün açıklaması.', price: '250 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Product+3', prepTime: 25, grams: 500, kcal: 750 } ],
-    'c4': [], 'c5': [], 'c6': [], 'c7': [], 'c8': [], 'c9': [],
-  }
-};
-
-// --- Bileşenler (Components) ---
-
-const Header = () => (
-  <header className="sticky top-0 z-50 flex items-center justify-between px-4 py-4 bg-white/90 backdrop-blur-md shadow-sm">
-    <button className="p-2 text-gray-800"><MenuIcon /></button>
-    <img src="./logo.png" alt="SpicyMenu Logo" className="h-8" onError={(e) => { e.target.onerror = null; e.target.style.display='none'; document.getElementById('logo-text').style.display='block'; }}/>
-    <h1 id="logo-text" className="hidden text-xl font-bold tracking-widest text-gray-900 uppercase">SpicyMenu</h1>
-    <button className="p-2 text-gray-800"><SearchIcon /></button>
-  </header>
-);
-
-const CategoryCard = ({ category, onSelectCategory }) => {
-    const isVideo = category.media && category.media.endsWith('.mp4');
-    
-    // Sıradaki toplam genişliği hesapla (boşluklar hariç)
-    const totalWidthInRow = category.row.reduce((acc, cat) => acc + cat.width, 0);
-    // Kartın esnek genişliğini yüzde olarak hesapla
-    const flexBasis = `${(category.width / totalWidthInRow) * 100}%`;
-
-    return (
-        <div
-            className="relative rounded-2xl p-6 flex flex-col justify-end cursor-pointer transition-transform duration-300 hover:scale-[1.03] overflow-hidden text-white shadow-lg"
-            style={{ 
-                flexBasis: flexBasis,
-                aspectRatio: `${category.width} / ${category.height}`
-            }}
-            onClick={() => onSelectCategory(category.id)}
-        >
-            {isVideo ? (
-                <video
-                    src={`./${category.media}`}
-                    autoPlay loop muted playsInline
-                    className="absolute top-0 left-0 w-full h-full object-cover z-0"
-                ></video>
-            ) : (
-                <img
-                    src={`./${category.media}`}
-                    alt={category.name}
-                    className="absolute top-0 left-0 w-full h-full object-cover z-0"
-                    onError={(e) => { e.target.style.backgroundColor = '#e5e7eb'; e.target.src = '' }}
-                />
-            )}
-            <div className="absolute top-0 left-0 w-full h-full bg-black/40 z-10"></div>
-            <div className="relative z-20">
-                <h2 className="text-2xl font-medium">{category.name}</h2>
-                <p className="font-regular opacity-90">{category.subtitle}</p>
-            </div>
-        </div>
-    );
-};
-
-
-const CategoryPage = ({ onSelectCategory }) => {
-    return (
-        <div className="p-4 flex flex-col gap-4">
-            {menuData.categoryRows.map((row, rowIndex) => (
-                <div key={rowIndex} className="flex gap-4">
-                    {row.map(category => (
-                        <CategoryCard key={category.id} category={{...category, row}} onSelectCategory={onSelectCategory} />
-                    ))}
-                </div>
-            ))}
-        </div>
-    );
-};
-
-const ProductListPage = ({ selectedCategory, onGoBack, onSelectCategory, onSelectProduct }) => {
-  const products = menuData.products[selectedCategory] || [];
-  const allCategories = menuData.categoryRows.flat();
-  
-  return (
-    <div className="bg-gray-100 min-h-screen">
-      <nav className="sticky top-[72px] z-40 bg-white/90 backdrop-blur-md overflow-x-auto whitespace-nowrap">
-        <div className="flex p-4 border-b border-gray-200">
-            <button onClick={onGoBack} className="flex-shrink-0 flex items-center justify-center px-4 py-2 text-sm font-semibold text-gray-700 bg-gray-200 rounded-full">
-                <BackIcon/> Kategoriler
-            </button>
-            <div className="w-4 flex-shrink-0"></div>
-            {allCategories.map(cat => (
-                 <button 
-                    key={cat.id}
-                    onClick={() => onSelectCategory(cat.id)}
-                    className={`flex-shrink-0 px-5 py-2 text-sm font-semibold rounded-full transition-colors duration-300 mr-2 ${selectedCategory === cat.id ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-700'}`}>
-                    {cat.name}
-                </button>
-            ))}
-        </div>
-      </nav>
-      <div className="p-4 space-y-4">
-        {products.length > 0 ? products.map(product => (
-          <div key={product.id} onClick={() => onSelectProduct(product)} className="flex items-center p-4 bg-white rounded-2xl cursor-pointer shadow-sm">
-            <div className="flex-1 pr-4">
-              <h3 className="text-lg font-medium text-gray-800">{product.name}</h3>
-              <p className="text-sm font-regular text-gray-600 mb-2">{product.description}</p>
-              <p className="text-md font-medium text-gray-900">{product.price}</p>
-            </div>
-            <img src={product.image} alt={product.name} className="w-28 h-28 rounded-lg object-cover" />
-          </div>
-        )) : (
-            <div className="text-center py-16"><p className="text-gray-500">Bu kategoride henüz ürün bulunmuyor.</p></div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-// YENİ ÜRÜN DETAY SAYFASI
-const ProductDetailPage = ({ product, onGoBack }) => {
-    if (!product) return null;
-    return (
-        <div className="bg-gray-100 min-h-screen">
-            <div className="relative">
-                <img src={product.image} alt={product.name} className="w-full h-64 object-cover" />
-                <button onClick={onGoBack} className="absolute top-4 left-4 bg-white/80 p-2 rounded-full shadow-md">
-                    <BackIcon className="h-6 w-6 text-gray-800" />
-                </button>
-            </div>
-            <div className="p-6">
-                <div className="flex justify-between items-start mb-4">
-                    <div>
-                        <h2 className="text-3xl font-medium text-gray-900">{product.name}</h2>
-                        <p className="text-md font-regular text-gray-600">{product.description}</p>
-                    </div>
-                    <p className="text-2xl font-medium text-gray-900 whitespace-nowrap ml-4">{product.price}</p>
-                </div>
-
-                <div className="flex justify-around bg-white p-4 rounded-2xl shadow-sm text-center">
-                    <div className="font-regular"><span className="font-medium text-lg block">{product.prepTime}</span> minute</div>
-                    <div className="font-regular"><span className="font-medium text-lg block">{product.grams}</span> gram</div>
-                    <div className="font-regular"><span className="font-medium text-lg block">{product.kcal}</span> kcal</div>
-                </div>
-            </div>
-        </div>
-    );
-};
-
-// Ana Uygulama Bileşeni
-export default function App() {
-  const [page, setPage] = useState('categories'); // categories, products, productDetail
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-
-  const handleSelectCategory = (categoryId) => {
-    setSelectedCategory(categoryId);
-    setPage('products');
-  };
-
-  const handleSelectProduct = (product) => {
-    setSelectedProduct(product);
-    setPage('productDetail');
-  };
-
-  const goBackToCategories = () => setPage('categories');
-  const goBackToProducts = () => setPage('products');
-
-  const getPageTransform = () => {
-    if (page === 'categories') return 'translate-x-0';
-    if (page === 'products') return '-translate-x-full';
-    if (page === 'productDetail') return '-translate-x-[200%]';
-    return 'translate-x-0';
-  };
-
-  return (
-    <>
-      <style>{`
+    <style>
+        /* Poppins Font */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
         body { font-family: 'Poppins', sans-serif; }
         .font-regular { font-weight: 400; }
         .font-medium { font-weight: 500; }
+        /* Scrollbar Gizleme */
         nav::-webkit-scrollbar { display: none; }
         nav { -ms-overflow-style: none; scrollbar-width: none; }
-      `}</style>
-      <div className="bg-gray-100 min-h-screen max-w-md mx-auto border-x border-gray-200">
-        <Header />
-        <main className="relative w-full overflow-hidden">
-          <div className={`flex transition-transform duration-500 ease-in-out ${getPageTransform()}`}>
-            <div className="w-full flex-shrink-0">
-              <CategoryPage onSelectCategory={handleSelectCategory} />
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // --- Ikonlar (SVG olarak) ---
+        const MenuIcon = () => (
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16m-16 6h16" />
+          </svg>
+        );
+
+        const SearchIcon = () => (
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        );
+
+        const BackIcon = ({ className = "h-5 w-5 mr-2" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+        );
+
+        // --- Örnek Menü Verisi ---
+        const menuData = {
+          categoryRows: [
+            [
+              { id: 'c1', name: 'Title1', subtitle: 'Subtitle1', width: 170, height: 200, media: 'title1.mp4' },
+              { id: 'c2', name: 'Title2', subtitle: 'Subtitle2', width: 170, height: 200, media: 'title2.png' }
+            ],
+            [
+              { id: 'c3', name: 'Title3', subtitle: 'Subtitle3', width: 205, height: 250, media: 'title3.mp4' },
+              { id: 'c4', name: 'Title4', subtitle: 'Subtitle4', width: 135, height: 200, media: 'title4.png' }
+            ],
+            [ { id: 'c5', name: 'Title5', subtitle: 'Subtitle5', width: 360, height: 200, media: 'title5.mp4' } ],
+            [
+              { id: 'c6', name: 'Title6', subtitle: 'Subtitle6', width: 205, height: 250, media: 'title6.png' },
+              { id: 'c7', name: 'Title7', subtitle: 'Subtitle7', width: 135, height: 200, media: 'title7.mp4' }
+            ],
+            [
+              { id: 'c8', name: 'Title8', subtitle: 'Subtitle8', width: 170, height: 200, media: 'title8.png' },
+              { id: 'c9', name: 'Title9', subtitle: 'Subtitle9', width: 170, height: 200, media: 'title9.mp4' }
+            ]
+          ],
+          products: {
+            'c1': [ { id: 'p1', name: 'Product 1', description: 'Lezzetli ürün açıklaması.', price: '165 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Product+1', prepTime: 15, grams: 350, kcal: 450 } ],
+            'c2': [ { id: 'p2', name: 'Product 2', description: 'Lezzetli ürün açıklaması.', price: '190 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Product+2', prepTime: 20, grams: 420, kcal: 600 } ],
+            'c3': [ { id: 'p3', name: 'Product 3', description: 'Lezzetli ürün açıklaması.', price: '250 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Product+3', prepTime: 25, grams: 500, kcal: 750 } ],
+            'c4': [], 'c5': [], 'c6': [], 'c7': [], 'c8': [], 'c9': [],
+          }
+        };
+
+        // --- Bileşenler (Components) ---
+
+        const Header = () => (
+          <header className="sticky top-0 z-50 flex items-center justify-between px-4 py-4 bg-white/90 backdrop-blur-md shadow-sm">
+            <button className="p-2 text-gray-800"><MenuIcon /></button>
+            <img src="./logo.png" alt="SpicyMenu Logo" className="h-8" onError={(e) => { e.target.onerror = null; e.target.style.display='none'; document.getElementById('logo-text').style.display='block'; }}/>
+            <h1 id="logo-text" className="hidden text-xl font-bold tracking-widest text-gray-900 uppercase">SpicyMenu</h1>
+            <button className="p-2 text-gray-800"><SearchIcon /></button>
+          </header>
+        );
+
+        const CategoryCard = ({ category, onSelectCategory }) => {
+            const isVideo = category.media && category.media.endsWith('.mp4');
+            const totalWidthInRow = category.row.reduce((acc, cat) => acc + cat.width, 0);
+            const flexBasis = `${(category.width / totalWidthInRow) * 100}%`;
+
+            return (
+                <div
+                    className="relative rounded-2xl p-6 flex flex-col justify-end cursor-pointer transition-transform duration-300 hover:scale-[1.03] overflow-hidden text-white shadow-lg"
+                    style={{ 
+                        flexBasis: flexBasis,
+                        aspectRatio: `${category.width} / ${category.height}`
+                    }}
+                    onClick={() => onSelectCategory(category.id)}
+                >
+                    {isVideo ? (
+                        <video
+                            src={`./${category.media}`}
+                            autoPlay loop muted playsInline
+                            className="absolute top-0 left-0 w-full h-full object-cover z-0"
+                        ></video>
+                    ) : (
+                        <img
+                            src={`./${category.media}`}
+                            alt={category.name}
+                            className="absolute top-0 left-0 w-full h-full object-cover z-0"
+                            onError={(e) => { e.target.style.backgroundColor = '#e5e7eb'; e.target.src = '' }}
+                        />
+                    )}
+                    <div className="absolute top-0 left-0 w-full h-full bg-black/40 z-10"></div>
+                    <div className="relative z-20">
+                        <h2 className="text-2xl font-medium">{category.name}</h2>
+                        <p className="font-regular opacity-90">{category.subtitle}</p>
+                    </div>
+                </div>
+            );
+        };
+
+        const CategoryPage = ({ onSelectCategory }) => {
+            return (
+                <div className="p-4 flex flex-col gap-4">
+                    {menuData.categoryRows.map((row, rowIndex) => (
+                        <div key={rowIndex} className="flex gap-4">
+                            {row.map(category => (
+                                <CategoryCard key={category.id} category={{...category, row}} onSelectCategory={onSelectCategory} />
+                            ))}
+                        </div>
+                    ))}
+                </div>
+            );
+        };
+
+        const ProductListPage = ({ selectedCategory, onGoBack, onSelectCategory, onSelectProduct }) => {
+          const products = menuData.products[selectedCategory] || [];
+          const allCategories = menuData.categoryRows.flat();
+          
+          return (
+            <div className="bg-gray-100 min-h-screen">
+              <nav className="sticky top-[72px] z-40 bg-white/90 backdrop-blur-md overflow-x-auto whitespace-nowrap">
+                <div className="flex p-4 border-b border-gray-200">
+                    <button onClick={onGoBack} className="flex-shrink-0 flex items-center justify-center px-4 py-2 text-sm font-semibold text-gray-700 bg-gray-200 rounded-full">
+                        <BackIcon/> Kategoriler
+                    </button>
+                    <div className="w-4 flex-shrink-0"></div>
+                    {allCategories.map(cat => (
+                         <button 
+                            key={cat.id}
+                            onClick={() => onSelectCategory(cat.id)}
+                            className={`flex-shrink-0 px-5 py-2 text-sm font-semibold rounded-full transition-colors duration-300 mr-2 ${selectedCategory === cat.id ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-700'}`}>
+                            {cat.name}
+                        </button>
+                    ))}
+                </div>
+              </nav>
+              <div className="p-4 space-y-4">
+                {products.length > 0 ? products.map(product => (
+                  <div key={product.id} onClick={() => onSelectProduct(product)} className="flex items-center p-4 bg-white rounded-2xl cursor-pointer shadow-sm">
+                    <div className="flex-1 pr-4">
+                      <h3 className="text-lg font-medium text-gray-800">{product.name}</h3>
+                      <p className="text-sm font-regular text-gray-600 mb-2">{product.description}</p>
+                      <p className="text-md font-medium text-gray-900">{product.price}</p>
+                    </div>
+                    <img src={product.image} alt={product.name} className="w-28 h-28 rounded-lg object-cover" />
+                  </div>
+                )) : (
+                    <div className="text-center py-16"><p className="text-gray-500">Bu kategoride henüz ürün bulunmuyor.</p></div>
+                )}
+              </div>
             </div>
-            <div className="w-full flex-shrink-0">
-              {selectedCategory && <ProductListPage selectedCategory={selectedCategory} onGoBack={goBackToCategories} onSelectCategory={setSelectedCategory} onSelectProduct={handleSelectProduct} />}
-            </div>
-            <div className="w-full flex-shrink-0">
-              <ProductDetailPage product={selectedProduct} onGoBack={goBackToProducts} />
-            </div>
-          </div>
-        </main>
-      </div>
-    </>
-  );
-}
+          );
+        };
+
+        const ProductDetailPage = ({ product, onGoBack }) => {
+            if (!product) return null;
+            return (
+                <div className="bg-gray-100 min-h-screen">
+                    <div className="relative">
+                        <img src={product.image} alt={product.name} className="w-full h-64 object-cover" />
+                        <button onClick={onGoBack} className="absolute top-4 left-4 bg-white/80 p-2 rounded-full shadow-md">
+                            <BackIcon className="h-6 w-6 text-gray-800" />
+                        </button>
+                    </div>
+                    <div className="p-6">
+                        <div className="flex justify-between items-start mb-4">
+                            <div>
+                                <h2 className="text-3xl font-medium text-gray-900">{product.name}</h2>
+                                <p className="text-md font-regular text-gray-600">{product.description}</p>
+                            </div>
+                            <p className="text-2xl font-medium text-gray-900 whitespace-nowrap ml-4">{product.price}</p>
+                        </div>
+
+                        <div className="flex justify-around bg-white p-4 rounded-2xl shadow-sm text-center">
+                            <div className="font-regular"><span className="font-medium text-lg block">{product.prepTime}</span> minute</div>
+                            <div className="font-regular"><span className="font-medium text-lg block">{product.grams}</span> gram</div>
+                            <div className="font-regular"><span className="font-medium text-lg block">{product.kcal}</span> kcal</div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // Ana Uygulama Bileşeni
+        function App() {
+          const [page, setPage] = React.useState('categories'); // categories, products, productDetail
+          const [selectedCategory, setSelectedCategory] = React.useState(null);
+          const [selectedProduct, setSelectedProduct] = React.useState(null);
+
+          const handleSelectCategory = (categoryId) => {
+            setSelectedCategory(categoryId);
+            setPage('products');
+          };
+
+          const handleSelectProduct = (product) => {
+            setSelectedProduct(product);
+            setPage('productDetail');
+          };
+
+          const goBackToCategories = () => setPage('categories');
+          const goBackToProducts = () => setPage('products');
+
+          const getPageTransform = () => {
+            if (page === 'categories') return 'translate-x-0';
+            if (page === 'products') return '-translate-x-full';
+            if (page === 'productDetail') return '-translate-x-[200%]';
+            return 'translate-x-0';
+          };
+
+          return (
+              <div className="bg-gray-100 min-h-screen max-w-md mx-auto border-x border-gray-200">
+                <Header />
+                <main className="relative w-full overflow-hidden">
+                  <div className={`flex transition-transform duration-500 ease-in-out ${getPageTransform()}`}>
+                    <div className="w-full flex-shrink-0">
+                      <CategoryPage onSelectCategory={handleSelectCategory} />
+                    </div>
+                    <div className="w-full flex-shrink-0">
+                      {selectedCategory && <ProductListPage selectedCategory={selectedCategory} onGoBack={goBackToCategories} onSelectCategory={setSelectedCategory} onSelectProduct={handleSelectProduct} />}
+                    </div>
+                    <div className="w-full flex-shrink-0">
+                      <ProductDetailPage product={selectedProduct} onGoBack={goBackToProducts} />
+                    </div>
+                  </div>
+                </main>
+              </div>
+          );
+        }
+
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        root.render(<App />);
+    </script>
+</body>
+</html>
