@@ -50,14 +50,14 @@
         const menuData = {
           categoryRows: [
             [
-              { id: 'c1', name: 'Title1', subtitle: 'Subtitle1', width: 170, height: 200, media: 'title1' },
-              { id: 'c2', name: 'Title2', subtitle: 'Subtitle2', width: 170, height: 200, media: 'title2' }
+              { id: 'c1', name: 'Ara Sıcaklar', subtitle: 'Lezzetli bir başlangıç', width: 170, height: 200, media: 'title1' },
+              { id: 'c2', name: 'İçecekler', subtitle: 'Taze ve serinletici', width: 170, height: 200, media: 'title2' }
             ],
             [
-              { id: 'c3', name: 'Title3', subtitle: 'Subtitle3', width: 205, height: 250, media: 'title3' },
-              { id: 'c4', name: 'Title4', subtitle: 'Subtitle4', width: 135, height: 200, media: 'title4' }
+              { id: 'c3', name: 'Pizza', subtitle: 'Ekşi maya hamurda gelen lezzet', width: 205, height: 250, media: 'title3' },
+              { id: 'c4', name: 'Salatalar', subtitle: 'Her zaman taze', width: 135, height: 200, media: 'title4' }
             ],
-            [ { id: 'c5', name: 'Title5', subtitle: 'Subtitle5', width: 360, height: 200, media: 'title5' } ],
+            [ { id: 'c5', name: 'Ana Yemekler', subtitle: 'Şef seçkisi lezzetler', width: 360, height: 200, media: 'title5' } ],
             [
               { id: 'c6', name: 'Title6', subtitle: 'Subtitle6', width: 205, height: 250, media: 'title6' },
               { id: 'c7', name: 'Title7', subtitle: 'Subtitle7', width: 135, height: 200, media: 'title7' }
@@ -113,7 +113,7 @@
                 <video src="./hero.mp4" autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0"></video>
                 <div className="absolute top-0 left-0 w-full h-full bg-black/30 z-10"></div>
                 <div className="relative z-20 flex flex-col items-center justify-center h-full px-4">
-                    <div className={`inline-block bg-white p-4 shadow-lg transition-opacity duration-300 ease-in-out mb-8 ${isScrolled ? 'opacity-0' : 'opacity-100'}`}>
+                    <div className={`bg-white shadow-lg transition-opacity duration-300 ease-in-out mb-8 ${isScrolled ? 'opacity-0' : 'opacity-100'} w-40 h-40 flex items-center justify-center`}>
                         <img
                             src="./logo.png"
                             alt="SpicyMenu Logo"
@@ -162,7 +162,7 @@
                     <div className="absolute top-0 left-0 w-full h-full bg-black/30 z-10"></div>
                     <div className="relative z-20">
                         <h2 className="text-2xl font-medium">{category.name}</h2>
-                        <p className="font-regular opacity-90">{category.subtitle}</p>
+                        <p className="text-sm font-regular opacity-90">{category.subtitle}</p>
                     </div>
                 </div>
             );
