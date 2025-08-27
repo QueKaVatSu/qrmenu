@@ -113,11 +113,11 @@
                 <video src="./hero.mp4" autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0"></video>
                 <div className="absolute top-0 left-0 w-full h-full bg-black/30 z-10"></div>
                 <div className="relative z-20 flex flex-col items-center justify-center h-full px-4">
-                    <div className={`inline-block bg-black/20 backdrop-blur-sm p-4 rounded-2xl transition-opacity duration-300 ease-in-out mb-8 ${isScrolled ? 'opacity-0' : 'opacity-100'}`}>
+                    <div className={`inline-block bg-white p-4 shadow-lg transition-opacity duration-300 ease-in-out mb-8 ${isScrolled ? 'opacity-0' : 'opacity-100'}`}>
                         <img
                             src="./logo.png"
                             alt="SpicyMenu Logo"
-                            className="h-32 drop-shadow-lg"
+                            className="h-32"
                             onError={(e) => { e.target.style.display = 'none'; }}
                         />
                     </div>
