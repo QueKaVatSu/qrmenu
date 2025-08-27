@@ -114,7 +114,7 @@
         
         const Hero = ({ onScrollClick, isScrolled }) => (
             <div className="relative h-screen w-full overflow-hidden">
-                <video src="./hero.mp4" autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0"></video>
+                <video src="./hero.webm" autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0"></video>
                 <div className="absolute top-0 left-0 w-full h-full bg-black/30 z-10"></div>
                 <div className="relative z-20 flex flex-col items-center justify-center h-full px-4">
                     <img
@@ -149,7 +149,7 @@
                     onClick={() => onSelectCategory(category.id)}
                 >
                     <video 
-                        src={`./${category.media}.mp4`} 
+                        src={`./${category.media}.webm`} 
                         onError={(e) => e.target.style.display = 'none'}
                         autoPlay loop muted playsInline 
                         className="absolute top-0 left-0 w-full h-full object-cover z-0"
