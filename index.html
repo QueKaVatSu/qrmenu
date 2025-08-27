@@ -251,57 +251,90 @@
             const sortedCategories = activeCategory ? [activeCategory, ...inactiveCategories] : allCategories;
             
             const reelsRef = React.useRef(null);
-            const scrollIntervalRef = React.useRef(null);
-            const [activeReelIndex, setActiveReelIndex] = React.useState(0);
-
-            const startScrolling = () => {
-                if (scrollIntervalRef.current) return;
-                scrollIntervalRef.current = setInterval(() => {
-                    if (reelsRef.current) {
-                        const { scrollLeft, scrollWidth } = reelsRef.current;
-                        if (scrollLeft >= (scrollWidth / 2)) {
-                            reelsRef.current.style.scrollBehavior = 'auto';
-                            reelsRef.current.scrollLeft = 0;
-                            reelsRef.current.style.scrollBehavior = 'smooth';
-                        }
-                        reelsRef.current.scrollLeft += 1;
-                    }
-                }, 35);
-            };
-
-            const stopScrolling = () => {
-                clearInterval(scrollIntervalRef.current);
-                scrollIntervalRef.current = null;
-            };
+            const [activeReelId, setActiveReelId] = React.useState(products.length > 0 ? products[0].id : null);
             
-            const handleScroll = React.useCallback(() => {
-                if (!reelsRef.current) return;
-                const container = reelsRef.current;
-                const scrollLeft = container.scrollLeft;
-                const itemWidth = container.children[0] ? container.children[0].offsetWidth + 16 : 0; // 16 for gap
-                
-                if (itemWidth > 0) {
-                    const newIndex = Math.round(scrollLeft / itemWidth);
-                    setActiveReelIndex(newIndex % products.length);
-                }
-            }, [products.length]);
+            const isDragging = React.useRef(false);
+            const startX = React.useRef(0);
+            const scrollLeft = React.useRef(0);
+            const velocity = React.useRef(0);
+            const animationFrameId = React.useRef(null);
 
+            const handleScroll = React.useCallback(() => {
+                if (!reelsRef.current || isDragging.current) return;
+                const container = reelsRef.current;
+                const containerCenter = container.scrollLeft + container.clientWidth / 2;
+                let closestChild = null;
+                let minDistance = Infinity;
+
+                Array.from(container.children).forEach(child => {
+                    const childCenter = child.offsetLeft + child.clientWidth / 2;
+                    const distance = Math.abs(containerCenter - childCenter);
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestChild = child;
+                    }
+                });
+
+                if (closestChild) {
+                    setActiveReelId(closestChild.dataset.id);
+                }
+            }, []);
+
+            const onDragStart = (e) => {
+                isDragging.current = true;
+                const pageX = e.pageX || e.touches[0].pageX;
+                startX.current = pageX - reelsRef.current.offsetLeft;
+                scrollLeft.current = reelsRef.current.scrollLeft;
+                velocity.current = 0;
+                cancelAnimationFrame(animationFrameId.current);
+                reelsRef.current.style.cursor = 'grabbing';
+                reelsRef.current.style.scrollSnapType = 'none';
+            };
+
+            const onDragEnd = () => {
+                if (!isDragging.current) return;
+                isDragging.current = false;
+                reelsRef.current.style.cursor = 'grab';
+                reelsRef.current.style.scrollSnapType = 'x mandatory';
+
+                const inertiaLoop = () => {
+                    reelsRef.current.scrollLeft += velocity.current;
+                    velocity.current *= 0.95;
+                    if (Math.abs(velocity.current) > 0.5) {
+                        animationFrameId.current = requestAnimationFrame(inertiaLoop);
+                    } else {
+                       handleScroll();
+                    }
+                };
+                animationFrameId.current = requestAnimationFrame(inertiaLoop);
+            };
+
+            const onDragMove = (e) => {
+                if (!isDragging.current) return;
+                e.preventDefault();
+                const pageX = e.pageX || e.touches[0].pageX;
+                const x = pageX - reelsRef.current.offsetLeft;
+                const walk = (x - startX.current) * 2;
+                const prevScrollLeft = reelsRef.current.scrollLeft;
+                reelsRef.current.scrollLeft = scrollLeft.current - walk;
+                velocity.current = reelsRef.current.scrollLeft - prevScrollLeft;
+            };
 
             React.useEffect(() => {
-                startScrolling();
                 const container = reelsRef.current;
                 if(container) {
-                    container.addEventListener('scroll', handleScroll, { passive: true });
+                    container.addEventListener('scroll', handleScroll);
+                    handleScroll(); 
                 }
                 return () => {
-                    stopScrolling();
                     if(container) {
                         container.removeEventListener('scroll', handleScroll);
                     }
+                    cancelAnimationFrame(animationFrameId.current);
                 };
             }, [handleScroll]);
-            
-            const duplicatedProducts = [...products, ...products];
+
+            const duplicatedProducts = [...products, ...products, ...products];
 
             return (
                 <div className="bg-gray-100 min-h-full pt-[64px]">
@@ -325,18 +358,25 @@
                         {/* Reels Section */}
                         <div
                             ref={reelsRef}
-                            onMouseEnter={stopScrolling} onMouseLeave={startScrolling}
-                            onTouchStart={stopScrolling} onTouchEnd={startScrolling}
-                            className="flex overflow-x-auto scroll-hidden px-4 py-8 space-x-4 items-center"
-                            style={{ scrollBehavior: 'smooth' }}
+                            className="flex overflow-x-auto scroll-hidden px-4 py-8 space-x-4 items-center cursor-grab"
+                            style={{ scrollSnapType: 'x mandatory' }}
+                            onMouseDown={onDragStart}
+                            onMouseLeave={onDragEnd}
+                            onMouseUp={onDragEnd}
+                            onMouseMove={onDragMove}
+                            onTouchStart={onDragStart}
+                            onTouchEnd={onDragEnd}
+                            onTouchMove={onDragMove}
                         >
                             {duplicatedProducts.map((product, index) => (
                                 <div 
                                     key={`${product.id}-${index}`}
+                                    data-id={product.id}
                                     className={`flex-shrink-0 w-32 text-center transition-transform duration-300 ease-in-out`}
+                                    style={{ scrollSnapAlign: 'center' }}
                                     onClick={() => onSelectProduct(product)}
                                 >
-                                    <div className={`relative w-full h-48 rounded-2xl overflow-hidden shadow-lg transform transition-transform duration-300 ease-in-out ${activeReelIndex === index % products.length ? 'scale-110' : 'scale-100'}`}>
+                                    <div className={`relative w-full h-48 rounded-2xl overflow-hidden shadow-lg transform transition-transform duration-300 ease-in-out ${activeReelId === product.id ? 'scale-110' : 'scale-100'}`}>
                                          <video src={`./${product.video}.webm`} autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0"></video>
                                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                                          <div className="absolute bottom-0 left-0 p-3 text-white">
