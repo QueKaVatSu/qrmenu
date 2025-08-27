@@ -113,12 +113,14 @@
                 <video src="./hero.mp4" autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0"></video>
                 <div className="absolute top-0 left-0 w-full h-full bg-black/30 z-10"></div>
                 <div className="relative z-20 flex flex-col items-center justify-center h-full px-4">
-                    <img
-                        src="./logo.png"
-                        alt="SpicyMenu Logo"
-                        className={`h-40 mb-8 transition-opacity duration-300 ease-in-out drop-shadow-lg ${isScrolled ? 'opacity-0' : 'opacity-100'}`}
-                        onError={(e) => { e.target.style.display = 'none'; }}
-                    />
+                    <div className={`bg-black/20 backdrop-blur-sm p-4 rounded-full transition-opacity duration-300 ease-in-out mb-8 ${isScrolled ? 'opacity-0' : 'opacity-100'}`}>
+                        <img
+                            src="./logo.png"
+                            alt="SpicyMenu Logo"
+                            className="h-32 drop-shadow-lg"
+                            onError={(e) => { e.target.style.display = 'none'; }}
+                        />
+                    </div>
                     <button 
                         onClick={onScrollClick}
                         className="font-regular text-white text-lg border border-white/80 rounded-full px-12 py-3 backdrop-blur-sm transition-colors hover:bg-white/20">
@@ -128,14 +130,20 @@
             </div>
         );
 
-        const CategoryCard = ({ category, onSelectCategory }) => {
+        const CategoryCard = ({ category, onSelectCategory, isVisible, index }) => {
             const totalWidthInRow = category.row.reduce((acc, cat) => acc + cat.width, 0);
             const flexBasis = `${(category.width / totalWidthInRow) * 100}%`;
 
             return (
                 <div
-                    className="relative rounded-2xl p-6 flex flex-col justify-end cursor-pointer transition-transform duration-300 hover:scale-[1.03] overflow-hidden text-white shadow-lg bg-gray-200"
-                    style={{ flexBasis: flexBasis, aspectRatio: `${category.width} / ${category.height}` }}
+                    className={`relative rounded-2xl p-6 flex flex-col justify-end cursor-pointer overflow-hidden text-white shadow-lg bg-gray-200 transition-all duration-500 ease-out
+                        ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
+                    `}
+                    style={{ 
+                        flexBasis: flexBasis, 
+                        aspectRatio: `${category.width} / ${category.height}`,
+                        transitionDelay: `${index * 50}ms`
+                    }}
                     onClick={() => onSelectCategory(category.id)}
                 >
                     <video 
@@ -160,13 +168,20 @@
             );
         };
 
-        const CategoryPage = ({ onSelectCategory, menuRef }) => {
+        const CategoryPage = ({ onSelectCategory, menuRef, isVisible }) => {
+            let cardIndex = 0;
             return (
                 <div ref={menuRef} className="p-4 flex flex-col gap-4 bg-gray-100" style={{ scrollMarginTop: '72px' }}>
                     {menuData.categoryRows.map((row, rowIndex) => (
                         <div key={rowIndex} className="flex gap-4">
                             {row.map(category => (
-                                <CategoryCard key={category.id} category={{...category, row}} onSelectCategory={onSelectCategory} />
+                                <CategoryCard 
+                                    key={category.id} 
+                                    category={{...category, row}} 
+                                    onSelectCategory={onSelectCategory}
+                                    isVisible={isVisible}
+                                    index={cardIndex++}
+                                />
                             ))}
                         </div>
                     ))}
@@ -280,7 +295,7 @@
                     
                     <div ref={scrollContainerRef} className="w-full flex-shrink-0 h-full overflow-y-auto scroll-hidden">
                         <Hero onScrollClick={handleScrollToMenu} isScrolled={isHeaderSolid} />
-                        <CategoryPage onSelectCategory={handleSelectCategory} menuRef={menuRef} />
+                        <CategoryPage onSelectCategory={handleSelectCategory} menuRef={menuRef} isVisible={isHeaderSolid} />
                     </div>
 
                     <div className="w-full flex-shrink-0 h-full overflow-y-auto scroll-hidden">
