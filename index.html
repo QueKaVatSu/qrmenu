@@ -47,24 +47,25 @@
         );
 
         // --- Örnek Menü Verisi ---
+        // DÜZELTME: Medya dosyası uzantıları kaldırıldı.
         const menuData = {
           categoryRows: [
             [
-              { id: 'c1', name: 'Title1', subtitle: 'Subtitle1', width: 170, height: 200, media: 'title1.mp4' },
-              { id: 'c2', name: 'Title2', subtitle: 'Subtitle2', width: 170, height: 200, media: 'title2.png' }
+              { id: 'c1', name: 'Title1', subtitle: 'Subtitle1', width: 170, height: 200, media: 'title1' },
+              { id: 'c2', name: 'Title2', subtitle: 'Subtitle2', width: 170, height: 200, media: 'title2' }
             ],
             [
-              { id: 'c3', name: 'Title3', subtitle: 'Subtitle3', width: 205, height: 250, media: 'title3.mp4' },
-              { id: 'c4', name: 'Title4', subtitle: 'Subtitle4', width: 135, height: 200, media: 'title4.png' }
+              { id: 'c3', name: 'Title3', subtitle: 'Subtitle3', width: 205, height: 250, media: 'title3' },
+              { id: 'c4', name: 'Title4', subtitle: 'Subtitle4', width: 135, height: 200, media: 'title4' }
             ],
-            [ { id: 'c5', name: 'Title5', subtitle: 'Subtitle5', width: 360, height: 200, media: 'title5.mp4' } ],
+            [ { id: 'c5', name: 'Title5', subtitle: 'Subtitle5', width: 360, height: 200, media: 'title5' } ],
             [
-              { id: 'c6', name: 'Title6', subtitle: 'Subtitle6', width: 205, height: 250, media: 'title6.png' },
-              { id: 'c7', name: 'Title7', subtitle: 'Subtitle7', width: 135, height: 200, media: 'title7.mp4' }
+              { id: 'c6', name: 'Title6', subtitle: 'Subtitle6', width: 205, height: 250, media: 'title6' },
+              { id: 'c7', name: 'Title7', subtitle: 'Subtitle7', width: 135, height: 200, media: 'title7' }
             ],
             [
-              { id: 'c8', name: 'Title8', subtitle: 'Subtitle8', width: 170, height: 200, media: 'title8.png' },
-              { id: 'c9', name: 'Title9', subtitle: 'Subtitle9', width: 170, height: 200, media: 'title9.mp4' }
+              { id: 'c8', name: 'Title8', subtitle: 'Subtitle8', width: 170, height: 200, media: 'title8' },
+              { id: 'c9', name: 'Title9', subtitle: 'Subtitle9', width: 170, height: 200, media: 'title9' }
             ]
           ],
           products: {
@@ -77,21 +78,40 @@
 
         // --- Bileşenler (Components) ---
 
-        const Header = () => (
-          <header className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-4 bg-transparent">
-            <button className="p-2 text-white"><MenuIcon /></button>
-            <img src="./logo.png" alt="SpicyMenu Logo" className="h-8" onError={(e) => { e.target.onerror = null; e.target.style.display='none'; document.getElementById('logo-text').style.display='block'; }}/>
-            <h1 id="logo-text" className="hidden text-xl font-bold tracking-widest text-white uppercase">SpicyMenu</h1>
-            <button className="p-2 text-white"><SearchIcon /></button>
+        const Header = ({ isSolid }) => (
+          <header 
+            className={`
+              fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-4 max-w-md mx-auto 
+              transition-all duration-300 ease-in-out
+              ${isSolid ? 'bg-white/90 backdrop-blur-md shadow-sm' : 'bg-transparent'}
+            `}
+          >
+            <button className={`p-2 transition-colors duration-300 ${isSolid ? 'text-gray-800' : 'text-white'}`}>
+                <MenuIcon />
+            </button>
+            <img 
+                src="./logo.png" 
+                alt="SpicyMenu Logo" 
+                className="h-8" 
+                onError={(e) => { e.target.onerror = null; e.target.style.display='none'; document.getElementById('logo-text').style.display='block'; }}
+            />
+            <h1 
+                id="logo-text" 
+                className={`hidden text-xl font-bold tracking-widest uppercase transition-colors duration-300 ${isSolid ? 'text-gray-900' : 'text-white'}`}
+            >
+                SpicyMenu
+            </h1>
+            <button className={`p-2 transition-colors duration-300 ${isSolid ? 'text-gray-800' : 'text-white'}`}>
+                <SearchIcon />
+            </button>
           </header>
         );
         
-        // YENİ AÇILIŞ VİDEOSU BİLEŞENİ
         const Hero = ({ onScrollClick }) => (
             <div className="relative h-screen w-full overflow-hidden">
                 <video src="./hero.mp4" autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0"></video>
                 <div className="absolute top-0 left-0 w-full h-full bg-black/40 z-10"></div>
-                <div className="relative z-20 flex flex-col items-center justify-center h-full">
+                <div className="relative z-20 flex flex-col items-center justify-center h-full px-4">
                     <button 
                         onClick={onScrollClick}
                         className="font-regular text-white text-lg border border-white/80 rounded-full px-12 py-3 backdrop-blur-sm transition-colors hover:bg-white/20">
@@ -102,21 +122,29 @@
         );
 
         const CategoryCard = ({ category, onSelectCategory }) => {
-            const isVideo = category.media && category.media.endsWith('.mp4');
             const totalWidthInRow = category.row.reduce((acc, cat) => acc + cat.width, 0);
             const flexBasis = `${(category.width / totalWidthInRow) * 100}%`;
 
             return (
                 <div
-                    className="relative rounded-2xl p-6 flex flex-col justify-end cursor-pointer transition-transform duration-300 hover:scale-[1.03] overflow-hidden text-white shadow-lg"
+                    className="relative rounded-2xl p-6 flex flex-col justify-end cursor-pointer transition-transform duration-300 hover:scale-[1.03] overflow-hidden text-white shadow-lg bg-gray-200"
                     style={{ flexBasis: flexBasis, aspectRatio: `${category.width} / ${category.height}` }}
                     onClick={() => onSelectCategory(category.id)}
                 >
-                    {isVideo ? (
-                        <video src={`./${category.media}`} autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0"></video>
-                    ) : (
-                        <img src={`./${category.media}`} alt={category.name} className="absolute top-0 left-0 w-full h-full object-cover z-0" onError={(e) => { e.target.style.backgroundColor = '#e5e7eb'; e.target.src = '' }} />
-                    )}
+                    {/* DÜZELTME: Hem video hem de resmi arar, bulduğunu gösterir */}
+                    <video 
+                        src={`./${category.media}.mp4`} 
+                        onError={(e) => e.target.style.display = 'none'}
+                        autoPlay loop muted playsInline 
+                        className="absolute top-0 left-0 w-full h-full object-cover z-0"
+                    ></video>
+                    <img 
+                        src={`./${category.media}.png`} 
+                        alt={category.name} 
+                        onError={(e) => e.target.style.display = 'none'}
+                        className="absolute top-0 left-0 w-full h-full object-cover z-0"
+                    />
+                    
                     <div className="absolute top-0 left-0 w-full h-full bg-black/40 z-10"></div>
                     <div className="relative z-20">
                         <h2 className="text-2xl font-medium">{category.name}</h2>
@@ -145,8 +173,8 @@
           const allCategories = menuData.categoryRows.flat();
           
           return (
-            <div className="bg-gray-100 min-h-full">
-              <nav className="sticky top-0 z-40 bg-white/90 backdrop-blur-md overflow-x-auto whitespace-nowrap scroll-hidden">
+            <div className="bg-gray-100 min-h-full pt-[72px]">
+              <nav className="fixed top-[72px] z-30 bg-white/90 backdrop-blur-md overflow-x-auto whitespace-nowrap scroll-hidden w-full max-w-md">
                 <div className="flex p-4 border-b border-gray-200">
                     <button onClick={onGoBack} className="flex-shrink-0 flex items-center justify-center px-4 py-2 text-sm font-semibold text-gray-700 bg-gray-200 rounded-full">
                         <BackIcon/> Kategoriler
@@ -162,7 +190,7 @@
                     ))}
                 </div>
               </nav>
-              <div className="p-4 space-y-4">
+              <div className="p-4 space-y-4 pt-16">
                 {products.length > 0 ? products.map(product => (
                   <div key={product.id} onClick={() => onSelectProduct(product)} className="flex items-center p-4 bg-white rounded-2xl cursor-pointer shadow-sm">
                     <div className="flex-1 pr-4">
@@ -183,7 +211,7 @@
         const ProductDetailPage = ({ product, onGoBack }) => {
             if (!product) return null;
             return (
-                <div className="bg-gray-100 min-h-full">
+                <div className="bg-gray-100 min-h-full pt-[72px]">
                     <div className="relative">
                         <img src={product.image} alt={product.name} className="w-full h-64 object-cover" />
                         <button onClick={onGoBack} className="absolute top-4 left-4 bg-white/80 p-2 rounded-full shadow-md z-30">
@@ -212,27 +240,27 @@
           const [page, setPage] = React.useState('categories');
           const [selectedCategory, setSelectedCategory] = React.useState(null);
           const [selectedProduct, setSelectedProduct] = React.useState(null);
+          const [isHeaderSolid, setIsHeaderSolid] = React.useState(false);
           const menuRef = React.useRef(null);
+          const scrollContainerRef = React.useRef(null);
 
-          const handleScrollToMenu = () => {
-              menuRef.current?.scrollIntoView({ behavior: 'smooth' });
-          };
+          React.useEffect(() => {
+            const container = scrollContainerRef.current;
+            if (!container) return;
+            const handleScroll = () => {
+              setIsHeaderSolid(container.scrollTop > 50);
+            };
+            container.addEventListener('scroll', handleScroll, { passive: true });
+            return () => container.removeEventListener('scroll', handleScroll);
+          }, []);
 
-          const handleSelectCategory = (categoryId) => {
-            setSelectedCategory(categoryId);
-            setPage('products');
-          };
-
-          const handleSelectProduct = (product) => {
-            setSelectedProduct(product);
-            setPage('productDetail');
-          };
-
+          const handleScrollToMenu = () => menuRef.current?.scrollIntoView({ behavior: 'smooth' });
+          const handleSelectCategory = (categoryId) => { setSelectedCategory(categoryId); setPage('products'); };
+          const handleSelectProduct = (product) => { setSelectedProduct(product); setPage('productDetail'); };
           const goBackToCategories = () => setPage('categories');
           const goBackToProducts = () => setPage('products');
 
           const getPageTransform = () => {
-            if (page === 'categories') return 'translate-x-0';
             if (page === 'products') return '-translate-x-full';
             if (page === 'productDetail') return '-translate-x-[200%]';
             return 'translate-x-0';
@@ -240,15 +268,13 @@
 
           return (
               <div className="bg-gray-100 min-h-screen max-w-md mx-auto">
+                <Header isSolid={isHeaderSolid || page !== 'categories'} />
                 <main className="relative w-full h-screen overflow-hidden">
                   <div className={`flex transition-transform duration-500 ease-in-out h-full ${getPageTransform()}`}>
                     
-                    <div className="w-full flex-shrink-0 h-full overflow-y-auto scroll-hidden">
-                      <div className="relative">
-                        <Header />
+                    <div ref={scrollContainerRef} className="w-full flex-shrink-0 h-full overflow-y-auto scroll-hidden">
                         <Hero onScrollClick={handleScrollToMenu} />
                         <CategoryPage onSelectCategory={handleSelectCategory} menuRef={menuRef} />
-                      </div>
                     </div>
 
                     <div className="w-full flex-shrink-0 h-full overflow-y-auto scroll-hidden">
