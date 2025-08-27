@@ -113,7 +113,7 @@
                 <video src="./hero.mp4" autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0"></video>
                 <div className="absolute top-0 left-0 w-full h-full bg-black/30 z-10"></div>
                 <div className="relative z-20 flex flex-col items-center justify-center h-full px-4">
-                    <div className={`bg-black/20 backdrop-blur-sm p-4 rounded-full transition-opacity duration-300 ease-in-out mb-8 ${isScrolled ? 'opacity-0' : 'opacity-100'}`}>
+                    <div className={`inline-block bg-black/20 backdrop-blur-sm p-4 rounded-2xl transition-opacity duration-300 ease-in-out mb-8 ${isScrolled ? 'opacity-0' : 'opacity-100'}`}>
                         <img
                             src="./logo.png"
                             alt="SpicyMenu Logo"
@@ -136,13 +136,13 @@
 
             return (
                 <div
-                    className={`relative rounded-2xl p-6 flex flex-col justify-end cursor-pointer overflow-hidden text-white shadow-lg bg-gray-200 transition-all duration-500 ease-out
-                        ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
+                    className={`relative rounded-2xl p-6 flex flex-col justify-end cursor-pointer overflow-hidden text-white shadow-lg bg-gray-200 transition-all duration-700 ease-out
+                        ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}
                     `}
                     style={{ 
                         flexBasis: flexBasis, 
                         aspectRatio: `${category.width} / ${category.height}`,
-                        transitionDelay: `${index * 50}ms`
+                        transitionDelay: `${index * 100}ms`
                     }}
                     onClick={() => onSelectCategory(category.id)}
                 >
@@ -262,6 +262,7 @@
           const [selectedCategory, setSelectedCategory] = React.useState(null);
           const [selectedProduct, setSelectedProduct] = React.useState(null);
           const [isHeaderSolid, setIsHeaderSolid] = React.useState(false);
+          const [isMenuVisible, setIsMenuVisible] = React.useState(false);
           const menuRef = React.useRef(null);
           const scrollContainerRef = React.useRef(null);
 
@@ -269,13 +270,24 @@
             const container = scrollContainerRef.current;
             if (!container) return;
             const handleScroll = () => {
-              setIsHeaderSolid(container.scrollTop > 50);
+              const scrollTop = container.scrollTop;
+              setIsHeaderSolid(scrollTop > 50);
+
+              if (menuRef.current && !isMenuVisible) {
+                if (menuRef.current.getBoundingClientRect().top < window.innerHeight * 0.85) {
+                    setIsMenuVisible(true);
+                }
+              }
             };
             container.addEventListener('scroll', handleScroll, { passive: true });
             return () => container.removeEventListener('scroll', handleScroll);
-          }, []);
+          }, [isMenuVisible]);
 
-          const handleScrollToMenu = () => menuRef.current?.scrollIntoView({ behavior: 'smooth' });
+          const handleScrollToMenu = () => {
+            menuRef.current?.scrollIntoView({ behavior: 'smooth' });
+            // Butona basıldığında animasyonu manuel olarak tetikle
+            setTimeout(() => setIsMenuVisible(true), 100);
+          };
           const handleSelectCategory = (categoryId) => { setSelectedCategory(categoryId); setPage('products'); };
           const handleSelectProduct = (product) => { setSelectedProduct(product); setPage('productDetail'); };
           const goBackToCategories = () => setPage('categories');
@@ -295,7 +307,7 @@
                     
                     <div ref={scrollContainerRef} className="w-full flex-shrink-0 h-full overflow-y-auto scroll-hidden">
                         <Hero onScrollClick={handleScrollToMenu} isScrolled={isHeaderSolid} />
-                        <CategoryPage onSelectCategory={handleSelectCategory} menuRef={menuRef} isVisible={isHeaderSolid} />
+                        <CategoryPage onSelectCategory={handleSelectCategory} menuRef={menuRef} isVisible={isMenuVisible} />
                     </div>
 
                     <div className="w-full flex-shrink-0 h-full overflow-y-auto scroll-hidden">
