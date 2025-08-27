@@ -251,43 +251,57 @@
             const sortedCategories = activeCategory ? [activeCategory, ...inactiveCategories] : allCategories;
             
             const reelsRef = React.useRef(null);
-            const [activeReelId, setActiveReelId] = React.useState(products.length > 0 ? products[0].id : null);
+            const scrollIntervalRef = React.useRef(null);
+            const [activeReelIndex, setActiveReelIndex] = React.useState(0);
 
+            const startScrolling = () => {
+                if (scrollIntervalRef.current) return;
+                scrollIntervalRef.current = setInterval(() => {
+                    if (reelsRef.current) {
+                        const { scrollLeft, scrollWidth } = reelsRef.current;
+                        if (scrollLeft >= (scrollWidth / 2)) {
+                            reelsRef.current.style.scrollBehavior = 'auto';
+                            reelsRef.current.scrollLeft = 0;
+                            reelsRef.current.style.scrollBehavior = 'smooth';
+                        }
+                        reelsRef.current.scrollLeft += 1;
+                    }
+                }, 35);
+            };
+
+            const stopScrolling = () => {
+                clearInterval(scrollIntervalRef.current);
+                scrollIntervalRef.current = null;
+            };
+            
             const handleScroll = React.useCallback(() => {
                 if (!reelsRef.current) return;
                 const container = reelsRef.current;
-                const containerCenter = container.scrollLeft + container.clientWidth / 2;
-                let closestChild = null;
-                let minDistance = Infinity;
-
-                Array.from(container.children).forEach(child => {
-                    const childCenter = child.offsetLeft + child.clientWidth / 2;
-                    const distance = Math.abs(containerCenter - childCenter);
-                    if (distance < minDistance) {
-                        minDistance = distance;
-                        closestChild = child;
-                    }
-                });
-
-                if (closestChild) {
-                    setActiveReelId(closestChild.dataset.id);
+                const scrollLeft = container.scrollLeft;
+                const itemWidth = container.children[0] ? container.children[0].offsetWidth + 16 : 0; // 16 for gap
+                
+                if (itemWidth > 0) {
+                    const newIndex = Math.round(scrollLeft / itemWidth);
+                    setActiveReelIndex(newIndex % products.length);
                 }
-            }, []);
+            }, [products.length]);
+
 
             React.useEffect(() => {
+                startScrolling();
                 const container = reelsRef.current;
                 if(container) {
-                    container.addEventListener('scroll', handleScroll);
-                    handleScroll(); 
+                    container.addEventListener('scroll', handleScroll, { passive: true });
                 }
                 return () => {
+                    stopScrolling();
                     if(container) {
                         container.removeEventListener('scroll', handleScroll);
                     }
                 };
             }, [handleScroll]);
             
-            const duplicatedProducts = [...products, ...products, ...products];
+            const duplicatedProducts = [...products, ...products];
 
             return (
                 <div className="bg-gray-100 min-h-full pt-[64px]">
@@ -311,23 +325,23 @@
                         {/* Reels Section */}
                         <div
                             ref={reelsRef}
-                            className="flex overflow-x-auto scroll-hidden px-4 pt-4 space-x-4 items-center cursor-grab active:cursor-grabbing"
-                            style={{ scrollBehavior: 'smooth', scrollSnapType: 'x mandatory' }}
+                            onMouseEnter={stopScrolling} onMouseLeave={startScrolling}
+                            onTouchStart={stopScrolling} onTouchEnd={startScrolling}
+                            className="flex overflow-x-auto scroll-hidden px-4 py-8 space-x-4 items-center"
+                            style={{ scrollBehavior: 'smooth' }}
                         >
                             {duplicatedProducts.map((product, index) => (
                                 <div 
                                     key={`${product.id}-${index}`}
-                                    data-id={product.id}
-                                    className={`flex-shrink-0 w-40 text-center transition-transform duration-300 ease-in-out ${activeReelId === product.id ? 'scale-110' : 'scale-95'}`}
-                                    style={{ scrollSnapAlign: 'center' }}
+                                    className={`flex-shrink-0 w-32 text-center transition-transform duration-300 ease-in-out`}
                                     onClick={() => onSelectProduct(product)}
                                 >
-                                    <div className="relative w-40 h-56 rounded-2xl overflow-hidden shadow-lg">
+                                    <div className={`relative w-full h-48 rounded-2xl overflow-hidden shadow-lg transform transition-transform duration-300 ease-in-out ${activeReelIndex === index % products.length ? 'scale-110' : 'scale-100'}`}>
                                          <video src={`./${product.video}.webm`} autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0"></video>
                                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                                          <div className="absolute bottom-0 left-0 p-3 text-white">
-                                             <h3 className="font-medium">{product.name}</h3>
-                                             <p className="text-sm font-regular">{product.price}</p>
+                                             <h3 className="font-medium text-sm">{product.name}</h3>
+                                             <p className="text-xs font-regular">{product.price}</p>
                                          </div>
                                     </div>
                                 </div>
@@ -335,7 +349,7 @@
                         </div>
 
                         {/* Story Section */}
-                        <div className="p-4">
+                        <div className="p-4 pt-0">
                             <div className="bg-white rounded-2xl p-6 shadow-sm">
                                 <h3 className="text-xl font-medium text-gray-800">Ana Menüden Bir Yemeğin Hikayesi</h3>
                                 <p className="text-gray-600 mt-2 font-regular">Her bir tabağımız, şeflerimizin özenle seçtiği yerel ve taze malzemelerle hazırlanır. Bu lezzet yolculuğunu keşfedin.</p>
