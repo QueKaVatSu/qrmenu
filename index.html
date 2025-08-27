@@ -45,6 +45,24 @@
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
         );
+        
+        const ClockIcon = () => (
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        );
+
+        const WeightIcon = () => (
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+            </svg>
+        );
+
+        const FireIcon = () => (
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7.014A8.003 8.003 0 0112 2a8.003 8.003 0 016.014 2.986C20.5 5 21 8 21 10c2 1 2.657 2.343 2.657 2.657a8 8 0 01-11.314 6z" />
+            </svg>
+        );
 
         // --- Örnek Menü Verisi ---
         const menuData = {
@@ -72,21 +90,24 @@
             ]
           ],
           products: {
-            'c1': [ { id: 'p1', name: 'Product 1', description: 'Lezzetli ürün açıklaması.', price: '165 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Product+1', prepTime: 15, grams: 350, kcal: 450 } ],
-            'c2': [ { id: 'p2', name: 'Product 2', description: 'Lezzetli ürün açıklaması.', price: '190 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Product+2', prepTime: 20, grams: 420, kcal: 600 } ],
-            'c3': [ { id: 'p3', name: 'Product 3', description: 'Lezzetli ürün açıklaması.', price: '250 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Product+3', prepTime: 25, grams: 500, kcal: 750 } ],
-            'c5': [ // Ana Yemekler için yeni veri
-                { id: 'p5-1', name: 'Dana Bonfile', description: 'Mantar sosu ve patates püresi ile', price: '890 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Bonfile', video: 'product1' },
-                { id: 'p5-2', name: 'Kuzu Pirzola', description: 'Izgara sebzeler ve firik pilavı ile', price: '950 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Pirzola', video: 'product2' },
-                { id: 'p5-3', name: 'Izgara Somon', description: 'Kuşkonmaz ve avokado salatası ile', price: '750 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Somon', video: 'product3' },
-                { id: 'p5-4', name: 'T-Bone Steak', description: '600gr, özel baharatlarla marine edilmiş', price: '1250 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Steak', video: 'product4' },
-                { id: 'p5-5', name: 'Tavuk Külbastı', description: 'Özel baharatlarla marine edilmiş tavuk but', price: '650 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Tavuk', video: 'product5' },
-                { id: 'p5-6', name: 'Antrikot', description: '250gr, dinlendirilmiş dana antrikot', price: '1100 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Antrikot', video: 'product6' },
-                { id: 'p5-7', name: 'Kuzu İncik', description: 'Ağır ateşte pişirilmiş, tandır lezzeti', price: '980 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=İncik', video: 'product7' },
+            'c1': [ { id: 'p1', name: 'Sigara Böreği', description: 'Çıtır çıtır, peynirli.', price: '165 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Börek', prepTime: 10, grams: 150, kcal: 300, video: 'product1' } ],
+            'c2': [ { id: 'p2', name: 'Limonata', description: 'Ev yapımı, taze nane ile.', price: '90 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Limonata', prepTime: 5, grams: 300, kcal: 150, video: 'product2' } ],
+            'c3': [ { id: 'p3', name: 'Margarita Pizza', description: 'Domates sos, mozzarella ve taze fesleğen.', price: '250 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Pizza', prepTime: 25, grams: 500, kcal: 750, video: 'product3' } ],
+            'c5': [
+                { id: 'p5-1', name: 'Dana Bonfile', description: 'Mantar sosu ve patates püresi ile', price: '890 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Bonfile', video: 'product1', prepTime: 25, grams: 400, kcal: 800, recommendations: ['p1', 'p2'] },
+                { id: 'p5-2', name: 'Kuzu Pirzola', description: 'Izgara sebzeler ve firik pilavı ile', price: '950 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Pirzola', video: 'product2', prepTime: 30, grams: 450, kcal: 950, recommendations: ['p1', 'p2'] },
+                { id: 'p5-3', name: 'Izgara Somon', description: 'Kuşkonmaz ve avokado salatası ile', price: '750 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Somon', video: 'product3', prepTime: 20, grams: 350, kcal: 650, recommendations: ['p2'] },
+                { id: 'p5-4', name: 'T-Bone Steak', description: '600gr, özel baharatlarla marine edilmiş', price: '1250 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Steak', video: 'product4', prepTime: 35, grams: 600, kcal: 1200, recommendations: ['p1'] },
+                { id: 'p5-5', name: 'Tavuk Külbastı', description: 'Özel baharatlarla marine edilmiş tavuk but', price: '650 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Tavuk', video: 'product5', prepTime: 25, grams: 400, kcal: 700 },
+                { id: 'p5-6', name: 'Antrikot', description: '250gr, dinlendirilmiş dana antrikot', price: '1100 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Antrikot', video: 'product6', prepTime: 30, grams: 250, kcal: 850 },
+                { id: 'p5-7', name: 'Kuzu İncik', description: 'Ağır ateşte pişirilmiş, tandır lezzeti', price: '980 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=İncik', video: 'product7', prepTime: 180, grams: 550, kcal: 1100 },
             ],
             'c4': [], 'c6': [], 'c7': [], 'c8': [], 'c9': [], 'c10': [], 'c11': [],
           }
         };
+
+        const allProducts = Object.values(menuData.products).flat();
+        const findProductById = (id) => allProducts.find(p => p.id === id);
 
         // --- Bileşenler (Components) ---
 
@@ -251,89 +272,33 @@
             const sortedCategories = activeCategory ? [activeCategory, ...inactiveCategories] : allCategories;
             
             const reelsRef = React.useRef(null);
-            const [activeReelId, setActiveReelId] = React.useState(products.length > 0 ? products[0].id : null);
-            
-            const isDragging = React.useRef(false);
-            const startX = React.useRef(0);
-            const scrollLeft = React.useRef(0);
-            const velocity = React.useRef(0);
-            const animationFrameId = React.useRef(null);
+            const [activeReelIndex, setActiveReelIndex] = React.useState(0);
 
             const handleScroll = React.useCallback(() => {
-                if (!reelsRef.current || isDragging.current) return;
+                if (!reelsRef.current) return;
                 const container = reelsRef.current;
-                const containerCenter = container.scrollLeft + container.clientWidth / 2;
-                let closestChild = null;
-                let minDistance = Infinity;
-
-                Array.from(container.children).forEach(child => {
-                    const childCenter = child.offsetLeft + child.clientWidth / 2;
-                    const distance = Math.abs(containerCenter - childCenter);
-                    if (distance < minDistance) {
-                        minDistance = distance;
-                        closestChild = child;
-                    }
-                });
-
-                if (closestChild) {
-                    setActiveReelId(closestChild.dataset.id);
+                const scrollLeft = container.scrollLeft;
+                const itemWidth = container.children[0] ? container.children[0].offsetWidth + 16 : 0; // 16 for gap
+                
+                if (itemWidth > 0) {
+                    const newIndex = Math.round(scrollLeft / itemWidth);
+                    setActiveReelIndex(newIndex % products.length);
                 }
-            }, []);
-
-            const onDragStart = (e) => {
-                isDragging.current = true;
-                const pageX = e.pageX || e.touches[0].pageX;
-                startX.current = pageX - reelsRef.current.offsetLeft;
-                scrollLeft.current = reelsRef.current.scrollLeft;
-                velocity.current = 0;
-                cancelAnimationFrame(animationFrameId.current);
-                reelsRef.current.style.cursor = 'grabbing';
-                reelsRef.current.style.scrollSnapType = 'none';
-            };
-
-            const onDragEnd = () => {
-                if (!isDragging.current) return;
-                isDragging.current = false;
-                reelsRef.current.style.cursor = 'grab';
-                reelsRef.current.style.scrollSnapType = 'x mandatory';
-
-                const inertiaLoop = () => {
-                    reelsRef.current.scrollLeft += velocity.current;
-                    velocity.current *= 0.95;
-                    if (Math.abs(velocity.current) > 0.5) {
-                        animationFrameId.current = requestAnimationFrame(inertiaLoop);
-                    } else {
-                       handleScroll();
-                    }
-                };
-                animationFrameId.current = requestAnimationFrame(inertiaLoop);
-            };
-
-            const onDragMove = (e) => {
-                if (!isDragging.current) return;
-                e.preventDefault();
-                const pageX = e.pageX || e.touches[0].pageX;
-                const x = pageX - reelsRef.current.offsetLeft;
-                const walk = (x - startX.current) * 2;
-                const prevScrollLeft = reelsRef.current.scrollLeft;
-                reelsRef.current.scrollLeft = scrollLeft.current - walk;
-                velocity.current = reelsRef.current.scrollLeft - prevScrollLeft;
-            };
+            }, [products.length]);
 
             React.useEffect(() => {
                 const container = reelsRef.current;
                 if(container) {
-                    container.addEventListener('scroll', handleScroll);
+                    container.addEventListener('scroll', handleScroll, { passive: true });
                     handleScroll(); 
                 }
                 return () => {
                     if(container) {
                         container.removeEventListener('scroll', handleScroll);
                     }
-                    cancelAnimationFrame(animationFrameId.current);
                 };
             }, [handleScroll]);
-
+            
             const duplicatedProducts = [...products, ...products, ...products];
 
             return (
@@ -358,25 +323,17 @@
                         {/* Reels Section */}
                         <div
                             ref={reelsRef}
-                            className="flex overflow-x-auto scroll-hidden px-4 py-8 space-x-4 items-center cursor-grab"
+                            className="flex overflow-x-auto scroll-hidden px-4 py-8 space-x-4 items-center cursor-grab active:cursor-grabbing"
                             style={{ scrollSnapType: 'x mandatory' }}
-                            onMouseDown={onDragStart}
-                            onMouseLeave={onDragEnd}
-                            onMouseUp={onDragEnd}
-                            onMouseMove={onDragMove}
-                            onTouchStart={onDragStart}
-                            onTouchEnd={onDragEnd}
-                            onTouchMove={onDragMove}
                         >
                             {duplicatedProducts.map((product, index) => (
                                 <div 
                                     key={`${product.id}-${index}`}
-                                    data-id={product.id}
                                     className={`flex-shrink-0 w-32 text-center transition-transform duration-300 ease-in-out`}
                                     style={{ scrollSnapAlign: 'center' }}
                                     onClick={() => onSelectProduct(product)}
                                 >
-                                    <div className={`relative w-full h-48 rounded-2xl overflow-hidden shadow-lg transform transition-transform duration-300 ease-in-out ${activeReelId === product.id ? 'scale-110' : 'scale-100'}`}>
+                                    <div className={`relative w-full h-48 rounded-2xl overflow-hidden shadow-lg transform transition-transform duration-300 ease-in-out ${activeReelIndex === index % products.length ? 'scale-110' : 'scale-100'}`}>
                                          <video src={`./${product.video}.webm`} autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0"></video>
                                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                                          <div className="absolute bottom-0 left-0 p-3 text-white">
@@ -419,11 +376,15 @@
         
         const ProductDetailPage = ({ product, onGoBack }) => {
             if (!product) return null;
+            
+            const recommendations = product.recommendations?.map(id => findProductById(id)).filter(Boolean) || [];
+
             return (
-                <div className="bg-gray-100 min-h-full pt-[64px]">
-                    <div className="relative">
-                        <img src={product.image} alt={product.name} className="w-full h-64 object-cover" />
-                        <button onClick={onGoBack} className="absolute top-4 left-4 bg-white/80 p-2 rounded-full shadow-md z-30">
+                <div className="bg-gray-100 min-h-full">
+                    <div className="relative h-80">
+                        <video src={`./${product.video}.webm`} autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover"></video>
+                        <img src={product.image} alt={product.name} className="absolute top-0 left-0 w-full h-full object-cover" onError={(e) => e.target.style.display='none'}/>
+                         <button onClick={onGoBack} className="absolute top-4 left-4 bg-white/80 p-2 rounded-full shadow-md z-30">
                             <BackIcon className="h-6 w-6 text-gray-800" />
                         </button>
                     </div>
@@ -435,11 +396,28 @@
                             </div>
                             <p className="text-2xl font-medium text-gray-900 whitespace-nowrap ml-4">{product.price}</p>
                         </div>
-                        <div className="flex justify-around bg-white p-4 rounded-2xl shadow-sm text-center">
-                            <div className="font-regular"><span className="font-medium text-lg block">{product.prepTime}</span> minute</div>
-                            <div className="font-regular"><span className="font-medium text-lg block">{product.grams}</span> gram</div>
-                            <div className="font-regular"><span className="font-medium text-lg block">{product.kcal}</span> kcal</div>
+                        <div className="flex justify-around bg-white p-4 rounded-2xl shadow-sm text-center text-gray-600">
+                            <div className="flex flex-col items-center"><ClockIcon /> <span className="font-medium">{product.prepTime}</span> minute</div>
+                            <div className="flex flex-col items-center"><WeightIcon /> <span className="font-medium">{product.grams}</span> gram</div>
+                            <div className="flex flex-col items-center"><FireIcon /> <span className="font-medium">{product.kcal}</span> kcal</div>
                         </div>
+
+                        {recommendations.length > 0 && (
+                            <div className="mt-8">
+                                <h3 className="text-xl font-medium text-gray-800 mb-4">Birlikte İyi Gider</h3>
+                                <div className="space-y-4">
+                                    {recommendations.map(rec => (
+                                        <div key={rec.id} className="flex items-center p-4 bg-white rounded-2xl shadow-sm">
+                                            <img src={rec.image} alt={rec.name} className="w-16 h-16 rounded-lg object-cover mr-4" />
+                                            <div className="flex-1">
+                                                <h4 className="font-medium text-gray-800">{rec.name}</h4>
+                                                <p className="text-sm text-gray-500">{rec.price}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             );
@@ -478,7 +456,10 @@
           const handleSelectCategory = (categoryId) => { setSelectedCategory(categoryId); setPage('products'); };
           const handleSelectProduct = (product) => { setSelectedProduct(product); setPage('productDetail'); };
           const goBackToCategories = () => setPage('categories');
-          const goBackToProducts = () => setPage('products');
+          const goBackToProducts = () => {
+              setSelectedProduct(null); // Detaydan ürün listesine dönerken ürünü sıfırla
+              setPage('products');
+          };
 
           const getPageTransform = () => {
             if (page === 'products') return '-translate-x-full';
@@ -498,7 +479,7 @@
 
           return (
               <div className="bg-gray-100 min-h-screen max-w-md mx-auto">
-                <Header isSolid={isHeaderSolid || page !== 'categories'} />
+                {page !== 'productDetail' && <Header isSolid={isHeaderSolid || page !== 'categories'} />}
                 <main className="relative w-full h-screen overflow-hidden">
                   <div className={`flex transition-transform duration-500 ease-in-out h-full ${getPageTransform()}`}>
                     
