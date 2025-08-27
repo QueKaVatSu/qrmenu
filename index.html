@@ -47,7 +47,6 @@
         );
 
         // --- Örnek Menü Verisi ---
-        // DÜZELTME: Medya dosyası uzantıları kaldırıldı.
         const menuData = {
           categoryRows: [
             [
@@ -89,29 +88,37 @@
             <button className={`p-2 transition-colors duration-300 ${isSolid ? 'text-gray-800' : 'text-white'}`}>
                 <MenuIcon />
             </button>
-            <img 
-                src="./logo.png" 
-                alt="SpicyMenu Logo" 
-                className="h-8" 
-                onError={(e) => { e.target.onerror = null; e.target.style.display='none'; document.getElementById('logo-text').style.display='block'; }}
-            />
-            <h1 
-                id="logo-text" 
-                className={`hidden text-xl font-bold tracking-widest uppercase transition-colors duration-300 ${isSolid ? 'text-gray-900' : 'text-white'}`}
-            >
-                SpicyMenu
-            </h1>
+            <div className={`transition-opacity duration-300 ${isSolid ? 'opacity-100' : 'opacity-0'}`}>
+                <img 
+                    src="./logo.png" 
+                    alt="SpicyMenu Logo" 
+                    className="h-8" 
+                    onError={(e) => { e.target.onerror = null; e.target.style.display='none'; document.getElementById('logo-text-header').style.display='block'; }}
+                />
+                <h1 
+                    id="logo-text-header" 
+                    className={`hidden text-xl font-bold tracking-widest uppercase ${isSolid ? 'text-gray-900' : 'text-white'}`}
+                >
+                    SpicyMenu
+                </h1>
+            </div>
             <button className={`p-2 transition-colors duration-300 ${isSolid ? 'text-gray-800' : 'text-white'}`}>
                 <SearchIcon />
             </button>
           </header>
         );
         
-        const Hero = ({ onScrollClick }) => (
+        const Hero = ({ onScrollClick, isScrolled }) => (
             <div className="relative h-screen w-full overflow-hidden">
                 <video src="./hero.mp4" autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0"></video>
                 <div className="absolute top-0 left-0 w-full h-full bg-black/40 z-10"></div>
                 <div className="relative z-20 flex flex-col items-center justify-center h-full px-4">
+                    <img
+                        src="./logo.png"
+                        alt="SpicyMenu Logo"
+                        className={`h-40 mb-8 transition-opacity duration-300 ease-in-out ${isScrolled ? 'opacity-0' : 'opacity-100'}`}
+                        onError={(e) => { e.target.style.display = 'none'; }}
+                    />
                     <button 
                         onClick={onScrollClick}
                         className="font-regular text-white text-lg border border-white/80 rounded-full px-12 py-3 backdrop-blur-sm transition-colors hover:bg-white/20">
@@ -131,7 +138,6 @@
                     style={{ flexBasis: flexBasis, aspectRatio: `${category.width} / ${category.height}` }}
                     onClick={() => onSelectCategory(category.id)}
                 >
-                    {/* DÜZELTME: Hem video hem de resmi arar, bulduğunu gösterir */}
                     <video 
                         src={`./${category.media}.mp4`} 
                         onError={(e) => e.target.style.display = 'none'}
@@ -156,7 +162,8 @@
 
         const CategoryPage = ({ onSelectCategory, menuRef }) => {
             return (
-                <div ref={menuRef} className="p-4 flex flex-col gap-4 bg-gray-100">
+                // DÜZELTME: Header'ın menünün üzerine binmemesi için scroll-margin-top eklendi.
+                <div ref={menuRef} className="p-4 flex flex-col gap-4 bg-gray-100" style={{ scrollMarginTop: '72px' }}>
                     {menuData.categoryRows.map((row, rowIndex) => (
                         <div key={rowIndex} className="flex gap-4">
                             {row.map(category => (
@@ -273,7 +280,7 @@
                   <div className={`flex transition-transform duration-500 ease-in-out h-full ${getPageTransform()}`}>
                     
                     <div ref={scrollContainerRef} className="w-full flex-shrink-0 h-full overflow-y-auto scroll-hidden">
-                        <Hero onScrollClick={handleScrollToMenu} />
+                        <Hero onScrollClick={handleScrollToMenu} isScrolled={isHeaderSolid} />
                         <CategoryPage onSelectCategory={handleSelectCategory} menuRef={menuRef} />
                     </div>
 
