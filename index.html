@@ -111,7 +111,7 @@
         const Hero = ({ onScrollClick, isScrolled }) => (
             <div className="relative h-screen w-full overflow-hidden">
                 <video src="./hero.mp4" autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0"></video>
-                <div className="absolute top-0 left-0 w-full h-full bg-black/40 z-10"></div>
+                <div className="absolute top-0 left-0 w-full h-full bg-black/30 z-10"></div>
                 <div className="relative z-20 flex flex-col items-center justify-center h-full px-4">
                     <img
                         src="./logo.png"
@@ -151,7 +151,7 @@
                         className="absolute top-0 left-0 w-full h-full object-cover z-0"
                     />
                     
-                    <div className="absolute top-0 left-0 w-full h-full bg-black/40 z-10"></div>
+                    <div className="absolute top-0 left-0 w-full h-full bg-black/30 z-10"></div>
                     <div className="relative z-20">
                         <h2 className="text-2xl font-medium">{category.name}</h2>
                         <p className="font-regular opacity-90">{category.subtitle}</p>
@@ -162,7 +162,6 @@
 
         const CategoryPage = ({ onSelectCategory, menuRef }) => {
             return (
-                // DÜZELTME: Header'ın menünün üzerine binmemesi için scroll-margin-top eklendi.
                 <div ref={menuRef} className="p-4 flex flex-col gap-4 bg-gray-100" style={{ scrollMarginTop: '72px' }}>
                     {menuData.categoryRows.map((row, rowIndex) => (
                         <div key={rowIndex} className="flex gap-4">
