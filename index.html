@@ -90,19 +90,24 @@
             ]
           ],
           products: {
-            'c1': [ { id: 'p1', name: 'Sigara Böreği', description: 'Çıtır çıtır, peynirli.', price: '165 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Börek', prepTime: 10, grams: 150, kcal: 300, video: 'product1' } ],
-            'c2': [ { id: 'p2', name: 'Limonata', description: 'Ev yapımı, taze nane ile.', price: '90 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Limonata', prepTime: 5, grams: 300, kcal: 150, video: 'product2' } ],
-            'c3': [ { id: 'p3', name: 'Margarita Pizza', description: 'Domates sos, mozzarella ve taze fesleğen.', price: '250 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Pizza', prepTime: 25, grams: 500, kcal: 750, video: 'product3' } ],
-            'c5': [
-                { id: 'p5-1', name: 'Dana Bonfile', description: 'Mantar sosu ve patates püresi ile', price: '890 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Bonfile', video: 'product1', prepTime: 25, grams: 400, kcal: 800, recommendations: ['p1', 'p2'] },
-                { id: 'p5-2', name: 'Kuzu Pirzola', description: 'Izgara sebzeler ve firik pilavı ile', price: '950 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Pirzola', video: 'product2', prepTime: 30, grams: 450, kcal: 950, recommendations: ['p1', 'p2'] },
-                { id: 'p5-3', name: 'Izgara Somon', description: 'Kuşkonmaz ve avokado salatası ile', price: '750 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Somon', video: 'product3', prepTime: 20, grams: 350, kcal: 650, recommendations: ['p2'] },
-                { id: 'p5-4', name: 'T-Bone Steak', description: '600gr, özel baharatlarla marine edilmiş', price: '1250 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Steak', video: 'product4', prepTime: 35, grams: 600, kcal: 1200, recommendations: ['p1'] },
-                { id: 'p5-5', name: 'Tavuk Külbastı', description: 'Özel baharatlarla marine edilmiş tavuk but', price: '650 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Tavuk', video: 'product5', prepTime: 25, grams: 400, kcal: 700 },
-                { id: 'p5-6', name: 'Antrikot', description: '250gr, dinlendirilmiş dana antrikot', price: '1100 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Antrikot', video: 'product6', prepTime: 30, grams: 250, kcal: 850 },
-                { id: 'p5-7', name: 'Kuzu İncik', description: 'Ağır ateşte pişirilmiş, tandır lezzeti', price: '980 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=İncik', video: 'product7', prepTime: 180, grams: 550, kcal: 1100 },
+            'c1': [ { id: 'p1', name: 'Sigara Böreği', description: 'Çıtır çıtır, peynirli.', price: '165 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Börek', prepTime: 10, grams: 150, kcal: 300, video: 'product1', tags: ['arasicak'] } ],
+            'c2': [ 
+                { id: 'p2', name: 'Limonata', description: 'Ev yapımı, taze nane ile.', price: '90 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Limonata', prepTime: 5, grams: 300, kcal: 150, video: 'product2', tags: ['icecek', 'alkolsuz'] },
+                { id: 'p2-2', name: 'Kola', description: 'Buz gibi.', price: '70 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Kola', prepTime: 1, grams: 330, kcal: 140, video: 'product_cola', tags: ['icecek', 'alkolsuz', 'kola'] }
             ],
-            'c4': [], 'c6': [], 'c7': [], 'c8': [], 'c9': [], 'c10': [], 'c11': [],
+            'c3': [ { id: 'p3', name: 'Margarita Pizza', description: 'Domates sos, mozzarella ve taze fesleğen.', price: '250 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Pizza', prepTime: 25, grams: 500, kcal: 750, video: 'product3', tags: ['pizza'] } ],
+            'c4': [ { id: 'p4', name: 'Sezar Salata', description: 'Izgara tavuk parçaları ile.', price: '210 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Salata', prepTime: 15, grams: 350, kcal: 450, video: 'product_salad', tags: ['salata'] } ],
+            'c5': [
+                { id: 'p5-1', name: 'Dana Bonfile', description: 'Mantar sosu ve patates püresi ile', price: '890 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Bonfile', video: 'product1', prepTime: 25, grams: 400, kcal: 800, tags: ['kirmizi-et', 'steak'] },
+                { id: 'p5-2', name: 'Kuzu Pirzola', description: 'Izgara sebzeler ve firik pilavı ile', price: '950 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Pirzola', video: 'product2', prepTime: 30, grams: 450, kcal: 950, tags: ['kirmizi-et'] },
+                { id: 'p5-3', name: 'Izgara Somon', description: 'Kuşkonmaz ve avokado salatası ile', price: '750 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Somon', video: 'product3', prepTime: 20, grams: 350, kcal: 650, tags: ['balik'] },
+                { id: 'p5-4', name: 'T-Bone Steak', description: '600gr, özel baharatlarla marine edilmiş', price: '1250 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Steak', video: 'product4', prepTime: 35, grams: 600, kcal: 1200, tags: ['kirmizi-et', 'steak'] },
+                { id: 'p5-5', name: 'Tavuk Külbastı', description: 'Özel baharatlarla marine edilmiş tavuk but', price: '650 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Tavuk', video: 'product5', prepTime: 25, grams: 400, kcal: 700, tags: ['beyaz-et', 'tavuk'] },
+                { id: 'p5-6', name: 'Antrikot', description: '250gr, dinlendirilmiş dana antrikot', price: '1100 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Antrikot', video: 'product6', prepTime: 30, grams: 250, kcal: 850, tags: ['kirmizi-et', 'steak'] },
+                { id: 'p5-7', name: 'Kuzu İncik', description: 'Ağır ateşte pişirilmiş, tandır lezzeti', price: '980 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=İncik', video: 'product7', prepTime: 180, grams: 550, kcal: 1100, tags: ['kirmizi-et'] },
+            ],
+            'c6': [ { id: 'p6', name: 'Kavaklıdere Yakut', description: 'Klasikleşmiş lezzet.', price: '750 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Şarap', prepTime: 1, grams: 750, kcal: 600, video: 'product_wine', tags: ['sarap', 'icecek', 'alkollu'] } ],
+            'c7': [], 'c8': [], 'c9': [], 'c10': [], 'c11': [],
           }
         };
 
@@ -383,11 +388,24 @@
         const ProductDetailPage = ({ product, onGoBack }) => {
             if (!product) return null;
             
-            const recommendations = product.recommendations?.map(id => findProductById(id)).filter(Boolean) || [];
+            const getRecommendations = (p) => {
+                if (!p.tags) return [];
+                let recommendations = [];
+                if (p.tags.includes('kirmizi-et')) {
+                    recommendations = allProducts.filter(item => item.tags && item.tags.includes('sarap'));
+                } else if (p.tags.includes('balik') || p.tags.includes('tavuk')) {
+                    recommendations = allProducts.filter(item => item.tags && item.tags.includes('salata'));
+                } else if (p.tags.includes('pizza')) {
+                    recommendations = allProducts.filter(item => item.tags && item.tags.includes('kola'));
+                }
+                return recommendations.slice(0, 2); // En fazla 2 öneri göster
+            };
+
+            const recommendations = getRecommendations(product);
 
             return (
                 <div className="bg-gray-100 min-h-full">
-                    <div className="relative h-[30rem] overflow-hidden rounded-b-3xl bg-gray-200">
+                    <div className="relative h-[36rem] overflow-hidden rounded-b-3xl bg-gray-200">
                         {product.video ? (
                             <video src={`./${product.video}.webm`} autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover"></video>
                         ) : (
