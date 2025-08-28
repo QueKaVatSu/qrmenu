@@ -387,9 +387,12 @@
 
             return (
                 <div className="bg-gray-100 min-h-full">
-                    <div className="relative h-[30rem] overflow-hidden rounded-b-3xl">
-                        <video src={`./${product.video}.webm`} autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover"></video>
-                        <img src={product.image} alt={product.name} className="absolute top-0 left-0 w-full h-full object-cover" onError={(e) => e.target.style.display='none'}/>
+                    <div className="relative h-[30rem] overflow-hidden rounded-b-3xl bg-gray-200">
+                        {product.video ? (
+                            <video src={`./${product.video}.webm`} autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover"></video>
+                        ) : (
+                            <img src={product.image} alt={product.name} className="absolute top-0 left-0 w-full h-full object-cover" />
+                        )}
                          <button onClick={onGoBack} className="absolute top-4 left-4 bg-white/80 p-2 rounded-full shadow-md z-30">
                             <BackIcon className="h-6 w-6 text-gray-800" />
                         </button>
@@ -438,6 +441,34 @@
           const menuRef = React.useRef(null);
           const scrollContainerRef = React.useRef(null);
 
+          const updatePage = (newPage, pushState = true) => {
+              if (pushState) {
+                  const state = { page: newPage, category: selectedCategory, product: selectedProduct };
+                  window.history.pushState(state, '');
+              }
+              setPage(newPage);
+          };
+
+          React.useEffect(() => {
+            const handlePopState = (event) => {
+                if (event.state && event.state.page) {
+                    setPage(event.state.page);
+                    setSelectedCategory(event.state.category);
+                    setSelectedProduct(event.state.product);
+                } else {
+                    setPage('categories'); // Fallback to the initial page
+                }
+            };
+
+            window.addEventListener('popstate', handlePopState);
+            // Push initial state
+            window.history.replaceState({ page: 'categories', category: null, product: null }, '');
+
+            return () => {
+                window.removeEventListener('popstate', handlePopState);
+            };
+          }, []);
+
           React.useEffect(() => {
             const container = scrollContainerRef.current;
             if (!container) return;
@@ -456,7 +487,7 @@
           }, [isMenuVisible]);
 
           const handleLogoClick = () => {
-              setPage('categories');
+              updatePage('categories');
               setTimeout(() => {
                   scrollContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
               }, 50);
@@ -465,13 +496,20 @@
             menuRef.current?.scrollIntoView({ behavior: 'smooth' });
             setTimeout(() => setIsMenuVisible(true), 100);
           };
-          const handleSelectCategory = (categoryId) => { setSelectedCategory(categoryId); setPage('products'); };
-          const handleSelectProduct = (product) => { setSelectedProduct(product); setPage('productDetail'); };
-          const goBackToCategories = () => setPage('categories');
-          const goBackToProducts = () => {
-              setSelectedProduct(null); // Detaydan ürün listesine dönerken ürünü sıfırla
+          const handleSelectCategory = (categoryId) => { 
+              setSelectedCategory(categoryId); 
+              const state = { page: 'products', category: categoryId, product: null };
+              window.history.pushState(state, '');
               setPage('products');
           };
+          const handleSelectProduct = (product) => { 
+              setSelectedProduct(product); 
+              const state = { page: 'productDetail', category: selectedCategory, product: product };
+              window.history.pushState(state, '');
+              setPage('productDetail');
+          };
+          const goBackToCategories = () => window.history.back();
+          const goBackToProducts = () => window.history.back();
 
           const getPageTransform = () => {
             if (page === 'products') return '-translate-x-full';
@@ -483,10 +521,10 @@
               if (!selectedCategory) return null;
               
               if (selectedCategory === 'c5') { // Ana Yemekler
-                  return <MainCoursePage selectedCategory={selectedCategory} onGoBack={goBackToCategories} onSelectCategory={setSelectedCategory} onSelectProduct={handleSelectProduct} />;
+                  return <MainCoursePage selectedCategory={selectedCategory} onGoBack={goBackToCategories} onSelectCategory={handleSelectCategory} onSelectProduct={handleSelectProduct} />;
               }
               
-              return <ProductListPage selectedCategory={selectedCategory} onGoBack={goBackToCategories} onSelectCategory={setSelectedCategory} onSelectProduct={handleSelectProduct} />;
+              return <ProductListPage selectedCategory={selectedCategory} onGoBack={goBackToCategories} onSelectCategory={handleSelectCategory} onSelectProduct={handleSelectProduct} />;
           };
 
           return (
