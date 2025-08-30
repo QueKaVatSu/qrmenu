@@ -363,6 +363,13 @@
                     <a href="https://www.kadrajatelier.com" target="_blank" rel="noopener noreferrer" className="block text-center text-sm text-gray-500 hover:text-gray-700">
                       Kadraj® Solution and Evolution Partner
                     </a>
+                    {/* İSTENEN: Kadraj yazısının hemen altına reklam-logo.webp */}
+                    <img
+                      src="./reklam-logo.webp"
+                      alt="Reklam"
+                      className="mx-auto mt-3 h-12 object-contain opacity-90"
+                      onError={(e)=>{e.target.style.display='none';}}
+                    />
                   </div>
                 </div>
               </aside>
@@ -379,7 +386,6 @@
                 <img src="./logo.png" alt="SpicyMenu Logo" className="h-14" onError={(e) => { e.target.onerror = null; e.target.style.display='none'; document.getElementById('logo-text-header').style.display='block'; }} />
                 <h1 id="logo-text-header" className={`hidden text-xl font-bold tracking-widest uppercase ${isSolid ? 'text-gray-900' : 'text-white'}`}>SpicyMenu</h1>
             </div>
-            {/* Sağ üst ve arama butonu kaldırıldı, yer tutucu: */}
             <div className={`${isSolid ? 'text-gray-800' : 'text-white'} w-6 h-6`} aria-hidden="true"></div>
           </header>
         );
@@ -754,7 +760,6 @@
               <div className="bg-gray-100 min-h-screen max-w-md mx-auto">
                   <LoadingScreen isLoading={isLoading} />
                   
-                  {/* İçerik yükleme sırasında da render olur; video hazır bekler */}
                   {(page !== 'productDetail' && page !== 'story') && (
                     <Header
                       isSolid={isHeaderSolid || page !== 'categories'}
