@@ -63,6 +63,20 @@
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7.014A8.003 8.003 0 0112 2a8.003 8.003 0 016.014 2.986C20.5 5 21 8 21 10c2 1 2.657 2.343 2.657 2.657a8 8 0 01-11.314 6z" />
             </svg>
         );
+        
+        // --- Yardımcı Fonksiyon (Utility) ---
+        const throttle = (func, limit) => {
+          let inThrottle;
+          return function() {
+            const args = arguments;
+            const context = this;
+            if (!inThrottle) {
+              func.apply(context, args);
+              inThrottle = true;
+              setTimeout(() => (inThrottle = false), limit);
+            }
+          };
+        };
 
         // --- Örnek Menü Verisi ---
         const menuData = {
@@ -287,14 +301,13 @@
                 if (scrollIntervalRef.current) return;
                 scrollIntervalRef.current = setInterval(() => {
                     if (reelsRef.current) {
-                        const { scrollLeft, scrollWidth, clientWidth } = reelsRef.current;
-                        // Using a larger threshold to avoid premature reset
+                        const { scrollLeft, scrollWidth } = reelsRef.current;
                         if (scrollLeft >= (scrollWidth * 0.66)) { 
                             reelsRef.current.style.scrollBehavior = 'auto';
                             reelsRef.current.scrollLeft = scrollLeft - (scrollWidth / 3);
                             reelsRef.current.style.scrollBehavior = 'smooth';
                         }
-                        reelsRef.current.scrollLeft += 0.5; // Slower scroll speed
+                        reelsRef.current.scrollLeft += 0.5;
                     }
                 }, 25);
             }, []);
@@ -322,18 +335,20 @@
                 }
             }, [products.length]);
 
+            const throttledHandleScroll = React.useMemo(() => throttle(handleScroll, 50), [handleScroll]);
+
             React.useEffect(() => {
                 const container = reelsRef.current;
                 if (container) {
-                    container.addEventListener('scroll', handleScroll, { passive: true });
-                    handleScroll();
+                    container.addEventListener('scroll', throttledHandleScroll, { passive: true });
+                    throttledHandleScroll();
                 }
                 return () => {
                     if (container) {
-                        container.removeEventListener('scroll', handleScroll);
+                        container.removeEventListener('scroll', throttledHandleScroll);
                     }
                 };
-            }, [handleScroll]);
+            }, [throttledHandleScroll]);
             
             const duplicatedProducts = [...products, ...products, ...products];
 
