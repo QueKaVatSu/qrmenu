@@ -14,10 +14,11 @@
 
     <style>
         /* Poppins Font */
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
         body { font-family: 'Poppins', sans-serif; }
         .font-regular { font-weight: 400; }
         .font-medium { font-weight: 500; }
+        .font-semibold { font-weight: 600; }
         /* Scrollbar Gizleme */
         .scroll-hidden::-webkit-scrollbar { display: none; }
         .scroll-hidden { -ms-overflow-style: none; scrollbar-width: none; }
@@ -64,7 +65,6 @@
             </svg>
         );
         
-        // --- Yardımcı Fonksiyon (Utility) ---
         const throttle = (func, limit) => {
           let inThrottle;
           return function() {
@@ -78,30 +78,14 @@
           };
         };
 
-        // --- Örnek Menü Verisi ---
         const menuData = {
           categoryRows: [
-            [
-              { id: 'c1', name: 'Ara Sıcaklar', subtitle: 'Lezzetli bir başlangıç', width: 170, height: 200, media: 'title1' },
-              { id: 'c2', name: 'İçecekler', subtitle: 'Taze ve serinletici', width: 170, height: 200, media: 'title2' }
-            ],
-            [
-              { id: 'c3', name: 'Pizza', subtitle: 'Ekşi maya hamurdan gelen lezzet', width: 205, height: 250, media: 'title3' },
-              { id: 'c4', name: 'Salatalar', subtitle: 'Her zaman taze', width: 135, height: 200, media: 'title4' }
-            ],
-            [ { id: 'c5', name: 'Ana Yemekler', subtitle: 'Şef seçkisi lezzetler', width: 360, height: 200, media: 'title5' } ],
-            [
-              { id: 'c6', name: 'Şaraplar', subtitle: 'Bağlardan kristal kadehlere', width: 205, height: 250, media: 'title6' },
-              { id: 'c7', name: 'Tatlılar', subtitle: 'Mutluluk Tadında Lezzetler', width: 135, height: 200, media: 'title7' }
-            ],
-            [
-              { id: 'c8', name: 'Rakılar', subtitle: 'Muhabbetin Dem Vakti', width: 170, height: 200, media: 'title8' },
-              { id: 'c9', name: 'Biralar', subtitle: 'Köpüklü, Soğuk, Lezzetli', width: 170, height: 200, media: 'title9' }
-            ],
-            [
-              { id: 'c10', name: 'Mezeler', subtitle: 'Sofranın Bütün Renkleri', width: 205, height: 250, media: 'title10' },
-              { id: 'c11', name: 'Shots', subtitle: 'Hızlı, Cesur, Unutulmaz', width: 135, height: 200, media: 'title11' }
-            ]
+            [{ id: 'c1', name: 'Ara Sıcaklar', subtitle: 'Lezzetli bir başlangıç', width: 170, height: 200, media: 'title1' },{ id: 'c2', name: 'İçecekler', subtitle: 'Taze ve serinletici', width: 170, height: 200, media: 'title2' }],
+            [{ id: 'c3', name: 'Pizza', subtitle: 'Ekşi maya hamurdan gelen lezzet', width: 205, height: 250, media: 'title3' },{ id: 'c4', name: 'Salatalar', subtitle: 'Her zaman taze', width: 135, height: 200, media: 'title4' }],
+            [{ id: 'c5', name: 'Ana Yemekler', subtitle: 'Şef seçkisi lezzetler', width: 360, height: 200, media: 'title5' }],
+            [{ id: 'c6', name: 'Şaraplar', subtitle: 'Bağlardan kristal kadehlere', width: 205, height: 250, media: 'title6' },{ id: 'c7', name: 'Tatlılar', subtitle: 'Mutluluk Tadında Lezzetler', width: 135, height: 200, media: 'title7' }],
+            [{ id: 'c8', name: 'Rakılar', subtitle: 'Muhabbetin Dem Vakti', width: 170, height: 200, media: 'title8' },{ id: 'c9', name: 'Biralar', subtitle: 'Köpüklü, Soğuk, Lezzetli', width: 170, height: 200, media: 'title9' }],
+            [{ id: 'c10', name: 'Mezeler', subtitle: 'Sofranın Bütün Renkleri', width: 205, height: 250, media: 'title10' },{ id: 'c11', name: 'Shots', subtitle: 'Hızlı, Cesur, Unutulmaz', width: 135, height: 200, media: 'title11' }]
           ],
           products: {
             'c1': [ { id: 'p1', name: 'Sigara Böreği', description: 'Çıtır çıtır, peynirli.', price: '165 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Börek', prepTime: 10, grams: 150, kcal: 300, video: 'product1', tags: ['arasicak'] } ],
@@ -116,51 +100,36 @@
                 { id: 'p5-2', name: 'Kuzu Pirzola', description: 'Izgara sebzeler ve firik pilavı ile', price: '950 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Pirzola', video: 'product2', prepTime: 30, grams: 450, kcal: 950, tags: ['kirmizi-et'] },
                 { id: 'p5-3', name: 'Izgara Somon', description: 'Kuşkonmaz ve avokado salatası ile', price: '750 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Somon', video: 'product3', prepTime: 20, grams: 350, kcal: 650, tags: ['balik'] },
                 { id: 'p5-4', name: 'T-Bone Steak', description: '600gr, özel baharatlarla marine edilmiş', price: '1250 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Steak', video: 'product4', prepTime: 35, grams: 600, kcal: 1200, tags: ['kirmizi-et', 'steak'] },
-                { id: 'p5-5', name: 'Tavuk Külbastı', description: 'Özel baharatlarla marine edilmiş tavuk but', price: '650 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Tavuk', video: 'product5', prepTime: 25, grams: 400, kcal: 700, tags: ['beyaz-et', 'tavuk'] },
+                { id: 'p5-5', name: 'Smash Burger', description: 'Karamelize soğan ve özel sos ile', price: '680 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Smash', video: 'product5', prepTime: 15, grams: 350, kcal: 850, tags: ['kirmizi-et', 'burger'] },
                 { id: 'p5-6', name: 'Antrikot', description: '250gr, dinlendirilmiş dana antrikot', price: '1100 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Antrikot', video: 'product6', prepTime: 30, grams: 250, kcal: 850, tags: ['kirmizi-et', 'steak'] },
                 { id: 'p5-7', name: 'Kuzu İncik', description: 'Ağır ateşte pişirilmiş, tandır lezzeti', price: '980 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=İncik', video: 'product7', prepTime: 180, grams: 550, kcal: 1100, tags: ['kirmizi-et'] },
             ],
             'c6': [ { id: 'p6', name: 'Kavaklıdere Yakut', description: 'Klasikleşmiş lezzet.', price: '750 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Şarap', prepTime: 1, grams: 750, kcal: 600, video: 'product_wine', tags: ['sarap', 'icecek', 'alkollu'] } ],
             'c7': [], 'c8': [], 'c9': [], 'c10': [], 'c11': [],
+          },
+          stories: {
+            'p5-1': {
+                title: 'Trüf Burgerin Hikayesi',
+                summary: 'Mevsimin en taze trüf mantarlarını, özel üretim brioche ekmeği ve 200 gramlık dinlendirilmiş dana köftesiyle birleştirdik. Her bir ısırıkta, toprağın zenginliğini ve şefin tutkusunu hissedeceksiniz. Bu burger, sıradan bir lezzetin ötesinde, unutulmaz bir deneyim vaat ediyor.',
+                fullStory: `Her şey, ormanın derinliklerinden gelen o eşsiz aroma ile başladı. Şeflerimiz, mevsimin en kaliteli siyah trüf mantarlarını bulmak için uzun bir yolculuğa çıktı. Bu nadide lezzeti, 28 gün boyunca dinlendirilmiş, %100 dana etinden hazırlanan 200 gramlık özel köftemizle buluşturduk. \n\nKöftenin mükemmel lezzetini tamamlamak için, her gün kendi fırınımızda pişirdiğimiz, tereyağlı ve hafif tatlı brioche ekmeğini kullanıyoruz. Erimiş cheddar peynirinin zenginliği ve ev yapımı trüflü mayonezimizin kremsi dokunuşu, bu burgeri bir sanat eserine dönüştürüyor. Yanında servis ettiğimiz baharatlı patates kızartması ile bu lezzet şölenini tamamlıyoruz.`,
+                image: 'https://placehold.co/600x400/333/fff?text=Trüf+Hikayesi'
+            }
           }
         };
 
         const allProducts = Object.values(menuData.products).flat();
-        const findProductById = (id) => allProducts.find(p => p.id === id);
-
+        
         // --- Bileşenler (Components) ---
 
         const Header = ({ isSolid, onLogoClick }) => (
           <header 
-            className={`
-              fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-1 max-w-md mx-auto h-[64px]
-              transition-all duration-300 ease-in-out
-              ${isSolid ? 'bg-white shadow-md' : 'bg-transparent'}
-            `}
-          >
-            <button className={`p-2 transition-colors duration-300 ${isSolid ? 'text-gray-800' : 'text-white'}`}>
-                <MenuIcon />
-            </button>
-            <div 
-                className={`transition-opacity duration-300 cursor-pointer ${isSolid ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-                onClick={onLogoClick}
-            >
-                <img 
-                    src="./logo.png" 
-                    alt="SpicyMenu Logo" 
-                    className="h-14" 
-                    onError={(e) => { e.target.onerror = null; e.target.style.display='none'; document.getElementById('logo-text-header').style.display='block'; }}
-                />
-                <h1 
-                    id="logo-text-header" 
-                    className={`hidden text-xl font-bold tracking-widest uppercase ${isSolid ? 'text-gray-900' : 'text-white'}`}
-                >
-                    SpicyMenu
-                </h1>
+            className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-1 max-w-md mx-auto h-[64px] transition-all duration-300 ease-in-out ${isSolid ? 'bg-white shadow-md' : 'bg-transparent'}`}>
+            <button className={`p-2 transition-colors duration-300 ${isSolid ? 'text-gray-800' : 'text-white'}`}><MenuIcon /></button>
+            <div className={`transition-opacity duration-300 cursor-pointer ${isSolid ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onClick={onLogoClick}>
+                <img src="./logo.png" alt="SpicyMenu Logo" className="h-14" onError={(e) => { e.target.onerror = null; e.target.style.display='none'; document.getElementById('logo-text-header').style.display='block'; }} />
+                <h1 id="logo-text-header" className={`hidden text-xl font-bold tracking-widest uppercase ${isSolid ? 'text-gray-900' : 'text-white'}`}>SpicyMenu</h1>
             </div>
-            <button className={`p-2 transition-colors duration-300 ${isSolid ? 'text-gray-800' : 'text-white'}`}>
-                <SearchIcon />
-            </button>
+            <button className={`p-2 transition-colors duration-300 ${isSolid ? 'text-gray-800' : 'text-white'}`}><SearchIcon /></button>
           </header>
         );
         
@@ -169,17 +138,8 @@
                 <video src="./hero.webm" autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0"></video>
                 <div className="absolute top-0 left-0 w-full h-full bg-black/30 z-10"></div>
                 <div className="relative z-20 flex flex-col items-center justify-center h-full px-4">
-                    <img
-                        src="./logo.png"
-                        alt="SpicyMenu Logo"
-                        className={`h-56 mb-8 transition-opacity duration-300 ease-in-out drop-shadow-lg ${isScrolled ? 'opacity-0' : 'opacity-100'}`}
-                        onError={(e) => { e.target.style.display = 'none'; }}
-                    />
-                    <button 
-                        onClick={onScrollClick}
-                        className="font-regular text-white text-lg border border-white/80 rounded-full px-12 py-3 backdrop-blur-sm transition-colors hover:bg-white/20">
-                        Menüyü Görüntüle
-                    </button>
+                    <img src="./logo.png" alt="SpicyMenu Logo" className={`h-56 mb-8 transition-opacity duration-300 ease-in-out drop-shadow-lg ${isScrolled ? 'opacity-0' : 'opacity-100'}`} onError={(e) => { e.target.style.display = 'none'; }} />
+                    <button onClick={onScrollClick} className="font-regular text-white text-lg border border-white/80 rounded-full px-12 py-3 backdrop-blur-sm transition-colors hover:bg-white/20">Menüyü Görüntüle</button>
                 </div>
             </div>
         );
@@ -187,32 +147,10 @@
         const CategoryCard = ({ category, onSelectCategory, isVisible, index }) => {
             const totalWidthInRow = category.row.reduce((acc, cat) => acc + cat.width, 0);
             const flexBasis = `${(category.width / totalWidthInRow) * 100}%`;
-
             return (
-                <div
-                    className={`relative rounded-2xl p-6 flex flex-col justify-end cursor-pointer overflow-hidden text-white shadow-lg bg-gray-200 transition-all duration-700 ease-out
-                        ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}
-                    `}
-                    style={{ 
-                        flexBasis: flexBasis, 
-                        aspectRatio: `${category.width} / ${category.height}`,
-                        transitionDelay: `${index * 100}ms`
-                    }}
-                    onClick={() => onSelectCategory(category.id)}
-                >
-                    <video 
-                        src={`./${category.media}.webm`} 
-                        onError={(e) => e.target.style.display = 'none'}
-                        autoPlay loop muted playsInline 
-                        className="absolute top-0 left-0 w-full h-full object-cover z-0"
-                    ></video>
-                    <img 
-                        src={`./${category.media}.png`} 
-                        alt={category.name} 
-                        onError={(e) => e.target.style.display = 'none'}
-                        className="absolute top-0 left-0 w-full h-full object-cover z-0"
-                    />
-                    
+                <div className={`relative rounded-2xl p-6 flex flex-col justify-end cursor-pointer overflow-hidden text-white shadow-lg bg-gray-200 transition-all duration-700 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ flexBasis: flexBasis, aspectRatio: `${category.width}/${category.height}`, transitionDelay: `${index * 100}ms`}} onClick={() => onSelectCategory(category.id)}>
+                    <video src={`./${category.media}.webm`} onError={(e) => e.target.style.display = 'none'} autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0"></video>
+                    <img src={`./${category.media}.png`} alt={category.name} onError={(e) => e.target.style.display = 'none'} className="absolute top-0 left-0 w-full h-full object-cover z-0"/>
                     <div className="absolute top-0 left-0 w-full h-full bg-black/30 z-10"></div>
                     <div className="relative z-20">
                         <h2 className="text-2xl font-medium">{category.name}</h2>
@@ -228,15 +166,7 @@
                 <div ref={menuRef} className="p-4 flex flex-col gap-4 bg-gray-100" style={{ scrollMarginTop: '64px' }}>
                     {menuData.categoryRows.map((row, rowIndex) => (
                         <div key={rowIndex} className="flex gap-4">
-                            {row.map(category => (
-                                <CategoryCard 
-                                    key={category.id} 
-                                    category={{...category, row}} 
-                                    onSelectCategory={onSelectCategory}
-                                    isVisible={isVisible}
-                                    index={cardIndex++}
-                                />
-                            ))}
+                            {row.map(category => ( <CategoryCard key={category.id} category={{...category, row}} onSelectCategory={onSelectCategory} isVisible={isVisible} index={cardIndex++}/> ))}
                         </div>
                     ))}
                 </div>
@@ -246,26 +176,15 @@
         const ProductListPage = ({ selectedCategory, onGoBack, onSelectCategory, onSelectProduct }) => {
           const products = menuData.products[selectedCategory] || [];
           const allCategories = menuData.categoryRows.flat();
-          
           const activeCategory = allCategories.find(c => c.id === selectedCategory);
           const inactiveCategories = allCategories.filter(c => c.id !== selectedCategory);
           const sortedCategories = activeCategory ? [activeCategory, ...inactiveCategories] : allCategories;
-
           return (
             <div className="bg-gray-100 min-h-full pt-[64px]">
               <nav className="sticky top-[64px] z-30 bg-white overflow-x-auto whitespace-nowrap scroll-hidden w-full max-w-md">
                 <div className="flex items-center p-4 border-b border-gray-200">
-                    <button onClick={onGoBack} className="p-2 mr-2">
-                        <BackIcon className="h-6 w-6 text-gray-600"/>
-                    </button>
-                    {sortedCategories.map(cat => (
-                         <button 
-                            key={cat.id}
-                            onClick={() => onSelectCategory(cat.id)}
-                            className={`flex-shrink-0 px-3 py-2 text-sm transition-colors duration-300 ${selectedCategory === cat.id ? 'font-medium text-gray-900' : 'font-regular text-gray-500'}`}>
-                            {cat.name}
-                        </button>
-                    ))}
+                    <button onClick={onGoBack} className="p-2 mr-2"><BackIcon className="h-6 w-6 text-gray-600"/></button>
+                    {sortedCategories.map(cat => ( <button key={cat.id} onClick={() => onSelectCategory(cat.id)} className={`flex-shrink-0 px-3 py-2 text-sm transition-colors duration-300 ${selectedCategory === cat.id ? 'font-medium text-gray-900' : 'font-regular text-gray-500'}`}>{cat.name}</button> ))}
                 </div>
               </nav>
               <div className="p-4 space-y-4">
@@ -278,16 +197,15 @@
                     </div>
                     <img src={product.image} alt={product.name} className="w-28 h-28 rounded-lg object-cover" />
                   </div>
-                )) : (
-                    <div className="text-center py-16"><p className="text-gray-500">Bu kategoride henüz ürün bulunmuyor.</p></div>
-                )}
+                )) : ( <div className="text-center py-16"><p className="text-gray-500">Bu kategoride henüz ürün bulunmuyor.</p></div> )}
               </div>
             </div>
           );
         };
         
-        const MainCoursePage = ({ selectedCategory, onGoBack, onSelectCategory, onSelectProduct }) => {
+        const MainCoursePage = ({ selectedCategory, onGoBack, onSelectCategory, onSelectProduct, onSelectStory }) => {
             const products = menuData.products[selectedCategory] || [];
+            const story = menuData.stories['p5-1'];
             const allCategories = menuData.categoryRows.flat();
             const activeCategory = allCategories.find(c => c.id === selectedCategory);
             const inactiveCategories = allCategories.filter(c => c.id !== selectedCategory);
@@ -304,9 +222,9 @@
                 scrollIntervalRef.current = setInterval(() => {
                     if (reelsRef.current) {
                         const { scrollLeft, scrollWidth } = reelsRef.current;
-                        if (scrollLeft >= (scrollWidth * 0.66)) { 
+                        if (scrollLeft >= (scrollWidth / 4) * 3) { 
                             reelsRef.current.style.scrollBehavior = 'auto';
-                            reelsRef.current.scrollLeft = scrollLeft - (scrollWidth / 3);
+                            reelsRef.current.scrollLeft = scrollLeft - (scrollWidth / 2);
                             reelsRef.current.style.scrollBehavior = 'smooth';
                         }
                         reelsRef.current.scrollLeft += 0.5;
@@ -330,7 +248,7 @@
                 scrollEndTimer.current = setTimeout(() => {
                     isManualScrolling.current = false;
                     startScrolling();
-                }, 1500); // Wait 1.5 seconds before resuming auto-scroll
+                }, 2500); // Wait 2.5 seconds before resuming auto-scroll
             };
 
             React.useEffect(() => {
@@ -359,50 +277,24 @@
                     container.addEventListener('scroll', throttledHandleScroll, { passive: true });
                     throttledHandleScroll();
                 }
-                return () => {
-                    if (container) {
-                        container.removeEventListener('scroll', throttledHandleScroll);
-                    }
-                };
+                return () => { if (container) { container.removeEventListener('scroll', throttledHandleScroll); }};
             }, [throttledHandleScroll]);
             
-            const duplicatedProducts = [...products, ...products, ...products];
+            const duplicatedProducts = [...products, ...products, ...products, ...products];
 
             return (
                 <div className="bg-gray-100 min-h-full pt-[64px]">
                     <nav className="sticky top-[64px] z-30 bg-white overflow-x-auto whitespace-nowrap scroll-hidden w-full max-w-md">
                         <div className="flex items-center p-4 border-b border-gray-200">
-                            <button onClick={onGoBack} className="p-2 mr-2">
-                                <BackIcon className="h-6 w-6 text-gray-600"/>
-                            </button>
-                            {sortedCategories.map(cat => (
-                                <button 
-                                    key={cat.id}
-                                    onClick={() => onSelectCategory(cat.id)}
-                                    className={`flex-shrink-0 px-3 py-2 text-sm transition-colors duration-300 ${selectedCategory === cat.id ? 'font-medium text-gray-900' : 'font-regular text-gray-500'}`}>
-                                    {cat.name}
-                                </button>
-                            ))}
+                            <button onClick={onGoBack} className="p-2 mr-2"><BackIcon className="h-6 w-6 text-gray-600"/></button>
+                            {sortedCategories.map(cat => (<button key={cat.id} onClick={() => onSelectCategory(cat.id)} className={`flex-shrink-0 px-3 py-2 text-sm transition-colors duration-300 ${selectedCategory === cat.id ? 'font-medium text-gray-900' : 'font-regular text-gray-500'}`}>{cat.name}</button>))}
                         </div>
                     </nav>
 
                     <div>
-                        {/* Reels Section */}
-                        <div
-                            ref={reelsRef}
-                            onMouseDown={handleManualScrollStart} onTouchStart={handleManualScrollStart}
-                            onMouseUp={handleManualScrollEnd} onTouchEnd={handleManualScrollEnd}
-                            onMouseLeave={handleManualScrollEnd}
-                            className="flex overflow-x-auto scroll-hidden px-4 py-8 space-x-4 items-center cursor-grab active:cursor-grabbing"
-                            style={{ scrollSnapType: 'x mandatory' }}
-                        >
+                        <div ref={reelsRef} onMouseDown={handleManualScrollStart} onTouchStart={handleManualScrollStart} onMouseUp={handleManualScrollEnd} onTouchEnd={handleManualScrollEnd} onMouseLeave={handleManualScrollEnd} className="flex overflow-x-auto scroll-hidden px-4 py-8 space-x-4 items-center cursor-grab active:cursor-grabbing" style={{ scrollSnapType: 'x mandatory' }}>
                             {duplicatedProducts.map((product, index) => (
-                                <div 
-                                    key={`${product.id}-${index}`}
-                                    className={`flex-shrink-0 w-32 text-center transition-transform duration-300 ease-in-out`}
-                                    style={{ scrollSnapAlign: 'center' }}
-                                    onClick={() => onSelectProduct(product)}
-                                >
+                                <div key={`${product.id}-${index}`} className={`flex-shrink-0 w-32 text-center transition-transform duration-300 ease-in-out`} style={{ scrollSnapAlign: 'center' }} onClick={() => onSelectProduct(product)}>
                                     <div className={`relative w-full h-48 rounded-2xl overflow-hidden shadow-lg transform transition-transform duration-300 ease-in-out ${activeReelIndex === index % products.length ? 'scale-110' : 'scale-100'}`}>
                                          <video src={`./${product.video}.webm`} autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0"></video>
                                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -415,18 +307,14 @@
                             ))}
                         </div>
 
-                        {/* Story Section */}
                         <div className="p-4 pt-0">
                             <div className="bg-white rounded-2xl p-6 shadow-sm">
-                                <h3 className="text-xl font-medium text-gray-800">Ana Menüden Bir Yemeğin Hikayesi</h3>
-                                <p className="text-gray-600 mt-2 font-regular">Her bir tabağımız, şeflerimizin özenle seçtiği yerel ve taze malzemelerle hazırlanır. Bu lezzet yolculuğunu keşfedin.</p>
-                                <button className="mt-4 text-sm font-medium text-gray-800 border border-gray-400 rounded-full px-5 py-2 hover:bg-gray-100 transition-colors">
-                                    KEŞFET
-                                </button>
+                                <h3 className="text-xl font-medium text-gray-800">{story.title}</h3>
+                                <p className="text-gray-600 mt-2 font-regular">{story.summary}</p>
+                                <button onClick={() => onSelectStory(story)} className="mt-4 text-sm font-medium text-gray-800 border border-gray-400 rounded-full px-5 py-2 hover:bg-gray-100 transition-colors">KEŞFET</button>
                             </div>
                         </div>
 
-                        {/* Product List */}
                         <div className="p-4 space-y-4">
                             {products.map(product => (
                                 <div key={product.id} onClick={() => onSelectProduct(product)} className="flex items-center p-4 bg-white rounded-2xl cursor-pointer shadow-sm">
@@ -449,40 +337,24 @@
         
         const ProductDetailPage = ({ product, onGoBack }) => {
             if (!product) return null;
-            
             const getRecommendations = (p) => {
                 if (!p.tags) return [];
                 let recommendations = [];
-                if (p.tags.includes('kirmizi-et') && !p.tags.includes('burger')) {
-                    recommendations = allProducts.filter(item => item.tags && item.tags.includes('sarap'));
-                } else if (p.tags.includes('balik') || p.tags.includes('tavuk')) {
-                    recommendations = allProducts.filter(item => item.tags && item.tags.includes('salata'));
-                } else if (p.tags.includes('pizza') || p.tags.includes('burger')) {
-                    recommendations = allProducts.filter(item => item.tags && item.tags.includes('kola'));
-                }
-                return recommendations.slice(0, 2); // En fazla 2 öneri göster
+                if (p.tags.includes('kirmizi-et') && !p.tags.includes('burger')) { recommendations = allProducts.filter(item => item.tags && item.tags.includes('sarap')); } 
+                else if (p.tags.includes('balik') || p.tags.includes('tavuk')) { recommendations = allProducts.filter(item => item.tags && item.tags.includes('salata')); } 
+                else if (p.tags.includes('pizza') || p.tags.includes('burger')) { recommendations = allProducts.filter(item => item.tags && item.tags.includes('kola'));}
+                return recommendations.slice(0, 2);
             };
-
             const recommendations = getRecommendations(product);
-
             return (
                 <div className="bg-gray-100 min-h-full" style={{ WebkitOverflowScrolling: 'touch' }}>
                     <div className="relative h-[30rem] overflow-hidden rounded-b-3xl bg-gray-200">
-                        {product.video ? (
-                            <video src={`./${product.video}.webm`} autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover"></video>
-                        ) : (
-                            <img src={product.image} alt={product.name} className="absolute top-0 left-0 w-full h-full object-cover" />
-                        )}
-                         <button onClick={onGoBack} className="absolute top-4 left-4 bg-white/80 p-2 rounded-full shadow-md z-30">
-                            <BackIcon className="h-6 w-6 text-gray-800" />
-                        </button>
+                        {product.video ? (<video src={`./${product.video}.webm`} autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover"></video>) : (<img src={product.image} alt={product.name} className="absolute top-0 left-0 w-full h-full object-cover" />)}
+                         <button onClick={onGoBack} className="absolute top-4 left-4 bg-white/80 p-2 rounded-full shadow-md z-30"><BackIcon className="h-6 w-6 text-gray-800" /></button>
                     </div>
                     <div className="p-6">
                         <div className="flex justify-between items-start mb-4">
-                            <div>
-                                <h2 className="text-3xl font-medium text-gray-900">{product.name}</h2>
-                                <p className="text-md font-regular text-gray-600">{product.description}</p>
-                            </div>
+                            <div><h2 className="text-3xl font-medium text-gray-900">{product.name}</h2><p className="text-md font-regular text-gray-600">{product.description}</p></div>
                             <p className="text-2xl font-medium text-gray-900 whitespace-nowrap ml-4">{product.price}</p>
                         </div>
                         <div className="flex justify-around bg-white p-4 rounded-2xl shadow-sm text-center text-gray-600">
@@ -490,7 +362,6 @@
                             <div className="flex flex-col items-center"><WeightIcon /> <span className="font-medium">{product.grams}</span> gram</div>
                             <div className="flex flex-col items-center"><FireIcon /> <span className="font-medium">{product.kcal}</span> kcal</div>
                         </div>
-
                         {recommendations.length > 0 && (
                             <div className="mt-8">
                                 <h3 className="text-xl font-medium text-gray-800 mb-4">Birlikte İyi Gider</h3>
@@ -498,10 +369,7 @@
                                     {recommendations.map(rec => (
                                         <div key={rec.id} className="flex items-center p-4 bg-white rounded-2xl shadow-sm">
                                             <img src={rec.image} alt={rec.name} className="w-16 h-16 rounded-lg object-cover mr-4" />
-                                            <div className="flex-1">
-                                                <h4 className="font-medium text-gray-800">{rec.name}</h4>
-                                                <p className="text-sm text-gray-500">{rec.price}</p>
-                                            </div>
+                                            <div className="flex-1"><h4 className="font-medium text-gray-800">{rec.name}</h4><p className="text-sm text-gray-500">{rec.price}</p></div>
                                         </div>
                                     ))}
                                 </div>
@@ -511,23 +379,33 @@
                 </div>
             );
         };
+        
+        const StoryPage = ({ story, onGoBack }) => {
+            if (!story) return null;
+            return (
+                <div className="bg-white min-h-full">
+                    <div className="relative h-72">
+                        <img src={story.image} alt={story.title} className="absolute top-0 left-0 w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <button onClick={onGoBack} className="absolute top-4 left-4 bg-white/80 p-2 rounded-full shadow-md z-10"><BackIcon className="h-6 w-6 text-gray-800" /></button>
+                        <h2 className="absolute bottom-6 left-6 text-4xl font-semibold text-white">{story.title}</h2>
+                    </div>
+                    <div className="p-6">
+                        <p className="text-gray-700 font-regular whitespace-pre-line leading-relaxed">{story.fullStory}</p>
+                    </div>
+                </div>
+            );
+        };
 
         function App() {
           const [page, setPage] = React.useState('categories');
           const [selectedCategory, setSelectedCategory] = React.useState(null);
           const [selectedProduct, setSelectedProduct] = React.useState(null);
+          const [selectedStory, setSelectedStory] = React.useState(null);
           const [isHeaderSolid, setIsHeaderSolid] = React.useState(false);
           const [isMenuVisible, setIsMenuVisible] = React.useState(false);
           const menuRef = React.useRef(null);
           const scrollContainerRef = React.useRef(null);
-
-          const updatePage = (newPage, pushState = true) => {
-              if (pushState) {
-                  const state = { page: newPage, category: selectedCategory, product: selectedProduct };
-                  window.history.pushState(state, '');
-              }
-              setPage(newPage);
-          };
 
           React.useEffect(() => {
             const handlePopState = (event) => {
@@ -535,31 +413,23 @@
                     setPage(event.state.page);
                     setSelectedCategory(event.state.category);
                     setSelectedProduct(event.state.product);
+                    setSelectedStory(event.state.story);
                 } else {
-                    setPage('categories'); // Fallback to the initial page
+                    setPage('categories');
                 }
             };
-
             window.addEventListener('popstate', handlePopState);
-            // Push initial state
-            window.history.replaceState({ page: 'categories', category: null, product: null }, '');
-
-            return () => {
-                window.removeEventListener('popstate', handlePopState);
-            };
+            window.history.replaceState({ page: 'categories', category: null, product: null, story: null }, '');
+            return () => { window.removeEventListener('popstate', handlePopState); };
           }, []);
 
           React.useEffect(() => {
             const container = scrollContainerRef.current;
             if (!container) return;
             const handleScroll = () => {
-              const scrollTop = container.scrollTop;
-              setIsHeaderSolid(scrollTop > 50);
-
+              setIsHeaderSolid(container.scrollTop > 50);
               if (menuRef.current && !isMenuVisible) {
-                if (menuRef.current.getBoundingClientRect().top < window.innerHeight * 0.85) {
-                    setIsMenuVisible(true);
-                }
+                if (menuRef.current.getBoundingClientRect().top < window.innerHeight * 0.85) { setIsMenuVisible(true); }
               }
             };
             container.addEventListener('scroll', handleScroll, { passive: true });
@@ -567,49 +437,49 @@
           }, [isMenuVisible]);
 
           const handleLogoClick = () => {
-              updatePage('categories');
-              setTimeout(() => {
-                  scrollContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
-              }, 50);
+              setPage('categories');
+              window.history.pushState({ page: 'categories' }, '');
+              setTimeout(() => { scrollContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }, 50);
           };
           const handleScrollToMenu = () => {
             menuRef.current?.scrollIntoView({ behavior: 'smooth' });
             setTimeout(() => setIsMenuVisible(true), 100);
           };
           const handleSelectCategory = (categoryId) => { 
-              setSelectedCategory(categoryId); 
-              const state = { page: 'products', category: categoryId, product: null };
-              window.history.pushState(state, '');
+              setSelectedCategory(categoryId);
               setPage('products');
+              window.history.pushState({ page: 'products', category: categoryId }, '');
           };
           const handleSelectProduct = (product) => { 
-              setSelectedProduct(product); 
-              const state = { page: 'productDetail', category: selectedCategory, product: product };
-              window.history.pushState(state, '');
+              setSelectedProduct(product);
               setPage('productDetail');
+              window.history.pushState({ page: 'productDetail', category: selectedCategory, product }, '');
           };
-          const goBackToCategories = () => window.history.back();
-          const goBackToProducts = () => window.history.back();
+          const handleSelectStory = (story) => {
+              setSelectedStory(story);
+              setPage('story');
+              window.history.pushState({ page: 'story', story }, '');
+          };
+          const goBack = () => window.history.back();
 
           const getPageTransform = () => {
             if (page === 'products') return '-translate-x-full';
             if (page === 'productDetail') return '-translate-x-[200%]';
+            if (page === 'story') return '-translate-x-[300%]';
             return 'translate-x-0';
           };
           
           const ProductPage = () => {
               if (!selectedCategory) return null;
-              
               if (selectedCategory === 'c5') { // Ana Yemekler
-                  return <MainCoursePage selectedCategory={selectedCategory} onGoBack={goBackToCategories} onSelectCategory={handleSelectCategory} onSelectProduct={handleSelectProduct} />;
+                  return <MainCoursePage selectedCategory={selectedCategory} onGoBack={goBack} onSelectCategory={handleSelectCategory} onSelectProduct={handleSelectProduct} onSelectStory={handleSelectStory} />;
               }
-              
-              return <ProductListPage selectedCategory={selectedCategory} onGoBack={goBackToCategories} onSelectCategory={handleSelectCategory} onSelectProduct={handleSelectProduct} />;
+              return <ProductListPage selectedCategory={selectedCategory} onGoBack={goBack} onSelectCategory={handleSelectCategory} onSelectProduct={handleSelectProduct} />;
           };
 
           return (
               <div className="bg-gray-100 min-h-screen max-w-md mx-auto">
-                {page !== 'productDetail' && <Header isSolid={isHeaderSolid || page !== 'categories'} onLogoClick={handleLogoClick} />}
+                {(page !== 'productDetail' && page !== 'story') && <Header isSolid={isHeaderSolid || page !== 'categories'} onLogoClick={handleLogoClick} />}
                 <main className="relative w-full h-screen overflow-hidden">
                   <div className={`flex transition-transform duration-500 ease-in-out h-full ${getPageTransform()}`}>
                     
@@ -623,7 +493,11 @@
                     </div>
                     
                     <div className="w-full flex-shrink-0 h-full overflow-y-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
-                      <ProductDetailPage product={selectedProduct} onGoBack={goBackToProducts} />
+                      <ProductDetailPage product={selectedProduct} onGoBack={goBack} />
+                    </div>
+                    
+                    <div className="w-full flex-shrink-0 h-full overflow-y-auto scroll-hidden">
+                        <StoryPage story={selectedStory} onGoBack={goBack} />
                     </div>
 
                   </div>
