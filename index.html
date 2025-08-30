@@ -25,18 +25,10 @@
         
         /* Logo için özel animasyon */
         @keyframes pulse-scale {
-          0%, 100% {
-            transform: scale(1);
-            opacity: 0.95;
-          }
-          50% {
-            transform: scale(1.03);
-            opacity: 1;
-          }
+          0%, 100% { transform: scale(1); opacity: 0.95; }
+          50% { transform: scale(1.03); opacity: 1; }
         }
-        .animate-pulse-scale {
-          animation: pulse-scale 2.5s ease-in-out infinite;
-        }
+        .animate-pulse-scale { animation: pulse-scale 2.5s ease-in-out infinite; }
     </style>
 </head>
 <body>
@@ -107,7 +99,7 @@
                 { id: 'p1-1', name: 'Paçanga Böreği', description: 'Pastırmalı, domatesli, biberli', price: '250 TL', image: 'https://placehold.co/200x200/e9e9e9/333?text=Paçanga', video: 'arasicak1' },
                 { id: 'p1-2', name: 'İçli Köfte', description: 'Kızartılmış, cevizli, kıymalı', price: '200 TL', image: 'https://placehold.co/200x200/e9e9e9/333?text=İçli+Köfte', video: 'arasicak2' },
                 { id: 'p1-3', name: 'Karides Güveç', description: 'Tereyağında, sarımsaklı, mantarlı', price: '500 TL', image: 'https://placehold.co/200x200/e9e9e9/333?text=Karides', video: 'arasicak3' },
-                { id: 'p1-4', name: 'Kalamar Tava', description: 'Tarator sos ile', price: '450 TL', image: 'https://placehold.co/200x200/e9e9e9/333?text=Kalamar', video: 'arasicak4' }
+                { id: 'p1-4', name: 'Kalamar Tava', description: 'Tarotor sos ile', price: '450 TL', image: 'https://placehold.co/200x200/e9e9e9/333?text=Kalamar', video: 'arasicak4' }
             ],
             'c2': [ 
                 { id: 'p2', name: 'Limonata', description: 'Ev yapımı, taze nane ile.', price: '90 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Limonata', tags: ['icecek', 'alkolsuz'] },
@@ -171,98 +163,34 @@
             ],
           },
           stories: {
-            'c1': {
-                title: 'Ara Sıcakların Hikayesi',
-                summary: 'Yemeğe lezzetli bir başlangıç yapmak için, her biri özenle hazırlanan sıcak atıştırmalıklarımızı keşfedin. Geleneksel tatlar, modern dokunuşlarla buluşuyor.',
-                fullStory: 'Sofralarımızın vazgeçilmezi ara sıcaklar, ana yemeğe giden yolda lezzetli bir mola sunar. Paçanga böreğimizin çıtırtısından, güvecimizde pişen karidesin tereyağlı kokusuna kadar her bir lezzet, en taze malzemelerle ve ustalıkla hazırlanır. Bu küçük tabaklar, büyük mutluluklar vaat ediyor.',
-                image: 'https://placehold.co/600x400/333/fff?text=Ara+Sıcaklar'
-            },
-            'c4': {
-                title: 'Salataların Hikayesi',
-                summary: 'Doğanın en taze yeşillikleri, şefimizin özel dokunuşlarıyla sağlıklı ve lezzetli tabaklara dönüşüyor. Her bir salata, ferahlatıcı bir öğün vaat ediyor.',
-                fullStory: 'Ferahlık ve lezzetin mükemmel birleşimi olan salatalarımız, en taze mevsim yeşillikleri ve kaliteli malzemelerle hazırlanır. İster hafif bir başlangıç, ister doyurucu bir ana öğün olsun, her tabağımızda doğanın renklerini ve tazeliğini bulacaksınız.',
-                image: 'https://placehold.co/600x400/333/fff?text=Salatalar'
-            },
-            'c5': {
-                title: 'Trüf Burgerin Hikayesi',
-                summary: 'Mevsimin en taze trüfleri, dinlendirilmiş dana köftesi ve özel brioche ekmeğiyle buluşuyor. Bu burger, sıradan bir lezzetin ötesinde unutulmaz bir deneyim vaat ediyor.',
-                fullStory: `Her şey, ormanın derinliklerinden gelen o eşsiz aroma ile başladı. Şeflerimiz, mevsimin en kaliteli siyah trüf mantarlarını bulmak için uzun bir yolculuğa çıktı. Bu nadide lezzeti, 28 gün boyunca dinlendirilmiş, %100 dana etinden hazırlanan 200 gramlık özel köftemizle buluşturduk. \n\nKöftenin mükemmel lezzetini tamamlamak için, her gün kendi fırınımızda pişirdiğimiz, tereyağlı ve hafif tatlı brioche ekmeğini kullanıyoruz. Erimiş cheddar peynirinin zenginliği ve ev yapımı trüflü mayonezimizin kremsi dokunuşu, bu burgeri bir sanat eserine dönüştürüyor. Yanında servis ettiğimiz baharatlı patates kızartması ile bu lezzet şölenini tamamlıyoruz.`,
-                image: 'https://placehold.co/600x400/333/fff?text=Trüf+Hikayesi'
-            },
-            'c6': {
-                title: 'Şarapların Hikayesi',
-                summary: 'Anadolu ve dünya bağlarının en seçkin üzümlerinden üretilen şarap seçkimiz, yemeğinizin lezzetini tamamlamak için sizi bekliyor. Her damlasında toprağın ve emeğin izlerini taşıyan bir yolculuk.',
-                fullStory: 'Bir kadeh şarap, bir yemeği unutulmaz bir anıya dönüştürebilir. Kırmızı, beyaz veya roze... Her biri farklı bir karakter, farklı bir hikaye anlatır. Kavımızdaki her bir şişe, yemeğinizle mükemmel bir uyum yakalamak ve damak zevkinize hitap etmek için özenle seçilmiştir.',
-                image: 'https://placehold.co/600x400/333/fff?text=Şaraplar'
-            },
-            'c7': {
-                title: 'Tatlıların Hikayesi',
-                summary: 'Yemeğin en tatlı sonu... Usta ellerde hazırlanan, her biri mutluluk vadeden tatlılarımızla lezzet yolculuğunuzu taçlandırın.',
-                fullStory: 'En güzel anlar tatlıyla biter. Çikolatanın yoğunluğundan meyvelerin ferahlığına, her bir tatlımız gününüzü güzelleştirmek için özenle hazırlanır. San Sebastian Cheesecakeimizin kremsi dokusundan, suflemizin akışkanlığına kadar her kaşıkta mutluluğu bulacaksınız.',
-                image: 'https://placehold.co/600x400/333/fff?text=Tatlılar'
-            },
-            'c8': {
-                title: 'Rakıların Hikayesi',
-                summary: 'Anasonun ferahlığı ve asırlık bir geleneğin bilgeliği, her kadehte yeniden canlanıyor. Muhabbetin en güzel demine, en iyi rakılar eşlik eder.',
-                fullStory: 'Rakı, sadece bir içki değil, bir kültürdür. Dost meclislerinin, derin sohbetlerin ve lezzetli mezelerin vazgeçilmezidir. Menümüzdeki her bir rakı, damıtım ustalığının ve anasonun en saf halinin birer temsilcisidir. Beyaz leblebi ve suyun eşliğinde, bu eşsiz geleneğin keyfini çıkarın.',
-                image: 'https://placehold.co/600x400/333/fff?text=Rakılar'
-            },
-            'c9': {
-                title: 'Biraların Hikayesi',
-                summary: 'Dünyanın dört bir yanından getirdiğimiz, her damak zevkine uygun bira çeşitlerimizle serinleyin. Her yudumda kaliteyi ve ferahlığı hissedeceksiniz.',
-                fullStory: 'Ferahlatıcı bir lagerden, yoğun aromalı bir ale’ye kadar, bira seçkimiz her anınıza eşlik etmek için hazırlandı. En kaliteli malt ve şerbetçiotları kullanılarak üretilen biralarımız, yemeğinizin yanında veya tek başına keyifli bir mola için mükemmel bir seçimdir.',
-                image: 'https://placehold.co/600x400/333/fff?text=Biralar'
-            },
-            'c10': {
-                title: 'Mezelerin Hikayesi',
-                summary: 'Ege ve Akdeniz’in taptaze lezzetleri, modern bir yorumla sofranızda. Paylaşmanın keyfini, zengin meze çeşitlerimizle çıkarın.',
-                fullStory: 'Meze, sadece bir başlangıç değil, aynı zamanda bir sofra kültürüdür. Zeytinyağlılarımızdan, yoğurtlu lezzetlerimize kadar her bir meze, en taze ve yerel malzemelerle hazırlanır. Dostlarla yapılan keyifli sohbetlerin en lezzetli eşlikçisi, zengin meze tabağımızdır.',
-                image: 'https://placehold.co/600x400/333/fff?text=Mezeler'
-            },
-            'c11': {
-                title: 'Shots\'ların Hikayesi',
-                summary: 'Gecenin ritmini yükselten, cesur ve hızlı lezzetler. Tek bir yudumda unutulmaz anlar için... Şerefe!',
-                fullStory: 'Bazen anı yakalamak için tek bir yudum yeterlidir. Klasik tekiladan, katmanlı B52\'ye kadar her bir shot, gecenize enerji katmak için özenle hazırlanır. Cesur lezzetler, unutulmaz anılar... Keyifli anların en hızlı yolu.',
-                image: 'https://placehold.co/600x400/333/fff?text=Shots'
-            }
+            'c1': { title:'Ara Sıcakların Hikayesi', summary:'Yemeğe lezzetli bir başlangıç...', fullStory:'Sofralarımızın vazgeçilmezi...', image:'https://placehold.co/600x400/333/fff?text=Ara+Sıcaklar' },
+            'c4': { title:'Salataların Hikayesi', summary:'Doğanın en taze yeşillikleri...', fullStory:'Ferahlık ve lezzetin...', image:'https://placehold.co/600x400/333/fff?text=Salatalar' },
+            'c5': { title:'Trüf Burgerin Hikayesi', summary:'Mevsimin en taze trüfleri...', fullStory:`Her şey, ormanın...`, image:'https://placehold.co/600x400/333/fff?text=Trüf+Hikayesi' },
+            'c6': { title:'Şarapların Hikayesi', summary:'Anadolu ve dünya bağlarının...', fullStory:'Bir kadeh şarap...', image:'https://placehold.co/600x400/333/fff?text=Şaraplar' },
+            'c7': { title:'Tatlıların Hikayesi', summary:'Yemeğin en tatlı sonu...', fullStory:'En güzel anlar...', image:'https://placehold.co/600x400/333/fff?text=Tatlılar' },
+            'c8': { title:'Rakıların Hikayesi', summary:'Anasonun ferahlığı...', fullStory:'Rakı, sadece bir içki değil...', image:'https://placehold.co/600x400/333/fff?text=Rakılar' },
+            'c9': { title:'Biraların Hikayesi', summary:'Dünyanın dört bir yanından...', fullStory:'Ferahlatıcı bir lagerden...', image:'https://placehold.co/600x400/333/fff?text=Biralar' },
+            'c10':{ title:'Mezelerin Hikayesi', summary:'Ege ve Akdeniz’in...', fullStory:'Meze, sadece bir başlangıç...', image:'https://placehold.co/600x400/333/fff?text=Mezeler' },
+            'c11':{ title:"Shots'ların Hikayesi", summary:'Gecenin ritmini yükselten...', fullStory:'Bazen anı yakalamak...', image:'https://placehold.co/600x400/333/fff?text=Shots' }
           }
         };
 
         const allProducts = Object.values(menuData.products).flat();
         
-        // --- Bileşenler (Components) ---
+        // --- Bileşenler ---
 
-        const LoadingScreen = ({ isLoading }) => {
-            return (
-                <div className={`fixed inset-0 z-[9999] flex items-center justify-center bg-white transition-opacity duration-700 ease-in-out ${isLoading ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                    <div className="text-center">
-                        <img 
-                            src="./logo.png" 
-                            alt="Logo Yükleniyor..." 
-                            className="h-48 mb-8 mx-auto animate-pulse-scale"
-                            onError={(e) => { e.target.style.display = 'none'; }}
-                        />
-                        <div className="w-16 h-16 border-4 border-gray-200 border-t-gray-800 rounded-full animate-spin mx-auto"></div>
-                    </div>
-                </div>
-            );
-        };
+        const LoadingScreen = ({ isLoading }) => (
+          <div className={`fixed inset-0 z-[9999] flex items-center justify-center bg-white transition-opacity duration-700 ease-in-out ${isLoading ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+            <div className="text-center">
+              <img src="./logo.png" alt="Logo Yükleniyor..." className="h-48 mb-8 mx-auto animate-pulse-scale" onError={(e)=>{e.target.style.display='none';}}/>
+              <div className="w-16 h-16 border-4 border-gray-200 border-t-gray-800 rounded-full animate-spin mx-auto"></div>
+            </div>
+          </div>
+        );
 
-        // --- YENİ: Soldan açılan Overlay ---
-        const SideOverlay = ({
-          open,
-          onClose,
-          onCallWaiter,
-          onSubmitFeedback,
-          onQuickAction
-        }) => {
-          const [form, setForm] = React.useState({
-            type: 'Öneri',
-            name: '',
-            table: '',
-            phone: '',
-            message: ''
-          });
+        // --- Soldan açılan Overlay ---
+        const SideOverlay = ({ open, onClose, onCallWaiter, onSubmitFeedback, onQuickAction }) => {
+          const [form, setForm] = React.useState({ type:'Öneri', name:'', table:'', phone:'', message:'' });
 
           React.useEffect(() => {
             const onEsc = (e) => { if (e.key === 'Escape') onClose(); };
@@ -270,48 +198,26 @@
             return () => document.removeEventListener('keydown', onEsc);
           }, [onClose]);
 
-          const update = (k, v) => setForm(prev => ({ ...prev, [k]: v }));
+          const update = (k, v) => setForm(p => ({...p, [k]: v}));
+          const submit = (e) => { e.preventDefault(); onSubmitFeedback(form); };
 
-          const submit = (e) => {
-            e.preventDefault();
-            onSubmitFeedback(form);
-          };
-
-          const QuickBtn = ({ label, value }) => (
-            <button
-              type="button"
-              className="px-3 py-2 rounded-full border text-sm hover:bg-gray-100 active:scale-[0.98] transition"
-              onClick={() => onQuickAction(label)}
-            >
+          const QuickBtn = ({ label }) => (
+            <button type="button" className="px-3 py-2 rounded-full border text-sm hover:bg-gray-100 active:scale-[0.98] transition" onClick={() => onQuickAction(label)}>
               {label}
             </button>
           );
 
           return (
             <div className={`fixed inset-0 z-[10000] ${open ? '' : 'pointer-events-none'}`}>
-              {/* Backdrop */}
-              <div
-                className={`absolute inset-0 bg-black/40 transition-opacity ${open ? 'opacity-100' : 'opacity-0'}`}
-                onClick={onClose}
-              />
-              {/* Panel */}
-              <aside
-                className={`absolute top-0 left-0 h-full w-[92%] max-w-md bg-white shadow-2xl p-5 overflow-y-auto transition-transform duration-300
-                ${open ? 'translate-x-0' : '-translate-x-full'}`}
-              >
+              <div className={`absolute inset-0 bg-black/40 transition-opacity ${open ? 'opacity-100' : 'opacity-0'}`} onClick={onClose}/>
+              <aside className={`absolute top-0 left-0 h-full w-[92%] max-w-md bg-white shadow-2xl p-5 overflow-y-auto transition-transform duration-300 ${open ? 'translate-x-0' : '-translate-x-full'}`}>
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xl font-semibold">Masa Servis Merkezi</h2>
-                  <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-                    Kapat
-                  </button>
+                  <button onClick={onClose} className="text-gray-500 hover:text-gray-700">Kapat</button>
                 </div>
 
                 <div className="space-y-4">
-                  <button
-                    type="button"
-                    className="w-full py-3 rounded-xl bg-emerald-600 text-white font-medium hover:bg-emerald-700 active:scale-[0.99] transition"
-                    onClick={onCallWaiter}
-                  >
+                  <button type="button" className="w-full py-3 rounded-xl bg-emerald-600 text-white font-medium hover:bg-emerald-700 active:scale-[0.99] transition" onClick={onCallWaiter}>
                     Garson Çağır
                   </button>
 
@@ -332,71 +238,32 @@
                     <div className="grid grid-cols-2 gap-3">
                       <div className="col-span-2">
                         <label className="text-sm text-gray-600">Tür</label>
-                        <select
-                          className="w-full mt-1 border rounded-lg px-3 py-2"
-                          value={form.type}
-                          onChange={(e) => update('type', e.target.value)}
-                        >
-                          <option>Öneri</option>
-                          <option>İstek</option>
-                          <option>Şikayet</option>
+                        <select className="w-full mt-1 border rounded-lg px-3 py-2" value={form.type} onChange={(e)=>update('type', e.target.value)}>
+                          <option>Öneri</option><option>İstek</option><option>Şikayet</option>
                         </select>
                       </div>
                       <div>
                         <label className="text-sm text-gray-600">Ad Soyad (ops.)</label>
-                        <input
-                          className="w-full mt-1 border rounded-lg px-3 py-2"
-                          value={form.name}
-                          onChange={(e) => update('name', e.target.value)}
-                          placeholder="Adınız (opsiyonel)"
-                        />
+                        <input className="w-full mt-1 border rounded-lg px-3 py-2" value={form.name} onChange={(e)=>update('name', e.target.value)} placeholder="Adınız (opsiyonel)"/>
                       </div>
                       <div>
                         <label className="text-sm text-gray-600">Masa No</label>
-                        <input
-                          className="w-full mt-1 border rounded-lg px-3 py-2"
-                          value={form.table}
-                          onChange={(e) => update('table', e.target.value)}
-                          placeholder="Örn: 12"
-                          required
-                        />
+                        <input className="w-full mt-1 border rounded-lg px-3 py-2" value={form.table} onChange={(e)=>update('table', e.target.value)} placeholder="Örn: 12" required/>
                       </div>
                       <div className="col-span-2">
                         <label className="text-sm text-gray-600">Telefon (ops.)</label>
-                        <input
-                          className="w-full mt-1 border rounded-lg px-3 py-2"
-                          value={form.phone}
-                          onChange={(e) => update('phone', e.target.value)}
-                          placeholder="İletişim için"
-                          inputMode="tel"
-                        />
+                        <input className="w-full mt-1 border rounded-lg px-3 py-2" value={form.phone} onChange={(e)=>update('phone', e.target.value)} placeholder="İletişim için" inputMode="tel"/>
                       </div>
                       <div className="col-span-2">
                         <label className="text-sm text-gray-600">Mesajınız</label>
-                        <textarea
-                          className="w-full mt-1 border rounded-lg px-3 py-2 min-h-[100px]"
-                          value={form.message}
-                          onChange={(e) => update('message', e.target.value)}
-                          placeholder="Geri bildiriminizi yazınız..."
-                          required
-                        />
+                        <textarea className="w-full mt-1 border rounded-lg px-3 py-2 min-h-[100px]" value={form.message} onChange={(e)=>update('message', e.target.value)} placeholder="Geri bildiriminizi yazınız..." required/>
                       </div>
                     </div>
-                    <button
-                      type="submit"
-                      className="w-full py-3 rounded-xl bg-gray-900 text-white font-medium hover:bg-black active:scale-[0.99] transition"
-                    >
-                      Gönder
-                    </button>
+                    <button type="submit" className="w-full py-3 rounded-xl bg-gray-900 text-white font-medium hover:bg-black active:scale-[0.99] transition">Gönder</button>
                   </form>
 
                   <div className="pt-6 border-t">
-                    <a
-                      href="https://www.kadrajatelier.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block text-center text-sm text-gray-500 hover:text-gray-700"
-                    >
+                    <a href="https://www.kadrajatelier.com" target="_blank" rel="noopener noreferrer" className="block text-center text-sm text-gray-500 hover:text-gray-700">
                       Kadraj Solution and Evolution Partner
                     </a>
                   </div>
@@ -415,7 +282,7 @@
                 <img src="./logo.png" alt="SpicyMenu Logo" className="h-14" onError={(e) => { e.target.onerror = null; e.target.style.display='none'; document.getElementById('logo-text-header').style.display='block'; }} />
                 <h1 id="logo-text-header" className={`hidden text-xl font-bold tracking-widest uppercase ${isSolid ? 'text-gray-900' : 'text-white'}`}>SpicyMenu</h1>
             </div>
-            <!-- Sağ üst ve arama butonu kaldırıldı, yer tutucu: -->
+            {/* Sağ üst ve arama butonu kaldırıldı, yer tutucu: */}
             <div className={`${isSolid ? 'text-gray-800' : 'text-white'} w-6 h-6`} aria-hidden="true"></div>
           </header>
         );
@@ -523,31 +390,19 @@
                 scrollIntervalRef.current = null;
             }, []);
 
-            const handleManualScrollStart = () => {
-                isManualScrolling.current = true;
-                stopScrolling();
-                clearTimeout(scrollEndTimer.current);
-            };
-
+            const handleManualScrollStart = () => { isManualScrolling.current = true; stopScrolling(); clearTimeout(scrollEndTimer.current); };
             const handleManualScrollEnd = () => {
                 clearTimeout(scrollEndTimer.current);
-                scrollEndTimer.current = setTimeout(() => {
-                    isManualScrolling.current = false;
-                    startScrolling();
-                }, 2500); // Wait 2.5 seconds before resuming auto-scroll
+                scrollEndTimer.current = setTimeout(() => { isManualScrolling.current = false; startScrolling(); }, 2500);
             };
 
-            React.useEffect(() => {
-                startScrolling();
-                return () => stopScrolling();
-            }, [startScrolling, stopScrolling]);
+            React.useEffect(() => { startScrolling(); return () => stopScrolling(); }, [startScrolling, stopScrolling]);
 
             const handleScroll = React.useCallback(() => {
                 if (!reelsRef.current) return;
                 const container = reelsRef.current;
                 const scrollLeft = container.scrollLeft;
                 const itemWidth = container.children[0] ? container.children[0].offsetWidth + 16 : 0;
-                
                 if (itemWidth > 0) {
                     const firstItemIndex = Math.round(scrollLeft / itemWidth);
                     const newIndex = firstItemIndex + 1;
@@ -563,7 +418,7 @@
                     container.addEventListener('scroll', throttledHandleScroll, { passive: true });
                     throttledHandleScroll();
                 }
-                return () => { if (container) { container.removeEventListener('scroll', throttledHandleScroll); }};
+                return () => { if (container) container.removeEventListener('scroll', throttledHandleScroll); };
             }, [throttledHandleScroll]);
             
             const duplicatedProducts = [...products, ...products, ...products, ...products];
@@ -630,7 +485,7 @@
                 let recommendations = [];
                 if (p.tags.includes('kirmizi-et') && !p.tags.includes('burger')) { recommendations = allProducts.filter(item => item.tags && item.tags.includes('sarap')); } 
                 else if (p.tags.includes('balik') || p.tags.includes('tavuk')) { recommendations = allProducts.filter(item => item.tags && item.tags.includes('salata')); } 
-                else if (p.tags.includes('pizza') || p.tags.includes('burger')) { recommendations = allProducts.filter(item => item.tags && item.tags.includes('kola'));}
+                else if (p.tags.includes('pizza') || p.tags.includes('burger')) { recommendations = allProducts.filter(item => item.tags && item.tags.includes('kola')); }
                 return recommendations.slice(0, 2);
             };
             const recommendations = getRecommendations(product);
@@ -685,20 +540,14 @@
             );
         };
 
-        const preloadAsset = (src) => {
-          return new Promise((resolve) => {
-            const isVideo = src.endsWith('.webm');
-            const element = isVideo ? document.createElement('video') : document.createElement('img');
-            element.src = src;
-            const onAssetLoad = () => resolve(src);
-            if (isVideo) {
-                element.oncanplaythrough = onAssetLoad;
-            } else {
-                element.onload = onAssetLoad;
-            }
-            element.onerror = onAssetLoad;
-          });
-        };
+        const preloadAsset = (src) => new Promise((resolve) => {
+          const isVideo = src.endsWith('.webm');
+          const element = isVideo ? document.createElement('video') : document.createElement('img');
+          element.src = src;
+          const onAssetLoad = () => resolve(src);
+          if (isVideo) element.oncanplaythrough = onAssetLoad; else element.onload = onAssetLoad;
+          element.onerror = onAssetLoad;
+        });
 
         function App() {
           const [page, setPage] = React.useState('categories');
@@ -709,25 +558,18 @@
           const [isMenuVisible, setIsMenuVisible] = React.useState(false);
           const [isLoading, setIsLoading] = React.useState(true);
 
-          // YENİ: Overlay state ve toast
+          // Overlay & toast
           const [isOverlayOpen, setIsOverlayOpen] = React.useState(false);
-          const [toast, setToast] = React.useState({ visible: false, message: '' });
+          const [toast, setToast] = React.useState({ visible:false, message:'' });
 
           const menuRef = React.useRef(null);
           const scrollContainerRef = React.useRef(null);
 
           React.useEffect(() => {
-            const assetsToPreload = menuData.categoryRows
-              .flat()
-              .flatMap(category => [`./${category.media}.webm`, `./${category.media}.png`]);
-
+            const assetsToPreload = menuData.categoryRows.flat().flatMap(category => [`./${category.media}.webm`, `./${category.media}.png`]);
             const preloadPromises = assetsToPreload.map(preloadAsset);
             const minimumLoaderTime = new Promise(resolve => setTimeout(resolve, 2000));
-
-            Promise.all([...preloadPromises, minimumLoaderTime]).then(() => {
-              console.log("Tüm kritik medya dosyaları yüklendi.");
-              setIsLoading(false);
-            });
+            Promise.all([...preloadPromises, minimumLoaderTime]).then(() => { setIsLoading(false); });
           }, []);
 
           React.useEffect(() => {
@@ -764,25 +606,10 @@
               window.history.pushState({ page: 'categories' }, '');
               setTimeout(() => { scrollContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }, 50);
           };
-          const handleScrollToMenu = () => {
-            menuRef.current?.scrollIntoView({ behavior: 'smooth' });
-            setTimeout(() => setIsMenuVisible(true), 100);
-          };
-          const handleSelectCategory = (categoryId) => { 
-              setSelectedCategory(categoryId);
-              setPage('products');
-              window.history.pushState({ page: 'products', category: categoryId }, '');
-          };
-          const handleSelectProduct = (product) => { 
-              setSelectedProduct(product);
-              setPage('productDetail');
-              window.history.pushState({ page: 'productDetail', category: selectedCategory, product }, '');
-          };
-          const handleSelectStory = (story) => {
-              setSelectedStory(story);
-              setPage('story');
-              window.history.pushState({ page: 'story', story }, '');
-          };
+          const handleScrollToMenu = () => { menuRef.current?.scrollIntoView({ behavior: 'smooth' }); setTimeout(() => setIsMenuVisible(true), 100); };
+          const handleSelectCategory = (categoryId) => { setSelectedCategory(categoryId); setPage('products'); window.history.pushState({ page: 'products', category: categoryId }, ''); };
+          const handleSelectProduct = (product) => { setSelectedProduct(product); setPage('productDetail'); window.history.pushState({ page: 'productDetail', category: selectedCategory, product }, ''); };
+          const handleSelectStory = (story) => { setSelectedStory(story); setPage('story'); window.history.pushState({ page: 'story', story }, ''); };
           const goBack = () => window.history.back();
 
           const getPageTransform = () => {
@@ -794,48 +621,19 @@
           
           const ProductPage = () => {
               if (!selectedCategory) return null;
-              
               const story = menuData.stories[selectedCategory];
               const products = menuData.products[selectedCategory] || [];
-              
               if (products.length > 0) {
-                  return <ReelsCategoryPage 
-                            selectedCategory={selectedCategory} 
-                            onGoBack={goBack} 
-                            onSelectCategory={handleSelectCategory} 
-                            onSelectProduct={handleSelectProduct} 
-                            onSelectStory={handleSelectStory} 
-                            story={story}
-                         />;
+                  return <ReelsCategoryPage selectedCategory={selectedCategory} onGoBack={goBack} onSelectCategory={handleSelectCategory} onSelectProduct={handleSelectProduct} onSelectStory={handleSelectStory} story={story} />;
               }
-              return <ProductListPage 
-                          selectedCategory={selectedCategory} 
-                          onGoBack={goBack} 
-                          onSelectCategory={handleSelectCategory} 
-                          onSelectProduct={handleSelectProduct} 
-                       />;
+              return <ProductListPage selectedCategory={selectedCategory} onGoBack={goBack} onSelectCategory={handleSelectCategory} onSelectProduct={handleSelectProduct} />;
           };
 
-          // YENİ: Overlay aksiyonları
-          const showToast = (message) => {
-            setToast({ visible: true, message });
-            setTimeout(() => setToast(prev => ({ ...prev, visible: false })), 2300);
-          };
-
-          const onCallWaiter = () => {
-            showToast('Garson çağrınız iletildi. Lütfen masanızda bekleyiniz.');
-            setIsOverlayOpen(false);
-          };
-
-          const onSubmitFeedback = (form) => {
-            console.log('Geri bildirim:', form);
-            showToast('Teşekkürler! Geri bildiriminiz alındı.');
-            setIsOverlayOpen(false);
-          };
-
-          const onQuickAction = (what) => {
-            showToast(`${what} isteğiniz iletildi.`);
-          };
+          // Overlay aksiyonları
+          const showToast = (message) => { setToast({ visible:true, message }); setTimeout(() => setToast(prev => ({ ...prev, visible:false })), 2300); };
+          const onCallWaiter = () => { showToast('Garson çağrınız iletildi. Lütfen masanızda bekleyiniz.'); setIsOverlayOpen(false); };
+          const onSubmitFeedback = (form) => { console.log('Geri bildirim:', form); showToast('Teşekkürler! Geri bildiriminiz alındı.'); setIsOverlayOpen(false); };
+          const onQuickAction = (what) => { showToast(`${what} isteğiniz iletildi.`); };
 
           return (
               <div className="bg-gray-100 min-h-screen max-w-md mx-auto">
@@ -873,7 +671,7 @@
                             </div>
                           </main>
 
-                          {/* YENİ: Overlay Render */}
+                          {/* Overlay */}
                           <SideOverlay
                             open={isOverlayOpen}
                             onClose={() => setIsOverlayOpen(false)}
@@ -882,7 +680,7 @@
                             onQuickAction={onQuickAction}
                           />
 
-                          {/* YENİ: Basit Toast */}
+                          {/* Basit Toast */}
                           <div className={`fixed left-1/2 -translate-x-1/2 bottom-6 z-[10001] transition-all ${toast.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
                             <div className="px-4 py-3 rounded-full bg-black text-white text-sm shadow-lg">
                               {toast.message}
