@@ -248,15 +248,175 @@
             );
         };
 
-        const Header = ({ isSolid, onLogoClick }) => (
+        // --- YENİ: Soldan açılan Overlay ---
+        const SideOverlay = ({
+          open,
+          onClose,
+          onCallWaiter,
+          onSubmitFeedback,
+          onQuickAction
+        }) => {
+          const [form, setForm] = React.useState({
+            type: 'Öneri',
+            name: '',
+            table: '',
+            phone: '',
+            message: ''
+          });
+
+          React.useEffect(() => {
+            const onEsc = (e) => { if (e.key === 'Escape') onClose(); };
+            document.addEventListener('keydown', onEsc);
+            return () => document.removeEventListener('keydown', onEsc);
+          }, [onClose]);
+
+          const update = (k, v) => setForm(prev => ({ ...prev, [k]: v }));
+
+          const submit = (e) => {
+            e.preventDefault();
+            onSubmitFeedback(form);
+          };
+
+          const QuickBtn = ({ label, value }) => (
+            <button
+              type="button"
+              className="px-3 py-2 rounded-full border text-sm hover:bg-gray-100 active:scale-[0.98] transition"
+              onClick={() => onQuickAction(label)}
+            >
+              {label}
+            </button>
+          );
+
+          return (
+            <div className={`fixed inset-0 z-[10000] ${open ? '' : 'pointer-events-none'}`}>
+              {/* Backdrop */}
+              <div
+                className={`absolute inset-0 bg-black/40 transition-opacity ${open ? 'opacity-100' : 'opacity-0'}`}
+                onClick={onClose}
+              />
+              {/* Panel */}
+              <aside
+                className={`absolute top-0 left-0 h-full w-[92%] max-w-md bg-white shadow-2xl p-5 overflow-y-auto transition-transform duration-300
+                ${open ? 'translate-x-0' : '-translate-x-full'}`}
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl font-semibold">Masa Servis Merkezi</h2>
+                  <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+                    Kapat
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  <button
+                    type="button"
+                    className="w-full py-3 rounded-xl bg-emerald-600 text-white font-medium hover:bg-emerald-700 active:scale-[0.99] transition"
+                    onClick={onCallWaiter}
+                  >
+                    Garson Çağır
+                  </button>
+
+                  <div className="bg-gray-50 p-4 rounded-xl">
+                    <h3 className="font-medium mb-3">Hızlı İstekler</h3>
+                    <div className="flex flex-wrap gap-2">
+                      <QuickBtn label="Hesap İste" />
+                      <QuickBtn label="Su" />
+                      <QuickBtn label="Peçete" />
+                      <QuickBtn label="Buz" />
+                      <QuickBtn label="POS Cihazı" />
+                      <QuickBtn label="Çocuk Sandalyesi" />
+                    </div>
+                  </div>
+
+                  <form onSubmit={submit} className="space-y-3">
+                    <h3 className="font-medium">Öneri / İstek / Şikayet</h3>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="col-span-2">
+                        <label className="text-sm text-gray-600">Tür</label>
+                        <select
+                          className="w-full mt-1 border rounded-lg px-3 py-2"
+                          value={form.type}
+                          onChange={(e) => update('type', e.target.value)}
+                        >
+                          <option>Öneri</option>
+                          <option>İstek</option>
+                          <option>Şikayet</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="text-sm text-gray-600">Ad Soyad (ops.)</label>
+                        <input
+                          className="w-full mt-1 border rounded-lg px-3 py-2"
+                          value={form.name}
+                          onChange={(e) => update('name', e.target.value)}
+                          placeholder="Adınız (opsiyonel)"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm text-gray-600">Masa No</label>
+                        <input
+                          className="w-full mt-1 border rounded-lg px-3 py-2"
+                          value={form.table}
+                          onChange={(e) => update('table', e.target.value)}
+                          placeholder="Örn: 12"
+                          required
+                        />
+                      </div>
+                      <div className="col-span-2">
+                        <label className="text-sm text-gray-600">Telefon (ops.)</label>
+                        <input
+                          className="w-full mt-1 border rounded-lg px-3 py-2"
+                          value={form.phone}
+                          onChange={(e) => update('phone', e.target.value)}
+                          placeholder="İletişim için"
+                          inputMode="tel"
+                        />
+                      </div>
+                      <div className="col-span-2">
+                        <label className="text-sm text-gray-600">Mesajınız</label>
+                        <textarea
+                          className="w-full mt-1 border rounded-lg px-3 py-2 min-h-[100px]"
+                          value={form.message}
+                          onChange={(e) => update('message', e.target.value)}
+                          placeholder="Geri bildiriminizi yazınız..."
+                          required
+                        />
+                      </div>
+                    </div>
+                    <button
+                      type="submit"
+                      className="w-full py-3 rounded-xl bg-gray-900 text-white font-medium hover:bg-black active:scale-[0.99] transition"
+                    >
+                      Gönder
+                    </button>
+                  </form>
+
+                  <div className="pt-6 border-t">
+                    <a
+                      href="https://www.kadrajatelier.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-center text-sm text-gray-500 hover:text-gray-700"
+                    >
+                      Kadraj Solution and Evolution Partner
+                    </a>
+                  </div>
+                </div>
+              </aside>
+            </div>
+          );
+        };
+
+        // --- Güncellenmiş Header (sağ üst ve arama butonları kaldırıldı) ---
+        const Header = ({ isSolid, onLogoClick, onMenuClick }) => (
           <header 
             className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-1 max-w-md mx-auto h-[64px] transition-all duration-300 ease-in-out ${isSolid ? 'bg-white shadow-md' : 'bg-transparent'}`}>
-            <button className={`p-2 transition-colors duration-300 ${isSolid ? 'text-gray-800' : 'text-white'}`}><MenuIcon /></button>
+            <button onClick={onMenuClick} className={`p-2 transition-colors duration-300 ${isSolid ? 'text-gray-800' : 'text-white'}`}><MenuIcon /></button>
             <div className={`transition-opacity duration-300 cursor-pointer ${isSolid ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onClick={onLogoClick}>
                 <img src="./logo.png" alt="SpicyMenu Logo" className="h-14" onError={(e) => { e.target.onerror = null; e.target.style.display='none'; document.getElementById('logo-text-header').style.display='block'; }} />
                 <h1 id="logo-text-header" className={`hidden text-xl font-bold tracking-widest uppercase ${isSolid ? 'text-gray-900' : 'text-white'}`}>SpicyMenu</h1>
             </div>
-            <button className={`p-2 transition-colors duration-300 ${isSolid ? 'text-gray-800' : 'text-white'}`}><SearchIcon /></button>
+            <!-- Sağ üst ve arama butonu kaldırıldı, yer tutucu: -->
+            <div className={`${isSolid ? 'text-gray-800' : 'text-white'} w-6 h-6`} aria-hidden="true"></div>
           </header>
         );
         
@@ -548,6 +708,11 @@
           const [isHeaderSolid, setIsHeaderSolid] = React.useState(false);
           const [isMenuVisible, setIsMenuVisible] = React.useState(false);
           const [isLoading, setIsLoading] = React.useState(true);
+
+          // YENİ: Overlay state ve toast
+          const [isOverlayOpen, setIsOverlayOpen] = React.useState(false);
+          const [toast, setToast] = React.useState({ visible: false, message: '' });
+
           const menuRef = React.useRef(null);
           const scrollContainerRef = React.useRef(null);
 
@@ -651,13 +816,40 @@
                        />;
           };
 
+          // YENİ: Overlay aksiyonları
+          const showToast = (message) => {
+            setToast({ visible: true, message });
+            setTimeout(() => setToast(prev => ({ ...prev, visible: false })), 2300);
+          };
+
+          const onCallWaiter = () => {
+            showToast('Garson çağrınız iletildi. Lütfen masanızda bekleyiniz.');
+            setIsOverlayOpen(false);
+          };
+
+          const onSubmitFeedback = (form) => {
+            console.log('Geri bildirim:', form);
+            showToast('Teşekkürler! Geri bildiriminiz alındı.');
+            setIsOverlayOpen(false);
+          };
+
+          const onQuickAction = (what) => {
+            showToast(`${what} isteğiniz iletildi.`);
+          };
+
           return (
               <div className="bg-gray-100 min-h-screen max-w-md mx-auto">
                   <LoadingScreen isLoading={isLoading} />
                   
                   {!isLoading && (
                       <>
-                          {(page !== 'productDetail' && page !== 'story') && <Header isSolid={isHeaderSolid || page !== 'categories'} onLogoClick={handleLogoClick} />}
+                          {(page !== 'productDetail' && page !== 'story') && (
+                            <Header
+                              isSolid={isHeaderSolid || page !== 'categories'}
+                              onLogoClick={handleLogoClick}
+                              onMenuClick={() => setIsOverlayOpen(true)}
+                            />
+                          )}
                           <main className="relative w-full h-screen overflow-hidden">
                             <div className={`flex transition-transform duration-500 ease-in-out h-full ${getPageTransform()}`}>
                               
@@ -680,6 +872,22 @@
 
                             </div>
                           </main>
+
+                          {/* YENİ: Overlay Render */}
+                          <SideOverlay
+                            open={isOverlayOpen}
+                            onClose={() => setIsOverlayOpen(false)}
+                            onCallWaiter={onCallWaiter}
+                            onSubmitFeedback={onSubmitFeedback}
+                            onQuickAction={onQuickAction}
+                          />
+
+                          {/* YENİ: Basit Toast */}
+                          <div className={`fixed left-1/2 -translate-x-1/2 bottom-6 z-[10001] transition-all ${toast.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
+                            <div className="px-4 py-3 rounded-full bg-black text-white text-sm shadow-lg">
+                              {toast.message}
+                            </div>
+                          </div>
                       </>
                   )}
               </div>
