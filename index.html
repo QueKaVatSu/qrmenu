@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spicy Menu</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React Kütüphaneleri -->
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel (JSX'i tarayıcıda çalıştırmak için) -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <style>
@@ -19,6 +22,21 @@
         /* Scrollbar Gizleme */
         .scroll-hidden::-webkit-scrollbar { display: none; }
         .scroll-hidden { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Logo için özel animasyon */
+        @keyframes pulse-scale {
+          0%, 100% {
+            transform: scale(1);
+            opacity: 0.95;
+          }
+          50% {
+            transform: scale(1.03);
+            opacity: 1;
+          }
+        }
+        .animate-pulse-scale {
+          animation: pulse-scale 2.5s ease-in-out infinite;
+        }
     </style>
 </head>
 <body>
@@ -216,8 +234,16 @@
 
         const LoadingScreen = ({ isLoading }) => {
             return (
-                <div className={`fixed inset-0 z-[9999] flex items-center justify-center bg-white transition-opacity duration-500 ease-in-out ${isLoading ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                    <div className="w-16 h-16 border-4 border-gray-200 border-t-gray-800 rounded-full animate-spin"></div>
+                <div className={`fixed inset-0 z-[9999] flex items-center justify-center bg-white transition-opacity duration-700 ease-in-out ${isLoading ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                    <div className="text-center">
+                        <img 
+                            src="./logo.png" 
+                            alt="Logo Yükleniyor..." 
+                            className="h-48 mb-8 mx-auto animate-pulse-scale"
+                            onError={(e) => { e.target.style.display = 'none'; }}
+                        />
+                        <div className="w-16 h-16 border-4 border-gray-200 border-t-gray-800 rounded-full animate-spin mx-auto"></div>
+                    </div>
                 </div>
             );
         };
@@ -499,6 +525,21 @@
             );
         };
 
+        const preloadAsset = (src) => {
+          return new Promise((resolve) => {
+            const isVideo = src.endsWith('.webm');
+            const element = isVideo ? document.createElement('video') : document.createElement('img');
+            element.src = src;
+            const onAssetLoad = () => resolve(src);
+            if (isVideo) {
+                element.oncanplaythrough = onAssetLoad;
+            } else {
+                element.onload = onAssetLoad;
+            }
+            element.onerror = onAssetLoad;
+          });
+        };
+
         function App() {
           const [page, setPage] = React.useState('categories');
           const [selectedCategory, setSelectedCategory] = React.useState(null);
@@ -511,10 +552,17 @@
           const scrollContainerRef = React.useRef(null);
 
           React.useEffect(() => {
-              const timer = setTimeout(() => {
-                  setIsLoading(false);
-              }, 2000); 
-              return () => clearTimeout(timer);
+            const assetsToPreload = menuData.categoryRows
+              .flat()
+              .flatMap(category => [`./${category.media}.webm`, `./${category.media}.png`]);
+
+            const preloadPromises = assetsToPreload.map(preloadAsset);
+            const minimumLoaderTime = new Promise(resolve => setTimeout(resolve, 2000));
+
+            Promise.all([...preloadPromises, minimumLoaderTime]).then(() => {
+              console.log("Tüm kritik medya dosyaları yüklendi.");
+              setIsLoading(false);
+            });
           }, []);
 
           React.useEffect(() => {
@@ -585,7 +633,7 @@
               const story = menuData.stories[selectedCategory];
               const products = menuData.products[selectedCategory] || [];
               
-              if (products.length > 0) { // If there are products, show Reels page
+              if (products.length > 0) {
                   return <ReelsCategoryPage 
                             selectedCategory={selectedCategory} 
                             onGoBack={goBack} 
@@ -595,7 +643,6 @@
                             story={story}
                          />;
               }
-              // Fallback for categories without products yet
               return <ProductListPage 
                           selectedCategory={selectedCategory} 
                           onGoBack={goBack} 
