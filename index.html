@@ -296,9 +296,11 @@
             const reelsRef = React.useRef(null);
             const scrollIntervalRef = React.useRef(null);
             const [activeReelIndex, setActiveReelIndex] = React.useState(0);
+            const isManualScrolling = React.useRef(false);
+            const scrollEndTimer = React.useRef(null);
 
             const startScrolling = React.useCallback(() => {
-                if (scrollIntervalRef.current) return;
+                if (scrollIntervalRef.current || isManualScrolling.current) return;
                 scrollIntervalRef.current = setInterval(() => {
                     if (reelsRef.current) {
                         const { scrollLeft, scrollWidth } = reelsRef.current;
@@ -316,6 +318,20 @@
                 clearInterval(scrollIntervalRef.current);
                 scrollIntervalRef.current = null;
             }, []);
+
+            const handleManualScrollStart = () => {
+                isManualScrolling.current = true;
+                stopScrolling();
+                clearTimeout(scrollEndTimer.current);
+            };
+
+            const handleManualScrollEnd = () => {
+                clearTimeout(scrollEndTimer.current);
+                scrollEndTimer.current = setTimeout(() => {
+                    isManualScrolling.current = false;
+                    startScrolling();
+                }, 1500); // Wait 1.5 seconds before resuming auto-scroll
+            };
 
             React.useEffect(() => {
                 startScrolling();
@@ -374,9 +390,9 @@
                         {/* Reels Section */}
                         <div
                             ref={reelsRef}
-                            onMouseDown={stopScrolling} onTouchStart={stopScrolling}
-                            onMouseUp={startScrolling} onTouchEnd={startScrolling}
-                            onMouseLeave={startScrolling}
+                            onMouseDown={handleManualScrollStart} onTouchStart={handleManualScrollStart}
+                            onMouseUp={handleManualScrollEnd} onTouchEnd={handleManualScrollEnd}
+                            onMouseLeave={handleManualScrollEnd}
                             className="flex overflow-x-auto scroll-hidden px-4 py-8 space-x-4 items-center cursor-grab active:cursor-grabbing"
                             style={{ scrollSnapType: 'x mandatory' }}
                         >
