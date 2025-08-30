@@ -88,7 +88,12 @@
             [{ id: 'c10', name: 'Mezeler', subtitle: 'Sofranın Bütün Renkleri', width: 205, height: 250, media: 'title10' },{ id: 'c11', name: 'Shots', subtitle: 'Hızlı, Cesur, Unutulmaz', width: 135, height: 200, media: 'title11' }]
           ],
           products: {
-            'c1': [ { id: 'p1', name: 'Sigara Böreği', description: 'Çıtır çıtır, peynirli.', price: '165 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Börek', prepTime: 10, grams: 150, kcal: 300, video: 'product1', tags: ['arasicak'] } ],
+            'c1': [
+                { id: 'p1-1', name: 'Paçanga Böreği', description: 'Pastırmalı, domatesli, biberli', price: '250 TL', image: 'https://placehold.co/200x200/e9e9e9/333?text=Paçanga' },
+                { id: 'p1-2', name: 'İçli Köfte', description: 'Kızartılmış, cevizli, kıymalı', price: '200 TL', image: 'https://placehold.co/200x200/e9e9e9/333?text=İçli+Köfte' },
+                { id: 'p1-3', name: 'Karides Güveç', description: 'Tereyağında, sarımsaklı, mantarlı', price: '500 TL', image: 'https://placehold.co/200x200/e9e9e9/333?text=Karides' },
+                { id: 'p1-4', name: 'Kalamar Tava', description: 'Tarator sos ile', price: '450 TL', image: 'https://placehold.co/200x200/e9e9e9/333?text=Kalamar' }
+            ],
             'c2': [ 
                 { id: 'p2', name: 'Limonata', description: 'Ev yapımı, taze nane ile.', price: '90 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Limonata', prepTime: 5, grams: 300, kcal: 150, video: 'product2', tags: ['icecek', 'alkolsuz'] },
                 { id: 'p2-2', name: 'Kola', description: 'Buz gibi.', price: '70 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Kola', prepTime: 1, grams: 330, kcal: 140, video: 'product_cola', tags: ['icecek', 'alkolsuz', 'kola'] }
@@ -104,8 +109,25 @@
                 { id: 'p5-6', name: 'Antrikot', description: '250gr, dinlendirilmiş dana antrikot', price: '1100 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=Antrikot', video: 'product6', prepTime: 30, grams: 250, kcal: 850, tags: ['kirmizi-et', 'steak'] },
                 { id: 'p5-7', name: 'Kuzu İncik', description: 'Ağır ateşte pişirilmiş, tandır lezzeti', price: '980 TL', image: 'https://placehold.co/150x150/e9e9e9/333?text=İncik', video: 'product7', prepTime: 180, grams: 550, kcal: 1100, tags: ['kirmizi-et'] },
             ],
-            'c6': [ { id: 'p6', name: 'Kavaklıdere Yakut', description: 'Klasikleşmiş lezzet.', price: '750 TL', image: 'https://placehold.co/600x400/e9e9e9/333?text=Şarap', prepTime: 1, grams: 750, kcal: 600, video: 'product_wine', tags: ['sarap', 'icecek', 'alkollu'] } ],
-            'c7': [], 'c8': [], 'c9': [], 'c10': [], 'c11': [],
+             'c6': [
+                { id: 'p6-1', name: 'Doluca Beyaz', description: '75cl', price: '750 TL', image: 'https://placehold.co/200x200/e9e9e9/333?text=Şarap' },
+                { id: 'p6-2', name: 'Doluca Kırmızı', description: '75cl', price: '750 TL', image: 'https://placehold.co/200x200/e9e9e9/333?text=Şarap' },
+                { id: 'p6-3', name: 'Sarafin Merlot', description: '75cl', price: '1200 TL', image: 'https://placehold.co/200x200/e9e9e9/333?text=Şarap' },
+                { id: 'p6-4', name: 'Sarafin Chardonnay', description: '75cl', price: '1200 TL', image: 'https://placehold.co/200x200/e9e9e9/333?text=Şarap' }
+            ],
+            'c9': [
+                { id: 'p9-1', name: 'Efes Pilsen', description: '50cl', price: '150 TL', image: 'https://placehold.co/200x200/e9e9e9/333?text=Bira' },
+                { id: 'p9-2', name: 'Bomonti', description: '50cl', price: '160 TL', image: 'https://placehold.co/200x200/e9e9e9/333?text=Bira' },
+                { id: 'p9-3', name: 'Corona', description: '33cl', price: '200 TL', image: 'https://placehold.co/200x200/e9e9e9/333?text=Bira' },
+                { id: 'p9-4', name: 'Heineken', description: '50cl', price: '200 TL', image: 'https://placehold.co/200x200/e9e9e9/333?text=Bira' }
+            ],
+            'c10': [
+                { id: 'p10-1', name: 'Atom', description: 'Süzme yoğurt, acı biber', price: '150 TL', image: 'https://placehold.co/200x200/e9e9e9/333?text=Meze' },
+                { id: 'p10-2', name: 'Haydari', description: 'Yoğurt, nane, sarımsak', price: '150 TL', image: 'https://placehold.co/200x200/e9e9e9/333?text=Meze' },
+                { id: 'p10-3', name: 'Acılı Ezme', description: 'Domates, biber, soğan', price: '150 TL', image: 'https://placehold.co/200x200/e9e9e9/333?text=Meze' },
+                { id: 'p10-4', name: 'Humus', description: 'Nohut, tahin, zeytinyağı', price: '150 TL', image: 'https://placehold.co/200x200/e9e9e9/333?text=Meze' }
+            ],
+            'c7': [], 'c8': [], 'c11': [],
           },
           stories: {
             'p5-1': {
