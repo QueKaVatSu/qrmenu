@@ -25,18 +25,10 @@
         
         /* Logo için özel animasyon */
         @keyframes pulse-scale {
-          0%, 100% {
-            transform: scale(1);
-            opacity: 0.95;
-          }
-          50% {
-            transform: scale(1.03);
-            opacity: 1;
-          }
+          0%, 100% { transform: scale(1); opacity: 0.95; }
+          50% { transform: scale(1.03); opacity: 1; }
         }
-        .animate-pulse-scale {
-          animation: pulse-scale 2.5s ease-in-out infinite;
-        }
+        .animate-pulse-scale { animation: pulse-scale 2.5s ease-in-out infinite; }
     </style>
 </head>
 <body>
@@ -247,25 +239,27 @@
         };
 
         const allProducts = Object.values(menuData.products).flat();
-        const ACCENT = '#590219'; // İstenilen tema rengi
+        const ACCENT = '#590219';
+        const ACCENT25 = 'rgba(89, 2, 25, 0.25)'; // %25 tonu
         
-        // --- Bileşenler (Components) ---
+        // --- Bileşenler ---
 
-        const LoadingScreen = ({ isLoading }) => {
-            return (
-                <div className={`fixed inset-0 z-[9999] flex items-center justify-center bg-white transition-opacity duration-700 ease-in-out ${isLoading ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                    <div className="text-center">
-                        <img 
-                            src="./logo.png" 
-                            alt="Logo Yükleniyor..." 
-                            className="h-48 mb-8 mx-auto animate-pulse-scale"
-                            onError={(e) => { e.target.style.display = 'none'; }}
-                        />
-                        <div className="w-16 h-16 border-4 border-gray-200 border-t-gray-800 rounded-full animate-spin mx-auto"></div>
-                    </div>
-                </div>
-            );
-        };
+        const LoadingScreen = ({ isLoading }) => (
+          <div
+            className={`fixed inset-0 z-[9999] flex items-center justify-center transition-opacity duration-700 ease-in-out ${isLoading ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+            style={{ backgroundColor: '#fff8e7' }}
+          >
+            <div className="text-center">
+              <img 
+                src="./logo.png" 
+                alt="Logo Yükleniyor..." 
+                className="h-48 mb-8 mx-auto animate-pulse-scale"
+                onError={(e) => { e.target.style.display = 'none'; }}
+              />
+              <div className="w-16 h-16 border-4 border-gray-200 border-t-gray-800 rounded-full animate-spin mx-auto"></div>
+            </div>
+          </div>
+        );
 
         // --- Soldan açılan Overlay ---
         const SideOverlay = ({
@@ -276,13 +270,7 @@
           onQuickAction,
           doneActions
         }) => {
-          const [form, setForm] = React.useState({
-            type: 'Öneri',
-            name: '',
-            table: '',
-            phone: '',
-            message: ''
-          });
+          const [form, setForm] = React.useState({ type:'Öneri', name:'', table:'', phone:'', message:'' });
 
           React.useEffect(() => {
             const onEsc = (e) => { if (e.key === 'Escape') onClose(); };
@@ -290,12 +278,8 @@
             return () => document.removeEventListener('keydown', onEsc);
           }, [onClose]);
 
-          const update = (k, v) => setForm(prev => ({ ...prev, [k]: v }));
-
-          const submit = (e) => {
-            e.preventDefault();
-            onSubmitFeedback(form);
-          };
+          const update = (k, v) => setForm(p => ({...p, [k]: v}));
+          const submit = (e) => { e.preventDefault(); onSubmitFeedback(form); };
 
           const QuickBtn = ({ label }) => {
             const disabled = doneActions.has(label);
@@ -303,12 +287,8 @@
               <button
                 type="button"
                 disabled={disabled}
-                className={`px-3 py-2 rounded-full border text-sm transition active:scale-[0.98]
-                  ${disabled
-                    ? 'cursor-not-allowed text-white'
-                    : 'hover:bg-gray-100'}
-                `}
-                style={disabled ? { backgroundColor: ACCENT, borderColor: ACCENT } : {}}
+                className={`px-3 py-2 rounded-full border text-sm transition active:scale-[0.98] ${disabled ? 'cursor-not-allowed' : 'hover:bg-gray-100'}`}
+                style={disabled ? { backgroundColor: ACCENT25, borderColor: ACCENT25, color: ACCENT } : {}}
                 onClick={() => onQuickAction(label)}
               >
                 {label}
@@ -318,29 +298,18 @@
 
           return (
             <div className={`fixed inset-0 z-[10000] ${open ? '' : 'pointer-events-none'}`}>
-              {/* Backdrop */}
-              <div
-                className={`absolute inset-0 bg-black/40 transition-opacity ${open ? 'opacity-100' : 'opacity-0'}`}
-                onClick={onClose}
-              />
-              {/* Panel */}
-              <aside
-                className={`absolute top-0 left-0 h-full w-[92%] max-w-md bg-white shadow-2xl p-5 overflow-y-auto transition-transform duration-300
-                ${open ? 'translate-x-0' : '-translate-x-full'}`}
-              >
+              <div className={`absolute inset-0 bg-black/40 transition-opacity ${open ? 'opacity-100' : 'opacity-0'}`} onClick={onClose}/>
+              <aside className={`absolute top-0 left-0 h-full w-[92%] max-w-md bg-white shadow-2xl p-5 overflow-y-auto transition-transform duration-300 ${open ? 'translate-x-0' : '-translate-x-full'}`}>
                 <div className="flex items-center justify-between mb-4">
-                  {/* Logo (başlık yerine) */}
-                  <div className="flex items-center gap-2">
-                    <img src="./logo.png" alt="Logo" className="h-8" onError={(e)=>{e.target.style.display='none';}}/>
-                  </div>
-                  {/* Artı <-> Çarpı animasyonlu kapatma */}
+                  {/* Menü logosu 4x */}
+                  <img src="./logo.png" alt="Logo" className="h-32" onError={(e)=>{e.target.style.display='none';}}/>
                   <PlusXButton isOpen={open} onClick={onClose} />
                 </div>
 
                 <div className="space-y-4">
                   <button
                     type="button"
-                    className="w-full py-3 rounded-lg text-white font-medium active:scale-[0.99] transition"
+                    className="w-full py-3 rounded-md text-white font-medium active:scale-[0.99] transition"
                     onClick={onCallWaiter}
                     style={{ backgroundColor: ACCENT }}
                   >
@@ -364,72 +333,34 @@
                     <div className="grid grid-cols-2 gap-3">
                       <div className="col-span-2">
                         <label className="text-sm text-gray-600">Tür</label>
-                        <select
-                          className="w-full mt-1 border rounded-lg px-3 py-2"
-                          value={form.type}
-                          onChange={(e) => update('type', e.target.value)}
-                        >
-                          <option>Öneri</option>
-                          <option>İstek</option>
-                          <option>Şikayet</option>
+                        <select className="w-full mt-1 border rounded-lg px-3 py-2" value={form.type} onChange={(e)=>update('type', e.target.value)}>
+                          <option>Öneri</option><option>İstek</option><option>Şikayet</option>
                         </select>
                       </div>
                       <div>
                         <label className="text-sm text-gray-600">Ad Soyad (ops.)</label>
-                        <input
-                          className="w-full mt-1 border rounded-lg px-3 py-2"
-                          value={form.name}
-                          onChange={(e) => update('name', e.target.value)}
-                          placeholder="Adınız (opsiyonel)"
-                        />
+                        <input className="w-full mt-1 border rounded-lg px-3 py-2" value={form.name} onChange={(e)=>update('name', e.target.value)} placeholder="Adınız (opsiyonel)"/>
                       </div>
                       <div>
                         <label className="text-sm text-gray-600">Masa No</label>
-                        <input
-                          className="w-full mt-1 border rounded-lg px-3 py-2"
-                          value={form.table}
-                          onChange={(e) => update('table', e.target.value)}
-                          placeholder="Örn: 12"
-                          required
-                        />
+                        <input className="w-full mt-1 border rounded-lg px-3 py-2" value={form.table} onChange={(e)=>update('table', e.target.value)} placeholder="Örn: 12" required/>
                       </div>
                       <div className="col-span-2">
                         <label className="text-sm text-gray-600">Telefon (ops.)</label>
-                        <input
-                          className="w-full mt-1 border rounded-lg px-3 py-2"
-                          value={form.phone}
-                          onChange={(e) => update('phone', e.target.value)}
-                          placeholder="İletişim için"
-                          inputMode="tel"
-                        />
+                        <input className="w-full mt-1 border rounded-lg px-3 py-2" value={form.phone} onChange={(e)=>update('phone', e.target.value)} placeholder="İletişim için" inputMode="tel"/>
                       </div>
                       <div className="col-span-2">
                         <label className="text-sm text-gray-600">Mesajınız</label>
-                        <textarea
-                          className="w-full mt-1 border rounded-lg px-3 py-2 min-h-[100px]"
-                          value={form.message}
-                          onChange={(e) => update('message', e.target.value)}
-                          placeholder="Geri bildiriminizi yazınız..."
-                          required
-                        />
+                        <textarea className="w-full mt-1 border rounded-lg px-3 py-2 min-h-[100px]" value={form.message} onChange={(e)=>update('message', e.target.value)} placeholder="Geri bildiriminizi yazınız..." required/>
                       </div>
                     </div>
-                    <button
-                      type="submit"
-                      className="w-full py-3 rounded-lg text-white font-medium active:scale-[0.99] transition"
-                      style={{ backgroundColor: '#111' }}
-                    >
+                    <button type="submit" className="w-full py-3 rounded-md text-white font-medium active:scale-[0.99] transition" style={{ backgroundColor: '#111' }}>
                       Gönder
                     </button>
                   </form>
 
                   <div className="pt-6 border-t">
-                    <a
-                      href="https://www.kadrajatelier.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block text-center text-sm text-gray-500 hover:text-gray-700"
-                    >
+                    <a href="https://www.kadrajatelier.com" target="_blank" rel="noopener noreferrer" className="block text-center text-sm text-gray-500 hover:text-gray-700">
                       Kadraj® Solution and Evolution Partner
                     </a>
                   </div>
@@ -439,7 +370,7 @@
           );
         };
 
-        // --- Güncellenmiş Header (sağ üst ve arama butonları kaldırıldı) ---
+        // --- Güncellenmiş Header ---
         const Header = ({ isSolid, onLogoClick, onMenuClick }) => (
           <header 
             className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-1 max-w-md mx-auto h-[64px] transition-all duration-300 ease-in-out ${isSolid ? 'bg-white shadow-md' : 'bg-transparent'}`}>
@@ -453,16 +384,25 @@
           </header>
         );
         
-        const Hero = ({ onScrollClick, isScrolled }) => (
+        const Hero = ({ onScrollClick, isScrolled, shouldPlay }) => {
+          const videoRef = React.useRef(null);
+          React.useEffect(() => {
+            if (shouldPlay && videoRef.current) {
+              const p = videoRef.current.play();
+              if (p && p.catch) p.catch(()=>{});
+            }
+          }, [shouldPlay]);
+          return (
             <div className="relative h-screen w-full overflow-hidden">
-                <video src="./hero.webm" autoPlay loop muted playsInline className="absolute top-0 left-0 w-full h-full object-cover z-0"></video>
+                <video ref={videoRef} src="./hero.webm" preload="auto" muted playsInline loop className="absolute top-0 left-0 w-full h-full object-cover z-0"></video>
                 <div className="absolute top-0 left-0 w-full h-full bg-black/30 z-10"></div>
                 <div className="relative z-20 flex flex-col items-center justify-center h-full px-4">
                     <img src="./logo.png" alt="SpicyMenu Logo" className={`h-56 mb-8 transition-opacity duration-300 ease-in-out drop-shadow-lg ${isScrolled ? 'opacity-0' : 'opacity-100'}`} onError={(e) => { e.target.style.display = 'none'; }} />
                     <button onClick={onScrollClick} className="font-regular text-white text-lg border border-white/80 rounded-full px-12 py-3 backdrop-blur-sm transition-colors hover:bg-white/20">Menüyü Görüntüle</button>
                 </div>
             </div>
-        );
+          );
+        };
 
         const CategoryCard = ({ category, onSelectCategory, isVisible, index }) => {
             const totalWidthInRow = category.row.reduce((acc, cat) => acc + cat.width, 0);
@@ -556,31 +496,19 @@
                 scrollIntervalRef.current = null;
             }, []);
 
-            const handleManualScrollStart = () => {
-                isManualScrolling.current = true;
-                stopScrolling();
-                clearTimeout(scrollEndTimer.current);
-            };
-
+            const handleManualScrollStart = () => { isManualScrolling.current = true; stopScrolling(); clearTimeout(scrollEndTimer.current); };
             const handleManualScrollEnd = () => {
                 clearTimeout(scrollEndTimer.current);
-                scrollEndTimer.current = setTimeout(() => {
-                    isManualScrolling.current = false;
-                    startScrolling();
-                }, 2500);
+                scrollEndTimer.current = setTimeout(() => { isManualScrolling.current = false; startScrolling(); }, 2500);
             };
 
-            React.useEffect(() => {
-                startScrolling();
-                return () => stopScrolling();
-            }, [startScrolling, stopScrolling]);
+            React.useEffect(() => { startScrolling(); return () => stopScrolling(); }, [startScrolling, stopScrolling]);
 
             const handleScroll = React.useCallback(() => {
                 if (!reelsRef.current) return;
                 const container = reelsRef.current;
                 const scrollLeft = container.scrollLeft;
                 const itemWidth = container.children[0] ? container.children[0].offsetWidth + 16 : 0;
-                
                 if (itemWidth > 0) {
                     const firstItemIndex = Math.round(scrollLeft / itemWidth);
                     const newIndex = firstItemIndex + 1;
@@ -596,7 +524,7 @@
                     container.addEventListener('scroll', throttledHandleScroll, { passive: true });
                     throttledHandleScroll();
                 }
-                return () => { if (container) { container.removeEventListener('scroll', throttledHandleScroll); }};
+                return () => { if (container) container.removeEventListener('scroll', throttledHandleScroll); };
             }, [throttledHandleScroll]);
             
             const duplicatedProducts = [...products, ...products, ...products, ...products];
@@ -718,20 +646,14 @@
             );
         };
 
-        const preloadAsset = (src) => {
-          return new Promise((resolve) => {
-            const isVideo = src.endsWith('.webm');
-            const element = isVideo ? document.createElement('video') : document.createElement('img');
-            element.src = src;
-            const onAssetLoad = () => resolve(src);
-            if (isVideo) {
-                element.oncanplaythrough = onAssetLoad;
-            } else {
-                element.onload = onAssetLoad;
-            }
-            element.onerror = onAssetLoad;
-          });
-        };
+        const preloadAsset = (src) => new Promise((resolve) => {
+          const isVideo = src.endsWith('.webm');
+          const element = isVideo ? document.createElement('video') : document.createElement('img');
+          element.src = src;
+          const onAssetLoad = () => resolve(src);
+          if (isVideo) element.oncanplaythrough = onAssetLoad; else element.onload = onAssetLoad;
+          element.onerror = onAssetLoad;
+        });
 
         function App() {
           const [page, setPage] = React.useState('categories');
@@ -742,27 +664,23 @@
           const [isMenuVisible, setIsMenuVisible] = React.useState(false);
           const [isLoading, setIsLoading] = React.useState(true);
 
-          // Overlay ve toast
+          // Overlay & toast
           const [isOverlayOpen, setIsOverlayOpen] = React.useState(false);
-          const [toast, setToast] = React.useState({ visible: false, message: '' });
-
-          // Hızlı isteklerin bir kez tıklanabilmesi için
+          const [toast, setToast] = React.useState({ visible:false, message:'' });
+          // Hızlı istekler tek tıklansın
           const [doneActions, setDoneActions] = React.useState(new Set());
 
           const menuRef = React.useRef(null);
           const scrollContainerRef = React.useRef(null);
 
           React.useEffect(() => {
-            const assetsToPreload = menuData.categoryRows
-              .flat()
-              .flatMap(category => [`./${category.media}.webm`, `./${category.media}.png`]);
-
+            const assetsToPreload = [
+              './hero.webm',
+              ...menuData.categoryRows.flat().flatMap(category => [`./${category.media}.webm`, `./${category.media}.png`])
+            ];
             const preloadPromises = assetsToPreload.map(preloadAsset);
             const minimumLoaderTime = new Promise(resolve => setTimeout(resolve, 2000));
-
-            Promise.all([...preloadPromises, minimumLoaderTime]).then(() => {
-              setIsLoading(false);
-            });
+            Promise.all([...preloadPromises, minimumLoaderTime]).then(() => { setIsLoading(false); });
           }, []);
 
           React.useEffect(() => {
@@ -799,25 +717,10 @@
               window.history.pushState({ page: 'categories' }, '');
               setTimeout(() => { scrollContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }, 50);
           };
-          const handleScrollToMenu = () => {
-            menuRef.current?.scrollIntoView({ behavior: 'smooth' });
-            setTimeout(() => setIsMenuVisible(true), 100);
-          };
-          const handleSelectCategory = (categoryId) => { 
-              setSelectedCategory(categoryId);
-              setPage('products');
-              window.history.pushState({ page: 'products', category: categoryId }, '');
-          };
-          const handleSelectProduct = (product) => { 
-              setSelectedProduct(product);
-              setPage('productDetail');
-              window.history.pushState({ page: 'productDetail', category: selectedCategory, product }, '');
-          };
-          const handleSelectStory = (story) => {
-              setSelectedStory(story);
-              setPage('story');
-              window.history.pushState({ page: 'story', story }, '');
-          };
+          const handleScrollToMenu = () => { menuRef.current?.scrollIntoView({ behavior: 'smooth' }); setTimeout(() => setIsMenuVisible(true), 100); };
+          const handleSelectCategory = (categoryId) => { setSelectedCategory(categoryId); setPage('products'); window.history.pushState({ page: 'products', category: categoryId }, ''); };
+          const handleSelectProduct = (product) => { setSelectedProduct(product); setPage('productDetail'); window.history.pushState({ page: 'productDetail', category: selectedCategory, product }, ''); };
+          const handleSelectStory = (story) => { setSelectedStory(story); setPage('story'); window.history.pushState({ page: 'story', story }, ''); };
           const goBack = () => window.history.back();
 
           const getPageTransform = () => {
@@ -829,109 +732,75 @@
           
           const ProductPage = () => {
               if (!selectedCategory) return null;
-              
               const story = menuData.stories[selectedCategory];
               const products = menuData.products[selectedCategory] || [];
-              
               if (products.length > 0) {
-                  return <ReelsCategoryPage 
-                            selectedCategory={selectedCategory} 
-                            onGoBack={goBack} 
-                            onSelectCategory={handleSelectCategory} 
-                            onSelectProduct={handleSelectProduct} 
-                            onSelectStory={handleSelectStory} 
-                            story={story}
-                         />;
+                  return <ReelsCategoryPage selectedCategory={selectedCategory} onGoBack={goBack} onSelectCategory={handleSelectCategory} onSelectProduct={handleSelectProduct} onSelectStory={handleSelectStory} story={story} />;
               }
-              return <ProductListPage 
-                          selectedCategory={selectedCategory} 
-                          onGoBack={goBack} 
-                          onSelectCategory={handleSelectCategory} 
-                          onSelectProduct={handleSelectProduct} 
-                       />;
+              return <ProductListPage selectedCategory={selectedCategory} onGoBack={goBack} onSelectCategory={handleSelectCategory} onSelectProduct={handleSelectProduct} />;
           };
 
           // Toast & overlay aksiyonları
-          const showToast = (message) => {
-            setToast({ visible: true, message });
-            setTimeout(() => setToast(prev => ({ ...prev, visible: false })), 2300);
-          };
-
-          const onCallWaiter = () => {
-            showToast('Garson çağrınız iletildi. Lütfen masanızda bekleyiniz.');
-            setIsOverlayOpen(false);
-          };
-
-          const onSubmitFeedback = (form) => {
-            console.log('Geri bildirim:', form);
-            showToast('Teşekkürler! Geri bildiriminiz alındı.');
-            setIsOverlayOpen(false);
-          };
-
+          const showToast = (message) => { setToast({ visible:true, message }); setTimeout(() => setToast(prev => ({ ...prev, visible:false })), 2300); };
+          const onCallWaiter = () => { showToast('Garson çağrınız iletildi. Lütfen masanızda bekleyiniz.'); setIsOverlayOpen(false); };
+          const onSubmitFeedback = (form) => { console.log('Geri bildirim:', form); showToast('Teşekkürler! Geri bildiriminiz alındı.'); setIsOverlayOpen(false); };
           const onQuickAction = (what) => {
             if (doneActions.has(what)) return;
             showToast(`${what} isteğiniz iletildi.`);
-            setDoneActions(prev => {
-              const n = new Set(prev);
-              n.add(what);
-              return n;
-            });
+            setDoneActions(prev => { const n = new Set(prev); n.add(what); return n; });
           };
 
           return (
               <div className="bg-gray-100 min-h-screen max-w-md mx-auto">
                   <LoadingScreen isLoading={isLoading} />
                   
-                  {!isLoading && (
-                      <>
-                          {(page !== 'productDetail' && page !== 'story') && (
-                            <Header
-                              isSolid={isHeaderSolid || page !== 'categories'}
-                              onLogoClick={handleLogoClick}
-                              onMenuClick={() => setIsOverlayOpen(true)}
-                            />
-                          )}
-                          <main className="relative w-full h-screen overflow-hidden">
-                            <div className={`flex transition-transform duration-500 ease-in-out h-full ${getPageTransform()}`}>
-                              
-                              <div ref={scrollContainerRef} className="w-full flex-shrink-0 h-full overflow-y-auto scroll-hidden bg-white">
-                                  <Hero onScrollClick={handleScrollToMenu} isScrolled={isHeaderSolid} />
-                                  <CategoryPage onSelectCategory={handleSelectCategory} menuRef={menuRef} isVisible={isMenuVisible} />
-                              </div>
-
-                              <div className="w-full flex-shrink-0 h-full overflow-y-auto scroll-hidden">
-                                <ProductPage />
-                              </div>
-                              
-                              <div className="w-full flex-shrink-0 h-full overflow-y-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
-                                <ProductDetailPage product={selectedProduct} onGoBack={goBack} />
-                              </div>
-                              
-                              <div className="w-full flex-shrink-0 h-full overflow-y-auto scroll-hidden">
-                                  <StoryPage story={selectedStory} onGoBack={goBack} />
-                              </div>
-
-                            </div>
-                          </main>
-
-                          {/* Overlay */}
-                          <SideOverlay
-                            open={isOverlayOpen}
-                            onClose={() => setIsOverlayOpen(false)}
-                            onCallWaiter={onCallWaiter}
-                            onSubmitFeedback={onSubmitFeedback}
-                            onQuickAction={onQuickAction}
-                            doneActions={doneActions}
-                          />
-
-                          {/* Basit Toast */}
-                          <div className={`fixed left-1/2 -translate-x-1/2 bottom-6 z-[10001] transition-all ${toast.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
-                            <div className="px-4 py-3 rounded-full bg-black text-white text-sm shadow-lg">
-                              {toast.message}
-                            </div>
-                          </div>
-                      </>
+                  {/* İçerik yükleme sırasında da render olur; video hazır bekler */}
+                  {(page !== 'productDetail' && page !== 'story') && (
+                    <Header
+                      isSolid={isHeaderSolid || page !== 'categories'}
+                      onLogoClick={handleLogoClick}
+                      onMenuClick={() => setIsOverlayOpen(true)}
+                    />
                   )}
+                  <main className="relative w-full h-screen overflow-hidden">
+                    <div className={`flex transition-transform duration-500 ease-in-out h-full ${getPageTransform()}`}>
+                      
+                      <div ref={scrollContainerRef} className="w-full flex-shrink-0 h-full overflow-y-auto scroll-hidden bg-white">
+                          <Hero onScrollClick={handleScrollToMenu} isScrolled={isHeaderSolid} shouldPlay={!isLoading} />
+                          <CategoryPage onSelectCategory={handleSelectCategory} menuRef={menuRef} isVisible={isMenuVisible} />
+                      </div>
+
+                      <div className="w-full flex-shrink-0 h-full overflow-y-auto scroll-hidden">
+                        <ProductPage />
+                      </div>
+                      
+                      <div className="w-full flex-shrink-0 h-full overflow-y-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
+                        <ProductDetailPage product={selectedProduct} onGoBack={goBack} />
+                      </div>
+                      
+                      <div className="w-full flex-shrink-0 h-full overflow-y-auto scroll-hidden">
+                          <StoryPage story={selectedStory} onGoBack={goBack} />
+                      </div>
+
+                    </div>
+                  </main>
+
+                  {/* Overlay */}
+                  <SideOverlay
+                    open={isOverlayOpen}
+                    onClose={() => setIsOverlayOpen(false)}
+                    onCallWaiter={onCallWaiter}
+                    onSubmitFeedback={onSubmitFeedback}
+                    onQuickAction={onQuickAction}
+                    doneActions={doneActions}
+                  />
+
+                  {/* Basit Toast */}
+                  <div className={`fixed left-1/2 -translate-x-1/2 bottom-6 z-[10001] transition-all ${toast.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
+                    <div className="px-4 py-3 rounded-full bg-black text-white text-sm shadow-lg">
+                      {toast.message}
+                    </div>
+                  </div>
               </div>
           );
         }
